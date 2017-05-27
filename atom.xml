@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://ghohankawk.github.io/"/>
-  <updated>2017-05-15T11:39:09.072Z</updated>
+  <updated>2017-05-27T05:27:28.999Z</updated>
   <id>http://ghohankawk.github.io/</id>
   
   <author>
@@ -14,6 +14,52 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>图片测试</title>
+    <link href="http://ghohankawk.github.io/2017/05/27/picTest/"/>
+    <id>http://ghohankawk.github.io/2017/05/27/picTest/</id>
+    <published>2017-05-27T05:24:03.940Z</published>
+    <updated>2017-05-27T05:27:28.999Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="这里面没内容"><a href="#这里面没内容" class="headerlink" title="这里面没内容"></a>这里面没内容</h1><p>   只是为了测试一下，图片能否直接展示在首页里面<br><img src="http://kenshin.hk/blog/movie/2016/kiminona/kiminona-02.jpg" alt=""></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;这里面没内容&quot;&gt;&lt;a href=&quot;#这里面没内容&quot; class=&quot;headerlink&quot; title=&quot;这里面没内容&quot;&gt;&lt;/a&gt;这里面没内容&lt;/h1&gt;&lt;p&gt;   只是为了测试一下，图片能否直接展示在首页里面&lt;br&gt;&lt;img src=&quot;http://kenshin.
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>新博客版本升级</title>
+    <link href="http://ghohankawk.github.io/2017/05/27/newBlog/"/>
+    <id>http://ghohankawk.github.io/2017/05/27/newBlog/</id>
+    <published>2017-05-27T04:50:09.050Z</published>
+    <updated>2017-05-27T05:21:56.663Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="为啥升级博客？"><a href="#为啥升级博客？" class="headerlink" title="为啥升级博客？"></a>为啥升级博客？</h1><p>   之前做完了ppt分享后，威哥触动了我，重新维护改造一下，以后记录工作生活点滴，今天庆祝复活了   </p>
+<h1 id="升级说明"><a href="#升级说明" class="headerlink" title="升级说明"></a>升级说明</h1><p>   主要有以下的改造   </p>
+<ul>
+<li>外观改造，去掉了那些无用的评论，统计，因为实际确实没啥人关注</li>
+<li>改完了外观清晰，简单的界面，去掉了那些标签功能，只要是方便自己看</li>
+<li>另外增加了，关于我的部分，按照个人的喜好进行了改编</li>
+</ul>
+<p>对了，明天就要端午节放假啦，提前来张图庆祝一下，请收下</p>
+<p><script src="https://source.pixiv.net/source/embed.js" data-id="63090620_47249e28b3d64ab364938a0dfbb60af5" data-size="large" data-border="on" charset="utf-8"></script><noscript><p><a href="https://www.pixiv.net/member_illust.php?mode=medium&amp;illust_id=63090620" target="_blank">端午節ちまき</a> by <a href="https://www.pixiv.net/member.php?id=266106" target="_blank">兔姬</a> on <a href="https://www.pixiv.net/" target="_blank">pixiv</a></p></noscript></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;为啥升级博客？&quot;&gt;&lt;a href=&quot;#为啥升级博客？&quot; class=&quot;headerlink&quot; title=&quot;为啥升级博客？&quot;&gt;&lt;/a&gt;为啥升级博客？&lt;/h1&gt;&lt;p&gt;   之前做完了ppt分享后，威哥触动了我，重新维护改造一下，以后记录工作生活点滴，今天庆祝复活了 
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>Markdown</title>
