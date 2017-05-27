@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>胡桃泽·萨塔妮亚·麦克威尔</title>
+
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta name="apple-mobile-app-capable" content="yes">
+    <meta name="apple-mobile-app-status-bar-style" content="black">
+
+    <meta name="description" content="一只叫做胡桃泽·萨塔妮亚·麦克威尔的恶魔">
+    <meta name="keywords" content="二次元，宅属性，前端，编程，全栈">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="author" content="cononico">
+    <meta name="application-name" content="Cononico" >
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link rel="stylesheet" type="text/css" href="css/process.css">
+    <link rel="shortcut icon"  type="image/x-icon" href="favicon.ico" />
+
+    <script type="text/javascript">
+        //设定rem值
+        document.getElementsByTagName("html")[0].style.fontSize = document.documentElement.clientWidth/20 + 'px';
+    </script>
+</head>
+<body>
+<header class="head">
+    <div class="head_logo_div">
+        <img class="logo_img" src="images/avatar.jpg"></a>
+    </div>
+    <div class="head_nav_div">
+        <nav class="head_nav">
+            <ul id="nav_ul">
+                <li class="nav_li_on nav_ul_li"><a href="/">首页</a></li>
+                <li class="nav_ul_li">技能</li>
+                <li class="nav_ul_li">经验</li>
+                <li class="nav_ul_li">爱好</li>
+                <li class="nav_ul_li">联系</li>
+            </ul>
+        </nav>
+    </div>
+    <div class="clear"></div>
+</header>
+
+<ul class="float_btn" id="float_btn">
+    <li class="btn_on"></li>
+    <li></li>
+    <li></li>
+    <li></li>
+</ul>
+
+<div class="wrapBox" id="wrapBox">
+    <div class="box">
+        <img class="box_bg" src="images/upload/pic1.jpg">
+        <div class="box01_content">
+            <div class="head_div">
+                <div class="cycle_item">
+                    <a href="https://github.com/Ghohankawk" class="github_a" id="github_a" target="_blank">
+                        <span class="github_icon"></span>
+                        <span class="github_text"><p class="item_name">GitHub</p></span>
+                    </a>
+                    <a href="http://www.weibo.com/u/2134465811" class="weibo_a" id="weibo_a" target="_blank">
+                        <span class="weibo_icon"></span>
+                        <span class="weibo_text"><p class="item_name">微博</p> </span>
+                    </a>
+                    <a href="http://blog.csdn.net/ghohankawk" class="blog_a" id="blog_a" target="_blank">
+                        <span class="blog_icon"></span>
+                        <span class="blog_text"><p class="item_name">CSDN</p></span>
+                    </a>
+
+                    <div class="green_cycle">
+                        <img class="green_cycle_img" src="images/icon/green_cycle.svg">
+                        <div class="yellow_cycle">
+                            <img class="yellow_cycle_img" src="images/icon/yellow_cycle.svg">
+                            <div class="blue_cycle">
+                                <img class="blue_cycle_img" src="images/icon/blue_cycle.svg">
+                                <div class="head_img_div">
+                                    <img class="head_img" src="images/upload/pic9.jpg">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <h1 class="title">斧乃木余接</h1>
+            <h2 class="title_h2">一个喜欢二次元的伪90后<s style="color: gray">（89年）</s></h2>
+            <div id="box01_text">
+                <p class="box01_p">不久前还在南京，某手机公司做java后端开发</p>
+                <p class="box01_p">现在辗转到了帝都，某搜索公司做前端开发</p>
+                <p class="box01_p">喜欢二次元文化，喜欢长篇的民工漫，也喜欢短篇的季度番，单纯喜欢作品</p>
+            </div>
+        </div>
+        <div class="arrow_div">
+            <img class="arrow_img" src="images/icon/arrowhead.png">
+        </div>
+    </div>
+
+    <div class="box">
+        <img class="box_bg" src="images/upload/pic5.png">
+
+        <div class="box02_content box_content">
+            <div id='bar_container' class="bar_container">
+                <div class="bar green" data-percent='90' data-skill='dota1'></div>
+                <div class='bar mint' data-percent='80' data-skill='Java'></div>
+                <div class='bar red' data-percent='60' data-skill='JavaScript'></div>
+                <div class='bar lila' data-percent='50' data-skill='星际争霸2 || 炉石传说'></div>
+                <div class='bar gray' data-percent='40' data-skill='Html'></div>
+                <div class="bar blue" data-percent='30' data-skill='Css'></div>
+                <div class='bar orange' data-percent='20' data-skill='Node.js'></div>
+            </div>
+            <div id="box02_text">
+                <h1>技能</h1>
+                <div class="overline"></div>
+                <p>有扎实的Java编程基础，有编写注释的习惯</p>
+                <p>熟悉HTML5、JavaScript、Ajax、CSS、JQuery、Bootstrap、JSP等Web前端技术</p>
+                <p>熟练掌握主流开源应用框架开发模式，如Struts+Spring+Hibernate、SpringMVC+Spring +myBatis等开发技术</p>
+                <p>熟练使用IntelliJ IDEA开发工具，Git项目版本管理工具，Jenkins项目持续集成工具，Maven项目生命周期管理工具等</p>
+                <p>熟悉关系型数据库MySQL，以及相应数据库调优、SQL优化</p>
+                <p>熟悉非关系型数据库Redis，以及相应使用场景</p>
+                <p>熟练掌握WEB服务器tomcat的应用部署，以及Linux环境的操作</p>
+                <p>了解分布式框架ZooKeeper，以及dubbo的使用</p>
+                <p>了解消息服务协议jms，以及对应实现activemq和rabbitmq的使用</p>
+            </div>
+            <div class="clear"></div>
+        </div>
+
+        <div class="arrow_div">
+            <img class="arrow_img" src="images/icon/arrowhead.png">
+        </div>
+
+    </div>
+
+    <div class="box">
+        <img class="box_bg" src="images/upload/pic6.jpg">
+
+        <div class="box_content box03_content">
+            <ul id="timeUl" class="timeUl">
+                <li>
+                    <div>
+                        <h1>2008.9-2012.6</h1>
+                        <p>在湖南长沙上大学中</p>
+                        <p>学习软件开发不相关的专业</p>
+                        <p>汽车服务工程</p>
+                        <p>一学就学了四年<p>
+                    </div>
+                </li>
+                <li>
+                    <div>
+                        <h1>2012.9-2015.6</h1>
+                        <p>在安徽合肥读研中</p>
+                        <p>开始学习软件开发相关的专业</p>
+                        <p>软件工程</p>
+                        <p>从零开始，那段日子真是艰辛<p>
+                    </div>
+                </li>
+                <li>
+                    <div>
+                        <h1>2015.7-2017.4</h1>
+                        <p>在南京工作中</p>
+                        <p>人生的第一份工作</p>
+                        <p>学到了很多东西，也认识了很多同事朋友</p>
+                        <p>充满了感激之情<p>
+                    </div>
+                </li>
+                <li>
+                    <div>
+                        <h1>2017.5-将来</h1>
+                        <p>在帝都安心工作中</p>
+                        <p>人生的第一次换工作</p>
+                        <p>找到了一份有挑战，也是最初热爱喜欢的工作方向，前端</p>
+                        <p>太遥远未来的事情，还想不到，就不去想了<p>
+                    </div>
+                </li>
+            </ul>
+            <div class="left_div" id="left_div">
+                <img class="left_arrow" src="images/icon/arrowleft.png">
+            </div>
+            <div class="right_div" id="right_div">
+                <img class="right_arrow" src="images/icon/arrowright.png">
+            </div>
+        </div>
+
+        <div class="arrow_div">
+            <img class="arrow_img" src="images/icon/arrowhead.png">
+        </div>
+    </div>
+
+
+    <div class="box">
+
+        <img class="box_bg" src="images/upload/pic8.jpg">
+        <div class="box_content box04_content">
+            <h1 class="box04_title">爱好</h1>
+            <ul class="hobby_content">
+                <li class="hobby_01">
+                    <div class="hobby_img_div">
+                        <div class="spinner spinner_01"></div>
+                        <div class="hobby_img">
+                            <img src="images/upload/kapok.jpg">
+                        </div>
+                        <div class="hobby_img_info">
+                            <h1>游戏</h1>
+                            <h2>PC游戏和主机游戏</h2>
+                        </div>
+                    </div>
+                    <div class="hobby_text_div">
+                        <div class="hobby_img_info_mob">
+                            <h1>游戏/<a>PC游戏和主机游戏</a></h1>
+                        </div>
+                        <p class="about_p">
+                            游戏，从小就是玩着小霸王长大，喜欢那种通关的成就感，后来玩的游戏有，刺客信条，龙腾世纪，蝙蝠侠阿甘疯人院等
+                        </p>
+                        <p>
+                            大学的时候慢慢玩dota1，比较擅长打辅助，实在是后来遇到的坑太多，没办法，才开始玩C位，再坑都不会比路人坑，现在没时间了，偶尔玩一下炉石传说
+                        </p>
+                    </div>
+                </li>
+                <li class="hobby_02">
+                    <div class="hobby_img_div">
+                        <div class="spinner spinner_02"></div>
+                        <div class="hobby_img">
+                            <img src="images/upload/acg.png">
+                        </div>
+                        <div class="hobby_img_info">
+                            <h1>ACG</h1>
+                            <h2>追新番&不追漫画</h2>
+                        </div>
+                    </div>
+                    <div class="hobby_text_div">
+                        <div class="hobby_img_info_mob">
+                            <h1>ACG/<a>追新番&不追漫画</a></h1>
+                        </div>
+                        <p class="about_p">
+                            入宅作《妖精的旋律》，之后完全中毒，入坑无以自拔，杂食基本不挑，喜欢的太多，数不过，
+                            让人最搞笑的是《男子高中生的日常》，
+                            让人最震撼的是《叛逆的鲁路修》，
+                            让人最感动哭的是《Clannad》系列，
+                            让人最热血的是《妖精的尾巴》等等
+                        </p>
+                        <p>
+                            再补充一句，中二病不是病，是病也没药医，每个人都中二过，只是他们从未知道过
+                        </p>
+                    </div>
+                </li>
+                <li class="hobby_03">
+                    <div class="hobby_img_div">
+                        <div class="spinner spinner_03"></div>
+                        <div class="hobby_img">
+                            <img src="images/upload/hutao2.jpg">
+                        </div>
+                        <div class="hobby_img_info">
+                            <h1>旅行</h1>
+                            <h2>游历&写作</h2>
+                        </div>
+                    </div>
+                    <div class="hobby_text_div">
+                        <div class="hobby_img_info_mob">
+                            <h1>旅行/<a>游历&写作</a></h1>
+                        </div>
+                        <p class="about_p">
+                            和大多数人一样都比较喜欢旅游，出去外面玩的心情，就是好。毕竟游山玩水，不用工作的日子，确实是好。游玩过后，再补一篇游记，留给未来看。
+                        </p>
+                        <p>
+                            天下没有免费的午餐，为了能好好吃饱午饭，就的平时努力工作赚钱，毕竟不想穷游
+                        </p>
+                    </div>
+                </li>
+                <div class="clear"></div>
+            </ul>
+        </div>
+        <div class="arrow_div">
+            <img class="arrow_img" src="images/icon/arrowhead.png">
+        </div>
+    </div>
+
+    <foot id="foot" class="foot">
+        <h1 class="foot_title">联系我(wx:hank1989)</h1>
+        <div class="foot_power">
+            <h3>即使已经到底了，你也不会联系我，还翻什么翻啊/(ㄒoㄒ)/~~</h3>
+        </div>
+    </foot>
+</div>
+<script >
+    (function(){
+        var h = window.innerHeight;
+        var w = window.innerWidth;
+
+        var bg = document.getElementsByClassName("box_bg");
+
+        if((w/h) >= (1920/1080)){
+            for(var i = 0;i < bg.length; i++){
+                bg[i].style.width = w + 'px';
+                bg[i].style.height = w * (1080/1920) + 'px';
+                bg[i].style.top = -(w * (1080/1920) - h)/2 + 'px';
+                bg[i].style.left = '0';
+            }
+        }
+        else{
+            for(var i = 0; i < bg.length; i++){
+                bg[i].style.height = h + 'px';
+                bg[i].style.width = h*(1920/1080) + 'px';
+                bg[i].style.left = -(h*(1920/1080) - w)/2 + 'px';
+                bg[i].style.top = '0';
+            }
+        }
+
+        var box01_index = 0;
+        var box01_p = document.getElementById('box01_text').children;
+        function boxOne() {
+            if(box01_index >=0 && box01_index <= 2){
+                box01_p[box01_index].style.opacity = '1';
+                box01_index ++;
+            }
+            else{
+                clearInterval(boxOneTimer);
+            }
+        }
+
+        var x_arr = new Array();
+        var y_arr = new Array();
+        var x = y = m =0;
+        for(var i = 0; i < 800; i++){
+            if(i >= 400){
+                x = m;
+                y = 200 + Math.sqrt(40000 - Math.pow(x-200,2));
+                m--;
+            }
+            else{
+                x = m;
+                y = 200 - Math.sqrt(40000 - Math.pow(x-200,2));
+                m++;
+            }
+            x_arr[i] = x - 60;
+            y_arr[i] = parseInt(y) - 25;
+        }
+
+        /*
+         *原型轨迹
+         */
+        var gitMove = document.getElementById('github_a');
+        var weiboMove = document.getElementById('weibo_a')
+        var blogMove = document.getElementById('blog_a')
+        var g_num = 0;
+        var w_num = 0;
+        var b_num = 0;
+        function movegit(){
+            if(g_num <= 750){
+                // gitMove.css({"left":x_arr[g_num] + "px","top":y_arr[g_num]+"px"});
+                gitMove.style.left = x_arr[g_num] + 'px';
+                gitMove.style.top = y_arr[g_num] + 'px';
+                g_num += 3;
+            }
+            else{
+                clearInterval(gitTimer);
+            }
+        }
+
+        function moveweibo(){
+            if(w_num <= 400){
+                // weiboMove.css({"left":x_arr[w_num]+"px","top":y_arr[w_num]});
+                weiboMove.style.left = x_arr[w_num] + 'px';
+                weiboMove.style.top = y_arr[w_num] + 'px';
+                w_num += 3;
+            }
+            else{
+                clearInterval(weiTimer);
+            }
+        }
+
+        function moveblog(){
+            if(b_num <= 90){
+                // blogMove.css({"left":x_arr[b_num]+"px","top":y_arr[b_num]});
+                blogMove.style.left = x_arr[b_num] + 'px';
+                blogMove.style.top = y_arr[b_num] + 'px';
+                b_num += 3;
+            }
+            else{
+                clearInterval(blogTimer);
+            }
+        }
+
+        movegit();
+        var gitTimer=setInterval(movegit,1);
+        moveweibo();
+        var weiTimer=setInterval(moveweibo,1);
+        moveblog();
+        var blogTimer=setInterval(moveblog,1);
+
+        //第一屏文字加载
+        var boxOneTimer = setInterval(boxOne,800);
+    })();
+
+    var f_btn = document.getElementById("float_btn").children;
+    var nav_ul = document.getElementById('nav_ul').children;
+    var wrapBox = document.getElementById("wrapBox");
+    var foot = document.getElementById("foot");
+    var arrow = document.getElementsByClassName("arrow_img");
+    var bg = document.getElementsByClassName("box_bg");
+    var boxs = document.getElementsByClassName("box");
+    var indexs = 0;
+    var process = document.getElementById('bar_container').children;//进度条
+    var box02_flag = false;       //还未曾到第二屏
+    var box02_text = document.getElementById('box02_text').children; //第二屏文字
+    var box02_index = 0;
+    var box02_timer;
+
+
+    function hasClass(obj, cls) {
+        return obj.className.match(new RegExp('(\\s|^)' + cls + '(\\s|$)'));
+    }
+
+    function addActive() {
+        for(var i = 0; i < process.length ; i++){
+            if(!hasClass(process[i],'active')){
+                process[i].className += ' active';
+            }
+        }
+    }
+
+    //第二屏动画
+    function boxTow() {
+        if(box02_index >= 0 && box02_index < box02_text.length){
+            box02_text[box02_index].style.right = '0';
+            box02_index++;
+        }
+        else{
+            clearInterval(box02_timer);
+        }
+    }
+
+    //滚动函数
+    function divMove(obj,overHeight,num){
+        if(obj.offsetTop >= overHeight){
+            //向下滚动
+            var timer;
+            timer = setInterval(function(){
+                if((obj.offsetTop - overHeight) <= num && (obj.offsetTop - overHeight) > 0){
+                    obj.style.top  = overHeight + 'px';
+                    clearInterval(timer);
+                }
+                else if((obj.offsetTop - overHeight) > num){
+                    obj.style.top = obj.offsetTop - num + 'px';
+                }
+                /*           else{
+                 //停止滚动
+                 //obj.style.top = obj.offsetTop - num + 'px';
+                 clearInterval(timer);
+                 }*/
+            },10);
+        }
+        else if(obj.offsetTop < overHeight){
+            //向上滚动
+            var timer;
+            timer = setInterval(function(){
+                if((overHeight - obj.offsetTop ) <= num && (overHeight - obj.offsetTop) > 0){
+                    //最后定位
+                    obj.style.top  = overHeight + 'px';
+                    clearInterval(timer);
+                }
+                else if((overHeight - obj.offsetTop) > num){
+                    //继续滚动
+                    obj.style.top = obj.offsetTop + num +'px';
+                }
+                /*            else{
+                 //停止滚动
+                 clearInterval(timer);
+                 }*/
+            },10);
+        }
+    }
+
+    function btnChange(index,flag,speed){
+        var height = window.innerHeight;
+        var fh = foot.offsetHeight;
+        for(var n=0; n<f_btn.length;n++){
+            f_btn[n].style.background = "transparent";
+        }
+
+        for(var n=0;n<nav_ul.length;n++){
+            nav_ul[n].style.color = '#000000';
+        }
+
+        if(flag){
+            if(index <= 0 ){
+                indexs = 0;
+                f_btn[0].style.background = "#ffffff";
+                //wrapBox.style.top = "0";
+                nav_ul[0].style.color = 'red';
+                divMove(wrapBox,0,20*speed);
+            }
+            else if(index >0 && index <=3){
+                f_btn[index].style.background = "#ffffff";
+                //wrapBox.style.top = (-height * indexs) +"px";
+                nav_ul[index].style.color = 'red';
+                divMove(wrapBox,-(height * indexs),20*speed);
+            }
+            else if(index == 4){
+                indexs = 4;
+                //wrapBox.style.top = (-height * 3 - fh) +"px";
+                divMove(wrapBox,(-height * 3 - fh),20*speed);
+                nav_ul[index].style.color = 'red';
+            }
+            else{
+                indexs = 4;
+            }
+        }
+        else{
+            if(index <= 0 ){
+                indexs = 0;
+                f_btn[0].style.background = "#ffffff";
+                nav_ul[0].style.color = 'red';
+                wrapBox.style.top = "0";
+            }
+            else if(index >0 && index <=3){
+                f_btn[index].style.background = "#ffffff";
+                nav_ul[index].style.color = 'red';
+                wrapBox.style.top = (-height * indexs) +"px";
+            }
+            else if(index == 4){
+                indexs = 4;
+                wrapBox.style.top = (-height * 3 - fh) +"px";
+                nav_ul[index].style.color = 'red';
+            }
+            else{
+                indexs = 4;
+            }
+        }
+        if(indexs == 1 && !box02_flag){
+            box02_flag = true;
+        }
+        if(box02_flag){
+            //第二屏动画
+            var timer = setTimeout(addActive,1000);
+            box02_timer = setInterval(boxTow,500);
+        }
+    }
+
+
+
+
+    //浮动点击事件
+    for(var i = 0; i < f_btn.length;i++){
+        f_btn[i].indexs = i;
+        f_btn[i].onclick = function(){
+            var speed = Math.abs(indexs - this.indexs);
+            indexs = this.indexs;
+            btnChange(indexs,true,speed);
+        }
+    }
+
+    //浮动nav事件
+    for(var i = 0; i < nav_ul.length;i++){
+        nav_ul[i].indexs = i;
+        nav_ul[i].onclick = function(){
+            var speed = Math.abs(indexs - this.indexs);
+            indexs = this.indexs;
+            btnChange(indexs,true,speed);
+        }
+    }
+
+
+    //箭头点击事件
+    for(var i = 0; i < arrow.length; i++){
+        arrow[i].indexs = i;
+        arrow[i].onclick = function(){
+            indexs = this.indexs + 1;
+            btnChange(indexs,true,1);
+        }
+    }
+
+    var oB = true;
+
+    //鼠标滑动事件
+    var scrollFunc=function(e){
+        var direct=0;
+        e=e || window.event;
+        if(e.wheelDelta){   //IE/Opera/Chrome
+            if(oB == true) {
+                //向下滑动
+                if(e.wheelDelta >=120 ){
+                    oB = false;
+                    indexs--;
+                    btnChange(indexs,true,1);
+                    setTimeout(function(){
+                        oB = true;
+                    },700);
+
+                }else if(e.wheelDelta <= -120){
+                    oB = false;
+                    //向上滑动
+                    indexs++;
+                    btnChange(indexs,true,1);
+                    setTimeout(function(){
+                        oB=true;
+                    },700);
+                }
+            }
+
+        }else if(e.detail){//Firefox
+            if(oB){
+                if(e.detail >= 3){
+                    oB = false;
+                    indexs++;
+                    btnChange(indexs,true,1);
+                    setTimeout(function(){
+                        oB = true;
+                    },700);
+                    console.log('ss');
+                }
+                else if(e.detail <= -3){
+                    oB = false;
+                    indexs--;
+                    btnChange(indexs,true,1);
+                    setTimeout(function(){oB = true;},700);
+                }
+            }
+        }
+    }
+
+
+
+
+    /*注册事件*/
+    if(document.addEventListener){
+        document.addEventListener('DOMMouseScroll',scrollFunc,false);//W3C
+    }
+    window.onmousewheel=document.onmousewheel=scrollFunc;//IE/Opera/Chrome/Safari
+
+
+    var iB = true;
+    //监听窗口改变
+    window.onresize = function(){
+        document.getElementsByTagName("html")[0].style.fontSize = document.documentElement.clientWidth/20 + 'px';
+        var h = window.innerHeight;
+        var w = window.innerWidth;
+        if(w/h >= 1920/1080){
+            iB = true;
+            imgChange(iB);
+            btnChange(indexs);
+
+        }
+        else{
+            iB = false;
+            imgChange(iB);
+            btnChange(indexs,false);
+        }
+    }
+
+    function imgChange(iB){
+        var h = window.innerHeight;
+        var w = window.innerWidth;
+        if(iB){
+            for(var i = 0;i < bg.length; i++){
+                bg[i].style.width = w + 'px';
+                bg[i].style.height = w * (1080/1920) + 'px';
+                bg[i].style.top = -(w * (1080/1920) - h)/2 + 'px';
+                boxs[i].style.width = w + 'px';
+                boxs[i].style.height = h + 'px';
+                bg[i].style.left = '0';
+            }
+        }
+        else{
+            for(var i = 0; i < bg.length; i++){
+                bg[i].style.height = h + 'px';
+                bg[i].style.width = h*(1920/1080) + 'px';
+                bg[i].style.left = -(h*(1920/1080) - w)/2 + 'px';
+                boxs[i].style.width = w + 'px';
+                boxs[i].style.height = h + 'px';
+                bg[i].style.top = '0';
+            }
+
+        }
+    }
+
+    var e_li = document.getElementById('timeUl').children;
+    var li_times = 0;
+    var left_div = document.getElementById('left_div');
+    var right_div = document.getElementById('right_div');
+    left_div.onclick = function () {
+        if(li_times == 0){
+            li_times = 0;
+        }
+        else{
+            document.getElementById('timeUl').style.left = document.getElementById('timeUl').offsetLeft + e_li[0].offsetWidth + 'px';
+            li_times--;
+        }
+    }
+
+    right_div.onclick = function () {
+        if(li_times == (e_li.length-2)){
+            li_times == e_li.length - 2;
+        }
+        else{
+            document.getElementById('timeUl').style.left = document.getElementById('timeUl').offsetLeft - e_li[0].offsetWidth +'px';
+            li_times++;
+        }
+    }
+
+    //手势事件
+    var startY,endY;
+    window.addEventListener('touchstart', touchStart,false);
+    window.addEventListener('touchmove', touchMove,false);
+    window.addEventListener('touchend', touchEnd,false);
+
+    function touchStart(event){
+        // var touch =   event.originalEvent.targetTouches[0];
+        // startY = touch.pageY;
+        startY =   event.touches[0].clientY;
+    }
+
+    function touchMove(event){
+        // var touch =  event.originalEvent.changedTouches[0];
+        // endY = touch.pageY;
+        endY=   event.touches[0].clientY;
+    }
+
+    function touchEnd(event){
+        if(endY - startY > 100){
+            //向上滑动
+            indexs = this.indexs - 1;
+            btnChange(indexs,true,1);
+        }
+        else if(startY -  endY > 100){
+            //向下滑动
+            indexs = this.indexs + 1;
+            btnChange(indexs,true,1);
+        }
+    }
+
+</script>
+</body>
+
+</html>
