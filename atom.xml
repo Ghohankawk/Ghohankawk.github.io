@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://ghohankawk.github.io/"/>
-  <updated>2017-05-27T05:27:28.999Z</updated>
+  <updated>2017-05-27T06:59:20.081Z</updated>
   <id>http://ghohankawk.github.io/</id>
   
   <author>
@@ -14,6 +14,37 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>博客文章模板</title>
+    <link href="http://ghohankawk.github.io/2017/05/27/article/"/>
+    <id>http://ghohankawk.github.io/2017/05/27/article/</id>
+    <published>2017-05-27T06:02:34.814Z</published>
+    <updated>2017-05-27T06:59:20.081Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="今天要分享的内容是。。。"><a href="#今天要分享的内容是。。。" class="headerlink" title="今天要分享的内容是。。。"></a>今天要分享的内容是。。。</h1><p>xxxxxxxxxx</p>
+<h1 id="第一部分"><a href="#第一部分" class="headerlink" title="第一部分"></a>第一部分</h1><p>正常说明，要干什么，再加一个链接按钮 <a href="http://daringfireball.net/projects/markdown/syntax" target="_blank" rel="external">xxx</a>. </p>
+<h1 id="第二部分"><a href="#第二部分" class="headerlink" title="第二部分"></a>第二部分</h1><ul>
+<li>第一点好处</li>
+<li>第一点好处</li>
+<li>第一点好处</li>
+</ul>
+<h1 id="第三部分"><a href="#第三部分" class="headerlink" title="第三部分"></a>第三部分</h1><pre><code>tab键，直接加底色，正常说明，顺便加一个加黑。
+</code></pre><p>   <strong>好黑啊</strong></p>
+<h1 id="第四部分"><a href="#第四部分" class="headerlink" title="第四部分"></a>第四部分</h1><p>想要加一张图片<br><img src="https://pandao.github.io/editor.md/images/logos/editormd-logo-180x180.png" alt=""></p>
+<h1 id="第五部分"><a href="#第五部分" class="headerlink" title="第五部分"></a>第五部分</h1><p>想要加原生代码<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">mate</span> <span class="attr">charest</span>=<span class="string">"utf-8"</span> /&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"keywords"</span> <span class="attr">content</span>=<span class="string">"Editor.md, Markdown, Editor"</span> /&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">title</span>&gt;</span>Hello world!<span class="tag">&lt;/<span class="name">title</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">style</span> <span class="attr">type</span>=<span class="string">"text/css"</span>&gt;</span><span class="undefined"></span></div><div class="line">            body&#123;font-size:14px;color:#444;font-family: "Microsoft Yahei", Tahoma, "Hiragino Sans GB", Arial;background:#fff;&#125;</div><div class="line">            ul&#123;list-style: none;&#125;</div><div class="line">            img&#123;border:none;vertical-align: middle;&#125;</div><div class="line">        <span class="tag">&lt;/<span class="name">style</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">h1</span> <span class="attr">class</span>=<span class="string">"text-xxl"</span>&gt;</span>Hello world!<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span>=<span class="string">"text-green"</span>&gt;</span>Plain text<span class="tag">&lt;/<span class="name">p</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<h1 id="第六部分"><a href="#第六部分" class="headerlink" title="第六部分"></a>第六部分</h1><p>相要加个高亮<br>执行命令：<code>npm install marked</code></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;今天要分享的内容是。。。&quot;&gt;&lt;a href=&quot;#今天要分享的内容是。。。&quot; class=&quot;headerlink&quot; title=&quot;今天要分享的内容是。。。&quot;&gt;&lt;/a&gt;今天要分享的内容是。。。&lt;/h1&gt;&lt;p&gt;xxxxxxxxxx&lt;/p&gt;
+&lt;h1 id=&quot;第一部分&quot;&gt;&lt;
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>图片测试</title>
