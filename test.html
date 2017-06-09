@@ -26,16 +26,35 @@
 <!--
   `amp-ad` requires `width` and `height` values. Select an ad network via the type argument.
 -->
+官网广告demo <br>
+<amp-ad width="300" height="250"
+        type="a9"
+        data-aax_size="300x250"
+        data-aax_pubname="test123"
+        data-aax_src="302">
+</amp-ad>
 
-我来测试一下，amp标准页面的广告点击
+<br>我来测试一下，amp标准页面的广告点击1，100高度宽度自适应 <br>
 <amp-ad layout="fixed-height"  height=100
         type="adsense"
         data-ad-client="ca-pub-8259296067350913"
         data-ad-slot="3061394380">
 </amp-ad>
 
-谷歌浏览统计
+<br>amp标准页面的广告点击2，300*250 <br>
+<amp-ad width=300 height=250
+        type="adsense"
+        data-ad-client="ca-pub-8259296067350913"
+        data-ad-slot="3061394380">
+</amp-ad>
 
+<br>谷歌浏览统计<br>
+<amp-img alt="个人头像"
+         src="images/avatar.jpg"
+         width="900"
+         height="675"
+         layout="responsive">
+</amp-img>
 <amp-analytics type="googleanalytics" id="analytics1">
     <script type="application/json">
         {
@@ -53,7 +72,7 @@
 </amp-analytics>
 
 
-<h1 id="header">谷歌事件统计</h1>
+<p id="header">谷歌事件统计,点击这里</p>
 <amp-analytics type="googleanalytics" id="analytics2">
     <script type="application/json">
         {
