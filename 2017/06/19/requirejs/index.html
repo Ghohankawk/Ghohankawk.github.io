@@ -1,0 +1,167 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> 关于requirejs的用法 · 闻道</title><meta name="description" content="关于requirejs的用法 - 韩坤"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/favicon.ico"><link rel="stylesheet" href="/css/prontera.css"><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><script>(adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-9654808400771776",
+    enable_page_level_ads: true
+});</script><script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject'] = r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-100775956-1', 'auto');
+ga('send', 'pageview');
+</script><link rel="search" type="application/opensearchdescription+xml" href="http://ghohankawk.github.io/atom.xml" title="闻道"></head><body><header class="feature-header"><nav class="component-nav"><ul><div class="logo-container"><a href="/"><h2 class="title">闻道</h2></a></div><a href="/" target="_self" class="li component-nav-item"><p>主页</p></a><a href="/archives/" target="_self" class="li component-nav-item"><p>归档</p></a><a href="/about.html" target="_self" class="li component-nav-item"><p>关于我</p></a><a href="https://ghohankawk.gitbooks.io/book/content/" target="_blank" class="li component-nav-item"><p>个人书籍</p></a><ul class="shortcut-icons"><a href="http://blog.csdn.net/ghohankawk" target="_blank"><img src="/images/github.svg" class="icon"></a><a href="/atom.xml" target="_blank"><img src="/images/rss.svg" class="icon"></a></ul></ul></nav></header><main class="container"><div id="post-container"><div class="post"><article class="post-block"><h1 class="post-title">关于requirejs的用法</h1><div class="post-info">Jun 19, 2017</div><div class="post-content"><h1 id="今天要分享的内容是requirejs"><a href="#今天要分享的内容是requirejs" class="headerlink" title="今天要分享的内容是requirejs"></a>今天要分享的内容是requirejs</h1><h1 id="AMD-简介"><a href="#AMD-简介" class="headerlink" title="AMD 简介"></a>AMD 简介</h1><p>  前端开发在近一两年发展的非常快，JavaScript 作为主流的开发语言得到了前所未有的热捧。大量的前端框架出现了，这些框架都在尝试着解决一些前端开发中的共性问题，但是实现又不尽相同。在这个背景下，CommonJS 社区诞生了，为了让前端框架发展的更加成熟，CommonJS 鼓励开发人员一起在社区里为一些完成特定功能的框架制定规范。AMD（Asynchronous Module Definition）就是其中的一个规范。</p>
+<h1 id="RequireJS-简介"><a href="#RequireJS-简介" class="headerlink" title="RequireJS 简介"></a>RequireJS 简介</h1><p>  RequireJS 是一个非常小巧的 JavaScript 模块载入框架，是 AMD 规范最好的实现者之一。最新版本的 RequireJS 压缩后只有 14K，堪称非常轻量。它还同时可以和其他的框架协同工作，使用 RequireJS 必将使您的前端代码质量得以提升。 目前最新版本的 RequireJS 1.0.8 在 IE 6+、Firefox 2+、Safari 3.2+、Chrome 3+、Opera 10+ 上都工作的很好。</p>
+<h1 id="案例一：-加载-JavaScript-文件"><a href="#案例一：-加载-JavaScript-文件" class="headerlink" title="案例一： 加载 JavaScript 文件"></a>案例一： 加载 JavaScript 文件</h1><pre><code>&lt;script src=&quot;./js/require.js&quot;&gt;&lt;/script&gt; 
+     &lt;script&gt; 
+    require([&quot;./js/a.js&quot;, &quot;./js/b.js&quot;], function() { 
+             myFunctionA(); 
+             myFunctionB(); 
+        }); 
+     &lt;/script&gt;
+
+     这种方式，用来加载以前的js文件，就像本地引用一样，但是没有解决全局变量的问题
+</code></pre><h1 id="案例二：-页面加载后执行-JavaScript"><a href="#案例二：-页面加载后执行-JavaScript" class="headerlink" title="案例二： 页面加载后执行 JavaScript"></a>案例二： 页面加载后执行 JavaScript</h1><p>   <script src="./js/require.js"></script><br>       <script><br>      require([“domReady!”, “./js/a.js”, “./js/b.js”], function() {<br>               myFunctionA();<br>               myFunctionB();<br>          });<br>       </script><br>       这个例子domReady!，解决了，有需要保证页面加载以后执行脚本时，RequireJS 提供了一个独立的 domReady 模块，需要去 RequireJS 官方网站下载这个模块</p>
+<h1 id="AMD模块的写法"><a href="#AMD模块的写法" class="headerlink" title="AMD模块的写法"></a>AMD模块的写法</h1><p>  require.js加载的模块，采用AMD规范。也就是说，模块必须按照AMD的规定来写。</p>
+<p>  具体来说，就是模块必须采用特定的define()函数来定义。如果一个模块不依赖其他模块，那么可以直接定义在define()函数之中。</p>
+<p>  假定现在有一个math.js文件，它定义了一个math模块。那么，math.js就要这样写：</p>
+<pre><code>// math.js
+define(function (){
+　　　　var add = function (x,y){
+　　　　　　return x+y;
+　　　　};
+　　　　return {
+　　　　　　add: add
+　　　　};
+});
+</code></pre><p>  加载方法如下：</p>
+<pre><code>// main.js
+　　require([&apos;math&apos;], function (math){
+　　　　alert(math.add(1,1));
+　　});
+</code></pre><h1 id="加载非规范的模块"><a href="#加载非规范的模块" class="headerlink" title="加载非规范的模块"></a>加载非规范的模块</h1><p>  理论上，require.js加载的模块，必须是按照AMD规范、用define()函数定义的模块。但是实际上，虽然已经有一部分流行的函数库（比如jQuery）符合AMD规范，更多的库并不符合。那么，require.js是否能够加载非规范的模块呢？</p>
+<p>  回答是可以的。</p>
+<p>  这样的模块在用require()加载之前，要先用require.config()方法，定义它们的一些特征。</p>
+<p>  举例来说，underscore和backbone这两个库，都没有采用AMD规范编写。如果要加载它们的话，必须先定义它们的特征。</p>
+<pre><code>require.config({
+　　　　shim: {
+
+　　　　　　&apos;underscore&apos;:{
+　　　　　　　　exports: &apos;_&apos;
+　　　　　　},
+　　　　　　&apos;backbone&apos;: {
+　　　　　　　　deps: [&apos;underscore&apos;, &apos;jquery&apos;],
+　　　　　　　　exports: &apos;Backbone&apos;
+　　　　　　}
+　　　　}
+});
+</code></pre><p>  require.config()接受一个配置对象，这个对象除了有前面说过的paths属性之外，还有一个shim属性，专门用来配置不兼容的模块。具体来说，每个模块要定义（1）exports值（输出的变量名），表明这个模块外部调用时的名称；（2）deps数组，表明该模块的依赖性。</p>
+<p>  比如，jQuery的插件可以这样定义：</p>
+<pre><code>shim: {
+　　　　&apos;jquery.scroll&apos;: {
+　　　　　　deps: [&apos;jquery&apos;],
+　　　　　　exports: &apos;jQuery.fn.scroll&apos;
+　　　　}
+}
+</code></pre><h1 id="require-js插件"><a href="#require-js插件" class="headerlink" title="require.js插件"></a>require.js插件</h1><p>  require.js还提供一系列插件，实现一些特定的功能。</p>
+<p>  domready插件，可以让回调函数在页面DOM结构加载完成后再运行。</p>
+<p>  require([‘domready!’], function (doc){<br>  　　　　// called once the DOM is ready<br>  　　});<br>  text和image插件，则是允许require.js加载文本和图片文件。</p>
+<p>  define([<br>  　　　　‘text!review.txt’,<br>  　　　　‘image!cat.jpg’<br>  　　　　],</p>
+<p>  　　　　function(review,cat){<br>  　　　　　　console.log(review);<br>  　　　　　　document.body.appendChild(cat);<br>  　　　　}<br>  　);<br>  类似的插件还有json和mdown，用于加载json文件和markdown文件。</p>
+<h1 id="在html中引入requirejs"><a href="#在html中引入requirejs" class="headerlink" title="在html中引入requirejs"></a>在html中引入requirejs</h1><p>  在HTML中，添加这样的 &lt; script&gt; 标签：</p>
+<pre><code>&lt;script src=&quot;/path/to/require.js&quot; data-main=&quot;/path/to/app/config.js&quot;&gt;&lt;/script&gt;
+</code></pre><p>  通常使用requirejs的话，我们只需要导入requirejs即可，不需要显式导入其它的js库，因为这个工作会交给requirejs来做。</p>
+<p>  属性 data-main 是告诉requirejs：你下载完以后，马上去载入真正的入口文件。它一般用来对requirejs进行配置，并且载入真正的程序模块。</p>
+<h1 id="依赖一个不使用requirejs方式的库"><a href="#依赖一个不使用requirejs方式的库" class="headerlink" title="依赖一个不使用requirejs方式的库"></a>依赖一个不使用requirejs方式的库</h1><p>  前面的代码是理想的情况，即依赖的js文件，里面用了 define(…) 这样的方式来组织代码的。如果没用这种方式，会出现什么情况？</p>
+<p>  比如这个 hello.js :</p>
+<pre><code>function hello() {
+alert(&quot;hello, world~&quot;);
+}
+</code></pre><p>  它就按最普通的方式定义了一个函数，我们能在requirejs里使用它吗？</p>
+<p>  先看下面不能正确工作的代码：</p>
+<pre><code>requirejs.config({
+baseUrl: &apos;/public/js&apos;,
+paths: {
+  hello: &apos;hello&apos;
+}
+});
+
+requirejs([&apos;hello&apos;], function(hello) {
+hello();
+});
+</code></pre><p>  这段代码会报错，提示：</p>
+<p>  Uncaught TypeError: undefined is not a function<br>  原因是最后调用 hello() 的时候，这个 hello 是个 undefined . 这说明，虽然我们依赖了一个js库（它会被载入），但requirejs无法从中拿到代表它的对象注入进来供我们使用。</p>
+<p>  在这种情况下，我们要使用 shim ，将某个依赖中的某个全局变量暴露给requirejs，当作这个模块本身的引用。</p>
+<pre><code>requirejs.config({
+baseUrl: &apos;/public/js&apos;,
+paths: {
+  hello: &apos;hello&apos;
+},
+shim: {
+  hello: { exports: &apos;hello&apos; }
+}
+});
+
+requirejs([&apos;hello&apos;], function(hello) {
+hello();
+});
+</code></pre><p>  再运行就正常了。</p>
+<p>  上面代码 exports: ‘hello’ 中的 hello ，是我们在 hello.js 中定义的 hello 函数。当我们使用 function hello() {} 的方式定义一个函数的时候，它就是全局可用的。如果我们选择了把它 export 给requirejs，那当我们的代码依赖于 hello 模块的时候，就可以拿到这个 hello 函数的引用了。</p>
+<p>  所以： exports 可以把某个非requirejs方式的代码中的某一个<strong>全局变量</strong>暴露出去，当作该模块以引用。</p>
+<h1 id="无主的与有主的模块"><a href="#无主的与有主的模块" class="headerlink" title="无主的与有主的模块"></a>无主的与有主的模块</h1><p>  我遇到了一个折腾我不少时间的问题：为什么我只能使用 jquery 来依赖jquery, 而不能用其它的名字？</p>
+<p>  比如下面这段代码：</p>
+<pre><code>requirejs.config({
+baseUrl: &apos;/public/js&apos;,
+paths: {
+  myjquery: &apos;lib/jquery/jquery&apos;
+}
+});
+
+requirejs([&apos;myjquery&apos;], function(jq) {
+alert(jq);
+});
+</code></pre><p>  它会提示我：</p>
+<p>  jq is undefined<br>  但我仅仅改个名字：</p>
+<pre><code>requirejs.config({
+baseUrl: &apos;/public/js&apos;,
+paths: {
+  jquery: &apos;lib/jquery/jquery&apos;
+}
+});
+
+requirejs([&apos;jquery&apos;], function(jq) {
+alert(jq);
+});
+</code></pre><p>  就一切正常了，能打印出 jq 相应的对象了。</p>
+<p>  为什么？我始终没搞清楚问题在哪儿。</p>
+<h1 id="有主的模块"><a href="#有主的模块" class="headerlink" title="有主的模块"></a>有主的模块</h1><p>  经常研究，发现原来在jquery中已经定义了：</p>
+<pre><code>define(&apos;jquery&apos;, [], function() { ... });
+</code></pre><p>  它这里的 define 跟我们前面看到的 app.js 不同，在于它多了第一个参数 ‘jquery’ ，表示给当前这个模块起了名字 jquery ，它已经是有主的了，只能属于 jquery .</p>
+<p>  所以当我们使用另一个名字：</p>
+<p>  myjquery: ‘lib/jquery/jquery’<br>  去引用这个库的时候，它会发现，在 jquery.js 里声明的模块名 jquery 与我自己使用的模块名 myjquery 冲突，便不会把它赋给 myjquery ，所以 myjquery 的值是 undefined 。</p>
+<p>  所以我们在使用一个第三方的时候，一定要注意它是否声明了一个确定的模块名。</p>
+<h1 id="无主的模块"><a href="#无主的模块" class="headerlink" title="无主的模块"></a>无主的模块</h1><p>  如果我们不指明模块名，就像这样：</p>
+<pre><code>define([...], function() {
+...
+});
+</code></pre><p>  那么它就是无主的模块。我们可以在 requirejs.config 里，使用任意一个模块名来引用它。这样的话，就让我们的命名非常自由，大部分的模块就是无主的。</p>
+<h1 id="为什么有的有主，有的无主"><a href="#为什么有的有主，有的无主" class="headerlink" title="为什么有的有主，有的无主"></a>为什么有的有主，有的无主</h1><p>  可以看到，无主的模块使用起来非常自由，为什么某些库（jquery, underscore）要把自己声明为有主的呢？</p>
+<p>  按某些说法，这么做是出于性能的考虑。因为像 jquery , underscore 这样的基础库，经常被其它的库依赖。如果声明为无主的，那么其它的库很可能起不同的模块名，这样当我们使用它们时，就可能会多次载入jquery/underscore。</p>
+<p>  而把它们声明为有主的，那么所有的模块只能使用同一个名字引用它们，这样系统就只会载入它们一次。</p>
+<h1 id="强行该名称的方法"><a href="#强行该名称的方法" class="headerlink" title="强行该名称的方法"></a>强行该名称的方法</h1><p>  对于有主的模块，我们还有一种方式可以挖墙角：不把它们当作满足requirejs规范的模块，而当作普通js库，然后在 shim 中导出它们定义的全局变量。</p>
+<pre><code>requirejs.config({
+baseUrl: &apos;/public/js&apos;,
+paths: {
+  myjquery: &apos;lib/jquery/jquery&apos;
+},
+shim: {
+  myjquery: { exports: &apos;jQuery&apos; }
+}
+});
+
+requirejs([&apos;myjquery&apos;], function(jq) {
+alert(jq);
+});
+</code></pre><p>  这样通过暴露 jQuery 这个全局变量给 myjquery ，我们就能正常的使用它了。</p>
+<p>  不过我们完全没有必要这么挖墙角，因为对于我们来说，似乎没有任何好处。</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p> 关于这块部分，我是看项目里有用到这个前端的组件，而自己没有实际开发过，因此<br> 对这个部分，理解不深刻，也就是现在能看懂的阶段了，主要是参考了好几篇关于<br> requirejs的文章总结的</p>
+<p> 还有就是，这个部分其实一直就有了解，因此也不是完全不懂的去学</p>
+<p> 反正是先入手学一下是很有必要的，</p>
+<p> 哎，最近发现那个requirejs的中文网，不知道怎么滴就访问不了，好像只能去看英文文档了</p>
+</div></article></div></div></main><footer class="footer-container"><div class="paginator"><a href="/2017/06/15/gitbook/" class="next">NEXT</a></div><div class="copyright"><p>© 2017 <a href="http://ghohankawk.github.io">韩坤</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/AngryPowman/hexo-theme-prontera" target="_blank">hexo-theme-prontera</a>.</p></div></footer></body></html>
