@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://ghohankawk.github.io/"/>
-  <updated>2017-06-19T12:25:11.311Z</updated>
+  <updated>2017-06-20T12:43:18.280Z</updated>
   <id>http://ghohankawk.github.io/</id>
   
   <author>
@@ -14,6 +14,56 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>关于Java中的ThreadLocal用法</title>
+    <link href="http://ghohankawk.github.io/2017/06/20/java-threadlocal/"/>
+    <id>http://ghohankawk.github.io/2017/06/20/java-threadlocal/</id>
+    <published>2017-06-20T12:24:34.672Z</published>
+    <updated>2017-06-20T12:43:18.280Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="今天要分享的内容是java中的ThreadLocal"><a href="#今天要分享的内容是java中的ThreadLocal" class="headerlink" title="今天要分享的内容是java中的ThreadLocal"></a>今天要分享的内容是java中的ThreadLocal</h1><p>并发编程中，一个重要的内容是数据共享。当你创建了实现Runnable接口的线程，然后开启使用相同Runnable实例的各种Thread对象，所有 的线程便共享定义在Runnable对象中的属性。也就是说，当你在一个线程中改变任意属性时，所有的线程都会因此受到影响，同时会看到第一个线程修改后的值。有时我们希望如此，比如：多个线程增大或减小同一个计数器变量；但是，有时我们希望确保每个线程，只能工作在它自己的线程实例的拷贝上，同时不会影 响其他线程的数据。</p>
+<h1 id="ThreadLocal是什么"><a href="#ThreadLocal是什么" class="headerlink" title="ThreadLocal是什么"></a>ThreadLocal是什么</h1><p>  ThreadLocal是一个关于创建线程局部变量的类。</p>
+<p>  通常情况下，我们创建的变量是可以被任何一个线程访问并修改的。而使用ThreadLocal创建的变量只能被当前线程访问，其他线程则无法访问和修改。</p>
+<p>Java中的ThreadLocal类允许我们创建只能被同一个线程读写的变量。因此，如果一段代码含有一个ThreadLocal变量的引用，即使两个线程同时执行这段代码，它们也无法访问到对方的ThreadLocal变量。</p>
+<ul>
+<li>在当前线程中，任何一个点都可以访问到ThreadLocal的值。</li>
+<li>该线程的ThreadLocal只能被该线程访问，一般情况下其他线程访问不到。</li>
+</ul>
+<h1 id="如何创建ThreadLocal变量"><a href="#如何创建ThreadLocal变量" class="headerlink" title="如何创建ThreadLocal变量"></a>如何创建ThreadLocal变量</h1><pre><code>private ThreadLocal myThreadLocal = new ThreadLocal();
+</code></pre><p>  通过这段代码实例化了一个ThreadLocal对象。我们只需要实例化对象一次，并且也不需要知道它是被哪个线程实例化。虽然所有的线程都能访问到这个ThreadLocal实例，但是每个线程却只能访问到自己通过调用ThreadLocal的set()方法设置的值。即使是两个不同的线程在同一个ThreadLocal对象上设置了不同的值，他们仍然无法访问到对方的值。</p>
+<h1 id="用法简介"><a href="#用法简介" class="headerlink" title="用法简介"></a>用法简介</h1><ol>
+<li><p>创建，支持泛型</p>
+<p>ThreadLocal<string> mStringThreadLocal = new ThreadLocal&lt;&gt;();</string></p>
+</li>
+<li><p>set方法</p>
+<p>mStringThreadLocal.set(“hank”);</p>
+</li>
+<li><p>get方法</p>
+<p>mStringThreadLocal.get();</p>
+</li>
+<li>initialValue()：返回当前线程赋予局部线程变量的初始值。<h1 id="具体用例"><a href="#具体用例" class="headerlink" title="具体用例"></a>具体用例</h1></li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * @author hankun</div><div class="line"> * @create 2017-06-20 20:33</div><div class="line"> */</div><div class="line">public class threadlocal &#123;</div><div class="line">    public static class MyRunnable implements Runnable &#123;</div><div class="line"></div><div class="line">        private ThreadLocal threadLocal = new ThreadLocal();</div><div class="line"></div><div class="line">        @Override</div><div class="line">        public void run() &#123;</div><div class="line">            threadLocal.set((int) (Math.random() * 100D));</div><div class="line">            try &#123;</div><div class="line">                Thread.sleep(2000);</div><div class="line">            &#125; catch (InterruptedException e) &#123;</div><div class="line"></div><div class="line">            &#125;</div><div class="line">            System.out.println(Thread.currentThread().getName() + &quot;  ==  &quot; + threadLocal.get());</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public static void main(String[] args) &#123;</div><div class="line">        MyRunnable my = new MyRunnable();</div><div class="line">        Thread thread1 = new Thread(my);</div><div class="line">        Thread thread2 = new Thread(my);</div><div class="line">        thread1.start();</div><div class="line">        thread2.start();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h1 id="关于InheritableThreadLocal"><a href="#关于InheritableThreadLocal" class="headerlink" title="关于InheritableThreadLocal"></a>关于InheritableThreadLocal</h1><p>InheritableThreadLocal类是ThreadLocal类的子类。ThreadLocal中每个线程拥有它自己的值，与ThreadLocal不同的是，InheritableThreadLocal允许一个线程以及该线程创建的所有子线程都可以访问它保存的值。</p>
+<p>【注：所有子线程都会继承父线程保存的ThreadLocal值】</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>局部线程通常使用在这样的情况下，当你有一些对象并不满足线程安全，但是你想避免在使用synchronized关键字、块时产生的同步访问，那么，让每个线程拥有它自己的对象实例。</p>
+<p>注意：局部变量是同步或局部线程的一个好的替代，它总是能够保证线程安全。唯一可能限制你这样做的是你的应用设计约束。</p>
+<p>这个地方，是因为看到项目中有些地方都有用到，所以自己也研究一下</p>
+<p>单从用法而言，还是比较简单的，没啥难度，要是研究原理的问题的话，可以考虑深入看一下源代码</p>
+<p>还有就是</p>
+<p>思考一下这种方式，变量对象，是放在堆里面吗？还是堆里面？</p>
+<p>答案是堆。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;今天要分享的内容是java中的ThreadLocal&quot;&gt;&lt;a href=&quot;#今天要分享的内容是java中的ThreadLocal&quot; class=&quot;headerlink&quot; title=&quot;今天要分享的内容是java中的ThreadLocal&quot;&gt;&lt;/a&gt;今天要分享的内容
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>关于requirejs的用法</title>
