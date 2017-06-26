@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://ghohankawk.github.io/"/>
-  <updated>2017-06-20T12:43:18.280Z</updated>
+  <updated>2017-06-26T12:37:59.914Z</updated>
   <id>http://ghohankawk.github.io/</id>
   
   <author>
@@ -14,6 +14,37 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>java中String的getBytes的用法</title>
+    <link href="http://ghohankawk.github.io/2017/06/26/java-getBytes/"/>
+    <id>http://ghohankawk.github.io/2017/06/26/java-getBytes/</id>
+    <published>2017-06-26T12:30:03.233Z</published>
+    <updated>2017-06-26T12:37:59.914Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="今天要分享的内容是java的string方法getBytes"><a href="#今天要分享的内容是java的string方法getBytes" class="headerlink" title="今天要分享的内容是java的string方法getBytes"></a>今天要分享的内容是java的string方法getBytes</h1><h1 id="先看一个测试用例"><a href="#先看一个测试用例" class="headerlink" title="先看一个测试用例"></a>先看一个测试用例</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">import java.io.UnsupportedEncodingException;</div><div class="line"></div><div class="line">/**</div><div class="line"> * @author hankun</div><div class="line"> * @create 2017-06-26 20:28</div><div class="line"> */</div><div class="line">public class testGetBytes &#123;</div><div class="line">    /**</div><div class="line">     *</div><div class="line">     * 1、Unicode是一种编码规范，是为解决全球字符通用编码而设计的，而rUTF-8,UTF-16等是这种规范的一种实现。</div><div class="line"></div><div class="line">     2、java内部采用Unicode编码规范，也就是支持多语言的，具体采用的UTF-16编码方式。</div><div class="line"></div><div class="line">     3、不管程序过程中用到了gbk,iso8859-1等格式，在存储与传递的过程中实际传递的都是Unicode编码的数据，要想接收到的值不出现乱码，就要保证传过去的时候用的是A编码，接收的时候也用A编码来转换接收。</div><div class="line"></div><div class="line">     4、如果双方的file.encoding确保都相同，那就省事了，都默认转了，但往往在不同项目交互时很多时候是不一致的，这个时候是必须要进行编码转换的。</div><div class="line"></div><div class="line">     5、无论如论转换，java程序的数据都是要先和Unicode做转换，这样也就是能处理多语言字符集的原因了。底层保持了一致，只要在传值和接值的时候也一致就肯定不会出现乱码了。</div><div class="line">     * */</div><div class="line"></div><div class="line">    public static void main(String[] args) throws UnsupportedEncodingException &#123;</div><div class="line"></div><div class="line"></div><div class="line">        String str = &quot;中文字符&quot;;</div><div class="line"></div><div class="line">        System.out.println(&quot;original string---&quot; + str);// 会正常输出原始串</div><div class="line"></div><div class="line">        /**</div><div class="line">         *</div><div class="line">         * str.getBytes();  如果括号中不写charset，则采用的是Sytem.getProperty(&quot;file.encoding&quot;),即当前文件的编码方式，</div><div class="line">         *</div><div class="line">         * 很多人写的是系统的默认编码，通过代码测试并非如此，实际得到的是文件的编码方式*</div><div class="line">         *</div><div class="line">         * str.getBytes(&quot;charset&quot;);//指定charset，即将底层存储的Unicode码解析为charset编码格式的字节数组方式</div><div class="line">         *</div><div class="line">         * String new_str=new String(str.getBytes(&quot;utf-8&quot;),&quot;gbk&quot;));</div><div class="line">         *</div><div class="line">         * //将已经解析出来的字节数据转化为gbk编码格式的字符串，在内存中即为gbk格式的字节数组转为Unicode去交互传递</div><div class="line">         */</div><div class="line"></div><div class="line">        String new_str = new String(str.getBytes(&quot;utf-8&quot;), &quot;gbk&quot;);</div><div class="line"></div><div class="line">        /**</div><div class="line">         *</div><div class="line">         * 此时的输出是乱码，在UTF-8的file.encoding下输出gbk格式的数据肯定是乱码,但是new_str的确是gbk编码式的</div><div class="line">         *</div><div class="line">         * 此时的乱码源于encoding不符，但gbk格式的new_str本身数据并没有问题,通过下面的转换也可以看得出来</div><div class="line">         */</div><div class="line"></div><div class="line">        System.out.println(&quot;new string----&quot; + new_str);</div><div class="line"></div><div class="line">        String final_str = new String(new_str.getBytes(&quot;gbk&quot;), &quot;utf-8&quot;);// 此处的含意与最上边的注释是一致的参数含意</div><div class="line"></div><div class="line">        /**</div><div class="line">         *</div><div class="line">         *输出是正常的，此时将gbk编码格式的new_str字符串，用gbk这个charset去解析它，然后用utf-8再转码一次，</div><div class="line">         *</div><div class="line">         * 因为new_str确实是gbk格式的，才能经过utf-8编码得到正常的数据显示。</div><div class="line">         */</div><div class="line"></div><div class="line">        System.out.println(&quot;final string---&quot; + final_str);</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>正常说明，要干什么，再加一个链接按钮 <a href="http://daringfireball.net/projects/markdown/syntax" target="_blank" rel="external">xxx</a>. </p>
+<h1 id="简单总结"><a href="#简单总结" class="headerlink" title="简单总结"></a>简单总结</h1><pre><code>1. 首先，你要明白，什么是uinicode，她和utf-8，以及utf-16，是什么关系
+2. 其实，你要知道，java中是用了，utf-16
+3. 再深入一点，就是，你也必须知道byte这个类型，就是所谓的字节数组了
+4. 他和int的区别，怎么转换
+5. byte数组里面存储的内容，怎么转换成对应的中文字符的？什么编码映射关系，转过去的？
+6. 还有就是，你会经常看到0xff，这种，还有&amp;，按位于的这种操作，具体是什么含义
+7. 大小端的问题，是什么意思？在网络里面如何区分？
+</code></pre><p>这个地方，之前其实就一直看过，每次看完一遍，以为真的懂了，但是，过后，还是不知道，啥原理</p>
+<p>这次，写过了，可能过一段时间又忘记了，但是，如果真正的理解了原理的话，就难忘记了</p>
+<p>这个地方，不管前后端，都必须掌握</p>
+<p>去看ruan大神的，那片，unicode文章，绝对有收获。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;今天要分享的内容是java的string方法getBytes&quot;&gt;&lt;a href=&quot;#今天要分享的内容是java的string方法getBytes&quot; class=&quot;headerlink&quot; title=&quot;今天要分享的内容是java的string方法getBytes&quot;&gt;
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>关于Java中的ThreadLocal用法</title>
@@ -1947,33 +1978,6 @@ m.pattern();//返回p 也就是返回该Matcher对象是由哪个Pattern对象�
     
     
       <category term="test" scheme="http://ghohankawk.github.io/tags/test/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Hello World</title>
-    <link href="http://ghohankawk.github.io/2017/05/26/hello-world/"/>
-    <id>http://ghohankawk.github.io/2017/05/26/hello-world/</id>
-    <published>2017-05-26T08:52:33.572Z</published>
-    <updated>2017-05-26T08:52:33.572Z</updated>
-    
-    <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;https://hexo.
-    
-    </summary>
-    
     
   </entry>
   
