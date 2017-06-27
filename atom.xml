@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://ghohankawk.github.io/"/>
-  <updated>2017-06-26T12:37:59.914Z</updated>
+  <updated>2017-06-27T12:38:31.331Z</updated>
   <id>http://ghohankawk.github.io/</id>
   
   <author>
@@ -14,6 +14,59 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>java中string的不可不知的编码知识</title>
+    <link href="http://ghohankawk.github.io/2017/06/27/java-encode/"/>
+    <id>http://ghohankawk.github.io/2017/06/27/java-encode/</id>
+    <published>2017-06-27T12:00:21.421Z</published>
+    <updated>2017-06-27T12:38:31.331Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="今天要分享的内容是java的string的字符串编码"><a href="#今天要分享的内容是java的string的字符串编码" class="headerlink" title="今天要分享的内容是java的string的字符串编码"></a>今天要分享的内容是java的string的字符串编码</h1><h1 id="首先记住一句话，字符串在-java-内存中总是按-unicode-编码存储的"><a href="#首先记住一句话，字符串在-java-内存中总是按-unicode-编码存储的" class="headerlink" title="首先记住一句话，字符串在 java 内存中总是按 unicode 编码存储的"></a>首先记住一句话，字符串在 java 内存中总是按 unicode 编码存储的</h1><h1 id="先看一个测试用例"><a href="#先看一个测试用例" class="headerlink" title="先看一个测试用例"></a>先看一个测试用例</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * @author hankun</div><div class="line"> * @create 2017-06-27 14:24</div><div class="line"> */</div><div class="line">public class unicode &#123;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * 字符串转换unicode</div><div class="line">     */</div><div class="line">    public static String string2Unicode(String string) &#123;</div><div class="line"></div><div class="line">        StringBuffer unicode = new StringBuffer();</div><div class="line">        for (int i = 0; i &lt; string.length(); i++) &#123;</div><div class="line"></div><div class="line">            // 取出每一个字符</div><div class="line">            char c = string.charAt(i);</div><div class="line"></div><div class="line">            // 转换为unicode</div><div class="line">            unicode.append(&quot;\\u&quot; + Integer.toHexString(c));</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        return unicode.toString();</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">    /**</div><div class="line">     * unicode 转字符串</div><div class="line">     */</div><div class="line">    public static String unicode2String(String unicode) &#123;</div><div class="line"></div><div class="line">        StringBuffer string = new StringBuffer();</div><div class="line"></div><div class="line">        String[] hex = unicode.split(&quot;\\\\u&quot;);</div><div class="line"></div><div class="line">        for (int i = 1; i &lt; hex.length; i++) &#123;</div><div class="line"></div><div class="line">            // 转换出每一个代码点</div><div class="line">            int data = Integer.parseInt(hex[i], 16);</div><div class="line"></div><div class="line">            // 追加成string</div><div class="line">            string.append((char) data);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        return string.toString();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * 测试字符串长度</div><div class="line">     */</div><div class="line">    public static void stringLength(String string) &#123;</div><div class="line"></div><div class="line">        System.out.println(&quot;String is = &quot; + string+&quot; ,default length = &quot;+ string.length());</div><div class="line">        System.out.println(&quot;String is = &quot; + string+&quot; ,getBytes length = &quot;+ string.getBytes().length);</div><div class="line">        System.out.println(&quot;String 中包含 &quot; + (string.getBytes().length-string.length())+&quot; 个中文&quot;);</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public static void main(String[] args) &#123;</div><div class="line">        String test = &quot;中文ab&quot;;</div><div class="line"></div><div class="line">        String unicode = string2Unicode(test);</div><div class="line"></div><div class="line">        String string = unicode2String(unicode) ;</div><div class="line"></div><div class="line">        System.out.println(unicode);</div><div class="line"></div><div class="line">        System.out.println(string);</div><div class="line">        String test1 = &quot;中文&quot;;</div><div class="line">        String test2 = &quot;ab&quot;;</div><div class="line">        stringLength(test);</div><div class="line">        stringLength(test1);</div><div class="line">        stringLength(test2);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>上面这个例子里面，还提供了一个，快速判断，字符串中，包含的中文个数方法</p>
+<h1 id="解释"><a href="#解释" class="headerlink" title="解释"></a>解释</h1><p>首先，Java中的一个char是2个字节。java采用unicode，2个字节来表示一个字符，这点与C语言中不同，c语言中采用ASCII，在大多数系统中，一个char通常占1个字节，但是在0~127整数之间的字符映射，unicode向下兼容ASCII。而Java采用unicode来表示字符，一个中文或英文字符的unicode编码都占2个字节，但如果采用其他编码方式，一个字符占用的字节数则各不相同。</p>
+<p>在 GB 2312 编码或 GBK 编码中，一个英文字母字符存储需要1个字节，一个汉字字符存储需要2个字节。 在UTF-8编码中，一个英文字母字符存储需要1个字节，一个汉字字符储存需要3到4个字节。在UTF-16编码中，一个英文字母字符存储需要2个字节，一个汉字字符储存需要3到4个字节（Unicode扩展区的一些汉字存储需要4个字节）。在UTF-32编码中，世界上任何字符的存储都需要4个字节。</p>
+<pre><code>我的系统的默认编码方式为GBK，因此对于字符串 “中文ab”，
+ 如果调用length（）方法返回其长度，得到的结果将为：4。该方法返回的是字符串的字符数，无论是中文字符还是英文字符，都被看做是一个字符。
+ 如果将其转换为byte数组，而后返回byte数组的长度，得到的结果将为：6。因为在GBK编码中，中文占2个字节，而英文字符占1个字节。
+</code></pre><h1 id="科普"><a href="#科普" class="headerlink" title="科普"></a>科普</h1><p>  字符：人们使用的记号，抽象意义上的一个符号。比如：‘1’,‘中’,‘a’</p>
+<p>  字节：计算机中存储数据的单元，一个8位的二进制数，是一个很具体的存储空间</p>
+<p>  字符集：使用哪些字符。也就是说哪些汉字，字母和符号会被收入标准中。所包含“字符”的集合就叫做“字符集”。</p>
+<p>  编码：规定每个“字符”分别用一个字节还是多个字节存储，用哪些字节来存储，这个规定就叫做“编码” </p>
+<p>  平常我们所说的“字符集”，比如：GB2312, GBK, JIS 等，除了有“字符的集合”这层含义外，同时也包含了“编码”的含义。</p>
+<h1 id="iso8859－1"><a href="#iso8859－1" class="headerlink" title="iso8859－1"></a>iso8859－1</h1><p>属于单字节编码，最多能表示的字符范围是 0-255，应用于英文系列。比如，字母 ‘a’ 的编码为0x61=97。 很明显，iso8859-1 编码表示的字符范围很窄，无法表示中文字符。但是，由于是单字节编码，和计算机最基础的表示单位一致，所以很多时候，仍旧使用 iso8859-1 编码来表示。而且在很多协议上，默认使用该编码。比如，虽然”中文”两个字不存在 iso8859-1 编码，以 gb2312 编码为例，应该是”d6d0 cec4” 两个字符，使用 iso8859-1 编码的时候则将它拆开为 4 个字节来表示：”d6 d0 ce c4”（事实上，在进行存储的时候，也是以字节为单位处理的）。而如果是 UTF 编码，则是 6 个字节 “e4 b8 ad e6 96 87”。很明显，这种表示方法还需要以另一种编码为基础。（unicode）</p>
+<h1 id="GB2312-GBK"><a href="#GB2312-GBK" class="headerlink" title="GB2312/GBK"></a>GB2312/GBK</h1><p>这是汉字的国标码，专门用来表示汉字，是双字节编码，而英文字母和 iso8859-1 一致（兼容iso8859-1 编码）。其中 gbk 编码能够用来同时表示繁体字和简体字，而 gb2312 只能表示简体字，gbk是兼容gb2312 编码的。</p>
+<h1 id="Unicode"><a href="#Unicode" class="headerlink" title="Unicode"></a>Unicode</h1><p>这是最统一的编码，可以用来表示所有语言的字符，而且是定长双字节（也有四字节的）编码，包括英文字母在内。所以可以说它是不兼容 iso8859-1 编码的，也不兼容任何编码。不过，相对于iso8859-1 编码来说，unicode 编码只是在前面增加了一个 0 字节，比如字母 ‘a’ 为 “00 61”。 需要说明的是，定长编码便于计算机处理（注意 GB2312/GBK 不是定长编码），而 unicode 又可以用来表示所有字符，所以在很多软件内部是使用 unicode 编码来处理的，比如 java。</p>
+<h1 id="UTF"><a href="#UTF" class="headerlink" title="UTF"></a>UTF</h1><p>考虑到 unicode 编码不兼容 iso8859-1 编码，而且容易占用更多的空间：因为对于英文字母，unicode 也需要两个字节来表示。所以 unicode 不便于传输和存储。因此而产生了 utf 编码，utf 编码兼容 iso8859-1 编码，同时也可以用来表示所有语言的字符，不过，utf 编码是不定长编码，每一个字符的长度从1-6个字节不等。另外，utf 编码自带简单的校验功能。一般来讲，英文字母都是用一个字节表示，而汉字使用三个字节。注意，虽然说utf是为了使用更少的空间而使用的，但那只是相对于 unicode编码来说，如果已经知道是汉字，则使用 GB2312/GBK 无疑是最节省的。不过另一方面，值得说明的是，虽然 utf 编码对汉字使用3个字节，但即使对于汉字网页，utf 编码也会比 unicode 编码节省，因为网页中包含了很多的英文字符。</p>
+<h1 id="getBytes-charset"><a href="#getBytes-charset" class="headerlink" title="getBytes(charset)"></a>getBytes(charset)</h1><pre><code>这是 java 字符串处理的一个标准函数，其作用是将字符串所表示的字符按照 charset 编码，并以字节方式表示。
+注意字符串在 java 内存中总是按 unicode 编码存储的。
+当Java程序从输入流、文件或字符文字量等途径获得字符串时，均会做字符编码的转换，例如InputStreamReader 的构造函数中就需要指定编码方式，而对于从文件和字符文字量中获得字符串时，均采用系统默认的编码方式对字符数据进行解码。
+</code></pre><p>考虑下面一段代码： </p>
+<pre><code>String str=”中”;
+① byte[] bytes = str.getBytes();
+② bytes = str.getBytes(“ISO-8859-1”);
+</code></pre><p> 语句①：将一个只含有一个字符“中”的字符串文字量赋给 String 类的一个对象 str，字符文字量“中”是按照操作系统默认编码方式进行编码，在中文 windows 系统中通常是“GBK”，“中”在GBK编码中是0xD6D0，在将该字符赋给str时，Java会对该字符串进行编码转换，即将GBK编码方式的“中”转换成Unicode编码方式的“中”，Unicode编码方式“中”的编码是0x4E2D，所以str在程序运行期间在内存中的二进制表示成16进制就是0x4E2D。</p>
+<p> 语句②：获得str字符串的二进制形式。getBytes(String encoding)方法需要指定编码方式，表示获得该字符串在何种编码方式中的二进制形式。此语句中没有设置参数，表示采用操作系统默认的编码方式，即此处获得的bytes是“中”在GBK编码中的二进制形式，即bytes[0]=0xD6, bytes[1]=0xD0。</p>
+<p> 语句③：该语句与语句②的区别就是指定了编码方式，此处指定的是ISO-8859-1，即通常所说的Latin-1，该编码采用8bit对字符编码，所以编码空间中只有256个字符。该编码中只包含了基本的ASCII码和一些扩展的其它西欧字符，所以该字符集中不可能包含中文的“中”字，也就是说Java虚拟机无法在ISO-8859-1编码集中找到“中”字对应的编码，针对这种情况，就只返回一个问号(?,0x3f)字符，所以此时bytes.length只有1，且bytes[0]=0x3f。</p>
+<h1 id="new-String-byte-bytes-String-encoding"><a href="#new-String-byte-bytes-String-encoding" class="headerlink" title="new String(byte[] bytes, String encoding)"></a>new String(byte[] bytes, String encoding)</h1><pre><code>getBytes()方法从字符串获得二进制的字节数组。如果要从二进制的字节数组获得字符串，则就需要使用new String(byte[] bytes, String encoding)方法，该方法按照encoding编码方法对字节数组bytes中的二进制数组进行解析，生成一个新的字符串对象。
+
+  byte[] bytes = {(byte)0xD6, (byte)0xD0, (byte)0x31};
+  ① String str = new String(bytes);
+  ② str = new String(bytes,”ISO-8859-1”);
+</code></pre><p>语句①：定义一个字节数组。</p>
+<p>语句②：将该字节数组中的二进制数据按照默认的编码方式（GBK）编码成字符串，我们知道GBK中0xD6 0xD0表示“中”，0x31表示字符“1”（GBK兼容ASCII，但不兼容ISO-8859-1除ASCII之外的部分），所以str得到的值是“中1”。</p>
+<p>语句③：该句用ISO-8859-1编码方式对该字节数据进行编码，由于在ISO-8859-1编码方式中一个字节会被解析成一个字符，所以该字节数组会被解释成包含三个字符的字符串，但由于在ISO-8859-1编码方式中没有对应0xD6和0xD0的字符，所以前两个字符会产生两个问号，由于0x31在ISO-8859-1编码中对应字符“1”（ISO-8859-1也兼容ASCII），所以此语句得到str的值是“??1”。</p>
+<h1 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h1><p>我相信看了，上面这么些背景知识，是不是以前，不清楚的东西，都有写明白了？多看几次，就更能理解了 </p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;今天要分享的内容是java的string的字符串编码&quot;&gt;&lt;a href=&quot;#今天要分享的内容是java的string的字符串编码&quot; class=&quot;headerlink&quot; title=&quot;今天要分享的内容是java的string的字符串编码&quot;&gt;&lt;/a&gt;今天要分享的内容
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>java中String的getBytes的用法</title>
@@ -1688,296 +1741,6 @@ m.pattern();//返回p 也就是返回该Matcher对象是由哪个Pattern对象�
     
     </summary>
     
-    
-  </entry>
-  
-  <entry>
-    <title>Markdown</title>
-    <link href="http://ghohankawk.github.io/2017/05/26/markdown/"/>
-    <id>http://ghohankawk.github.io/2017/05/26/markdown/</id>
-    <published>2017-05-26T11:13:43.301Z</published>
-    <updated>2017-05-15T11:39:09.072Z</updated>
-    
-    <content type="html"><![CDATA[<p><img src="https://pandao.github.io/editor.md/images/logos/editormd-logo-180x180.png" alt=""></p>
-<p><img src="https://img.shields.io/github/stars/pandao/editor.md.svg" alt=""> <img src="https://img.shields.io/github/forks/pandao/editor.md.svg" alt=""> <img src="https://img.shields.io/github/tag/pandao/editor.md.svg" alt=""> <img src="https://img.shields.io/github/release/pandao/editor.md.svg" alt=""> <img src="https://img.shields.io/github/issues/pandao/editor.md.svg" alt=""> <img src="https://img.shields.io/bower/v/editor.md.svg" alt=""></p>
-<p><strong>目录 (Table of Contents)</strong></p>
-<p>[TOCM]</p>
-<p>[TOC]</p>
-<h1 id="Heading-1"><a href="#Heading-1" class="headerlink" title="Heading 1"></a>Heading 1</h1><h2 id="Heading-2"><a href="#Heading-2" class="headerlink" title="Heading 2"></a>Heading 2</h2><h3 id="Heading-3"><a href="#Heading-3" class="headerlink" title="Heading 3"></a>Heading 3</h3><h4 id="Heading-4"><a href="#Heading-4" class="headerlink" title="Heading 4"></a>Heading 4</h4><h5 id="Heading-5"><a href="#Heading-5" class="headerlink" title="Heading 5"></a>Heading 5</h5><h6 id="Heading-6"><a href="#Heading-6" class="headerlink" title="Heading 6"></a>Heading 6</h6><h1 id="Heading-1-link-Heading-link"><a href="#Heading-1-link-Heading-link" class="headerlink" title="Heading 1 link Heading link"></a>Heading 1 link <a href="https://github.com/pandao/editor.md" title="Heading link" target="_blank" rel="external">Heading link</a></h1><h2 id="Heading-2-link-Heading-link"><a href="#Heading-2-link-Heading-link" class="headerlink" title="Heading 2 link Heading link"></a>Heading 2 link <a href="https://github.com/pandao/editor.md" title="Heading link" target="_blank" rel="external">Heading link</a></h2><h3 id="Heading-3-link-Heading-link"><a href="#Heading-3-link-Heading-link" class="headerlink" title="Heading 3 link Heading link"></a>Heading 3 link <a href="https://github.com/pandao/editor.md" title="Heading link" target="_blank" rel="external">Heading link</a></h3><h4 id="Heading-4-link-Heading-link-Heading-link-Heading-link"><a href="#Heading-4-link-Heading-link-Heading-link-Heading-link" class="headerlink" title="Heading 4 link Heading link Heading link Heading link"></a>Heading 4 link <a href="https://github.com/pandao/editor.md" title="Heading link" target="_blank" rel="external">Heading link</a> Heading link <a href="https://github.com/pandao/editor.md" title="Heading link" target="_blank" rel="external">Heading link</a></h4><h5 id="Heading-5-link-Heading-link"><a href="#Heading-5-link-Heading-link" class="headerlink" title="Heading 5 link Heading link"></a>Heading 5 link <a href="https://github.com/pandao/editor.md" title="Heading link" target="_blank" rel="external">Heading link</a></h5><h6 id="Heading-6-link-Heading-link"><a href="#Heading-6-link-Heading-link" class="headerlink" title="Heading 6 link Heading link"></a>Heading 6 link <a href="https://github.com/pandao/editor.md" title="Heading link" target="_blank" rel="external">Heading link</a></h6><h4 id="标题（用底线的形式）Heading-underline"><a href="#标题（用底线的形式）Heading-underline" class="headerlink" title="标题（用底线的形式）Heading (underline)"></a>标题（用底线的形式）Heading (underline)</h4><h1 id="This-is-an-H1"><a href="#This-is-an-H1" class="headerlink" title="This is an H1"></a>This is an H1</h1><h2 id="This-is-an-H2"><a href="#This-is-an-H2" class="headerlink" title="This is an H2"></a>This is an H2</h2><h3 id="字符效果和横线等"><a href="#字符效果和横线等" class="headerlink" title="字符效果和横线等"></a>字符效果和横线等</h3><hr>
-<p><del>删除线</del> <s>删除线（开启识别HTML标签时）</s><br><em>斜体字</em>      <em>斜体字</em><br><strong>粗体</strong>  <strong>粗体</strong><br><strong><em>粗斜体</em></strong> <strong><em>粗斜体</em></strong></p>
-<p>上标：X<sub>2</sub>，下标：O<sup>2</sup></p>
-<p><strong>缩写(同HTML的abbr标签)</strong></p>
-<blockquote>
-<p>即更长的单词或短语的缩写形式，前提是开启识别HTML标签时，已默认开启</p>
-</blockquote>
-<p>The <abbr title="Hyper Text Markup Language">HTML</abbr> specification is maintained by the <abbr title="World Wide Web Consortium">W3C</abbr>.</p>
-<h3 id="引用-Blockquotes"><a href="#引用-Blockquotes" class="headerlink" title="引用 Blockquotes"></a>引用 Blockquotes</h3><blockquote>
-<p>引用文本 Blockquotes</p>
-</blockquote>
-<p>引用的行内混合 Blockquotes</p>
-<blockquote>
-<p>引用：如果想要插入空白换行<code>即&lt;br /&gt;标签</code>，在插入处先键入两个以上的空格然后回车即可，<a href="http://localhost/" target="_blank" rel="external">普通链接</a>。</p>
-</blockquote>
-<h3 id="锚点与链接-Links"><a href="#锚点与链接-Links" class="headerlink" title="锚点与链接 Links"></a>锚点与链接 Links</h3><p><a href="http://localhost/" target="_blank" rel="external">普通链接</a></p>
-<p><a href="http://localhost/" title="普通链接带标题" target="_blank" rel="external">普通链接带标题</a></p>
-<p>直接链接：<a href="https://github.com" target="_blank" rel="external">https://github.com</a></p>
-<p><a href="http://www.this-anchor-link.com/" target="_blank" rel="external">锚点链接</a> </p>
-<p><a href="mailto:test.test@gmail.com" target="_blank" rel="external">mailto:test.test@gmail.com</a></p>
-<p>GFM a-tail link @pandao  邮箱地址自动链接 test.test@gmail.com  www@vip.qq.com</p>
-<blockquote>
-<p>@pandao</p>
-</blockquote>
-<h3 id="多语言代码高亮-Codes"><a href="#多语言代码高亮-Codes" class="headerlink" title="多语言代码高亮 Codes"></a>多语言代码高亮 Codes</h3><h4 id="行内代码-Inline-code"><a href="#行内代码-Inline-code" class="headerlink" title="行内代码 Inline code"></a>行内代码 Inline code</h4><p>执行命令：<code>npm install marked</code></p>
-<h4 id="缩进风格"><a href="#缩进风格" class="headerlink" title="缩进风格"></a>缩进风格</h4><p>即缩进四个空格，也做为实现类似 <code>&lt;pre&gt;</code> 预格式化文本 ( Preformatted Text ) 的功能。</p>
-<pre><code>&lt;?php
-    echo &quot;Hello world!&quot;;
-?&gt;
-</code></pre><p>预格式化文本：</p>
-<pre><code>| First Header  | Second Header |
-| ------------- | ------------- |
-| Content Cell  | Content Cell  |
-| Content Cell  | Content Cell  |
-</code></pre><h4 id="JS代码"><a href="#JS代码" class="headerlink" title="JS代码　"></a>JS代码　</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params"></span>) </span>&#123;</div><div class="line">	<span class="built_in">console</span>.log(<span class="string">"Hello world!"</span>);</div><div class="line">&#125;</div><div class="line"> </div><div class="line">(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    <span class="keyword">var</span> box = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="keyword">return</span> box.fn.init();</div><div class="line">    &#125;;</div><div class="line"></div><div class="line">    box.prototype = box.fn = &#123;</div><div class="line">        <span class="attr">init</span> : <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">            <span class="built_in">console</span>.log(<span class="string">'box.init()'</span>);</div><div class="line"></div><div class="line">			<span class="keyword">return</span> <span class="keyword">this</span>;</div><div class="line">        &#125;,</div><div class="line"></div><div class="line">		<span class="attr">add</span> : <span class="function"><span class="keyword">function</span>(<span class="params">str</span>) </span>&#123;</div><div class="line">			alert(<span class="string">"add"</span>, str);</div><div class="line"></div><div class="line">			<span class="keyword">return</span> <span class="keyword">this</span>;</div><div class="line">		&#125;,</div><div class="line"></div><div class="line">		<span class="attr">remove</span> : <span class="function"><span class="keyword">function</span>(<span class="params">str</span>) </span>&#123;</div><div class="line">			alert(<span class="string">"remove"</span>, str);</div><div class="line"></div><div class="line">			<span class="keyword">return</span> <span class="keyword">this</span>;</div><div class="line">		&#125;</div><div class="line">    &#125;;</div><div class="line">    </div><div class="line">    box.fn.init.prototype = box.fn;</div><div class="line">    </div><div class="line">    <span class="built_in">window</span>.box =box;</div><div class="line">&#125;)();</div><div class="line"></div><div class="line"><span class="keyword">var</span> testBox = box();</div><div class="line">testBox.add(<span class="string">"jQuery"</span>).remove(<span class="string">"jQuery"</span>);</div></pre></td></tr></table></figure>
-<h4 id="HTML-代码-HTML-codes"><a href="#HTML-代码-HTML-codes" class="headerlink" title="HTML 代码 HTML codes"></a>HTML 代码 HTML codes</h4><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">mate</span> <span class="attr">charest</span>=<span class="string">"utf-8"</span> /&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"keywords"</span> <span class="attr">content</span>=<span class="string">"Editor.md, Markdown, Editor"</span> /&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">title</span>&gt;</span>Hello world!<span class="tag">&lt;/<span class="name">title</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">style</span> <span class="attr">type</span>=<span class="string">"text/css"</span>&gt;</span><span class="undefined"></span></div><div class="line">            body&#123;font-size:14px;color:#444;font-family: "Microsoft Yahei", Tahoma, "Hiragino Sans GB", Arial;background:#fff;&#125;</div><div class="line">            ul&#123;list-style: none;&#125;</div><div class="line">            img&#123;border:none;vertical-align: middle;&#125;</div><div class="line">        <span class="tag">&lt;/<span class="name">style</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">h1</span> <span class="attr">class</span>=<span class="string">"text-xxl"</span>&gt;</span>Hello world!<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span>=<span class="string">"text-green"</span>&gt;</span>Plain text<span class="tag">&lt;/<span class="name">p</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
-<h3 id="图片-Images"><a href="#图片-Images" class="headerlink" title="图片 Images"></a>图片 Images</h3><p>Image:</p>
-<p><img src="https://pandao.github.io/editor.md/examples/images/4.jpg" alt=""></p>
-<blockquote>
-<p>Follow your heart.</p>
-</blockquote>
-<p><img src="https://pandao.github.io/editor.md/examples/images/8.jpg" alt=""></p>
-<blockquote>
-<p>图为：厦门白城沙滩</p>
-</blockquote>
-<p>图片加链接 (Image + Link)：</p>
-<p><a href="https://pandao.github.io/editor.md/images/7.jpg" title="李健首张专辑《似水流年》封面" target="_blank" rel="external"><img src="https://pandao.github.io/editor.md/examples/images/7.jpg" alt=""></a></p>
-<blockquote>
-<p>图为：李健首张专辑《似水流年》封面</p>
-</blockquote>
-<hr>
-<h3 id="列表-Lists"><a href="#列表-Lists" class="headerlink" title="列表 Lists"></a>列表 Lists</h3><h4 id="无序列表（减号）Unordered-Lists"><a href="#无序列表（减号）Unordered-Lists" class="headerlink" title="无序列表（减号）Unordered Lists (-)"></a>无序列表（减号）Unordered Lists (-)</h4><ul>
-<li>列表一</li>
-<li>列表二</li>
-<li>列表三</li>
-</ul>
-<h4 id="无序列表（星号）Unordered-Lists"><a href="#无序列表（星号）Unordered-Lists" class="headerlink" title="无序列表（星号）Unordered Lists (*)"></a>无序列表（星号）Unordered Lists (*)</h4><ul>
-<li>列表一</li>
-<li>列表二</li>
-<li>列表三</li>
-</ul>
-<h4 id="无序列表（加号和嵌套）Unordered-Lists"><a href="#无序列表（加号和嵌套）Unordered-Lists" class="headerlink" title="无序列表（加号和嵌套）Unordered Lists (+)"></a>无序列表（加号和嵌套）Unordered Lists (+)</h4><ul>
-<li>列表一</li>
-<li>列表二<ul>
-<li>列表二-1</li>
-<li>列表二-2</li>
-<li>列表二-3</li>
-</ul>
-</li>
-<li>列表三<ul>
-<li>列表一</li>
-<li>列表二</li>
-<li>列表三</li>
-</ul>
-</li>
-</ul>
-<h4 id="有序列表-Ordered-Lists"><a href="#有序列表-Ordered-Lists" class="headerlink" title="有序列表 Ordered Lists (-)"></a>有序列表 Ordered Lists (-)</h4><ol>
-<li>第一行</li>
-<li>第二行</li>
-<li>第三行</li>
-</ol>
-<h4 id="GFM-task-list"><a href="#GFM-task-list" class="headerlink" title="GFM task list"></a>GFM task list</h4><ul>
-<li>[x] GFM task list 1</li>
-<li>[x] GFM task list 2</li>
-<li>[ ] GFM task list 3<ul>
-<li>[ ] GFM task list 3-1</li>
-<li>[ ] GFM task list 3-2</li>
-<li>[ ] GFM task list 3-3</li>
-</ul>
-</li>
-<li>[ ] GFM task list 4<ul>
-<li>[ ] GFM task list 4-1</li>
-<li>[ ] GFM task list 4-2</li>
-</ul>
-</li>
-</ul>
-<hr>
-<h3 id="绘制表格-Tables"><a href="#绘制表格-Tables" class="headerlink" title="绘制表格 Tables"></a>绘制表格 Tables</h3><table>
-<thead>
-<tr>
-<th>项目</th>
-<th style="text-align:right">价格</th>
-<th style="text-align:center">数量</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>计算机</td>
-<td style="text-align:right">$1600</td>
-<td style="text-align:center">5</td>
-</tr>
-<tr>
-<td>手机</td>
-<td style="text-align:right">$12</td>
-<td style="text-align:center">12</td>
-</tr>
-<tr>
-<td>管线</td>
-<td style="text-align:right">$1</td>
-<td style="text-align:center">234</td>
-</tr>
-</tbody>
-</table>
-<table>
-<thead>
-<tr>
-<th>First Header</th>
-<th>Second Header</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Content Cell</td>
-<td>Content Cell</td>
-</tr>
-<tr>
-<td>Content Cell</td>
-<td>Content Cell </td>
-</tr>
-</tbody>
-</table>
-<table>
-<thead>
-<tr>
-<th>First Header</th>
-<th>Second Header</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Content Cell</td>
-<td>Content Cell</td>
-</tr>
-<tr>
-<td>Content Cell</td>
-<td>Content Cell</td>
-</tr>
-</tbody>
-</table>
-<table>
-<thead>
-<tr>
-<th>Function name</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>help()</code></td>
-<td>Display the help window.</td>
-</tr>
-<tr>
-<td><code>destroy()</code></td>
-<td><strong>Destroy your computer!</strong></td>
-</tr>
-</tbody>
-</table>
-<table>
-<thead>
-<tr>
-<th style="text-align:left">Left-Aligned</th>
-<th style="text-align:center">Center Aligned</th>
-<th style="text-align:right">Right Aligned</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left">col 3 is</td>
-<td style="text-align:center">some wordy text</td>
-<td style="text-align:right">$1600</td>
-</tr>
-<tr>
-<td style="text-align:left">col 2 is</td>
-<td style="text-align:center">centered</td>
-<td style="text-align:right">$12</td>
-</tr>
-<tr>
-<td style="text-align:left">zebra stripes</td>
-<td style="text-align:center">are neat</td>
-<td style="text-align:right">$1</td>
-</tr>
-</tbody>
-</table>
-<table>
-<thead>
-<tr>
-<th>Item</th>
-<th style="text-align:right">Value</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Computer</td>
-<td style="text-align:right">$1600</td>
-</tr>
-<tr>
-<td>Phone</td>
-<td style="text-align:right">$12</td>
-</tr>
-<tr>
-<td>Pipe</td>
-<td style="text-align:right">$1</td>
-</tr>
-</tbody>
-</table>
-<hr>
-<h4 id="特殊符号-HTML-Entities-Codes"><a href="#特殊符号-HTML-Entities-Codes" class="headerlink" title="特殊符号 HTML Entities Codes"></a>特殊符号 HTML Entities Codes</h4><p>&copy; &amp;  &uml; &trade; &iexcl; &pound;<br>&amp; &lt; &gt; &yen; &euro; &reg; &plusmn; &para; &sect; &brvbar; &macr; &laquo; &middot; </p>
-<p>X&sup2; Y&sup3; &frac34; &frac14;  &times;  &divide;   &raquo;</p>
-<p>18&ordm;C  &quot;  &apos;</p>
-<p>[========]</p>
-<h3 id="Emoji表情-smiley"><a href="#Emoji表情-smiley" class="headerlink" title="Emoji表情 :smiley:"></a>Emoji表情 :smiley:</h3><blockquote>
-<p>Blockquotes :star:</p>
-</blockquote>
-<h4 id="GFM-task-lists-amp-Emoji-amp-fontAwesome-icon-emoji-amp-editormd-logo-emoji-editormd-logo-5x"><a href="#GFM-task-lists-amp-Emoji-amp-fontAwesome-icon-emoji-amp-editormd-logo-emoji-editormd-logo-5x" class="headerlink" title="GFM task lists &amp; Emoji &amp; fontAwesome icon emoji &amp; editormd logo emoji :editormd-logo-5x:"></a>GFM task lists &amp; Emoji &amp; fontAwesome icon emoji &amp; editormd logo emoji :editormd-logo-5x:</h4><ul>
-<li>[x] :smiley: @mentions, :smiley: #refs, <a href="">links</a>, <strong>formatting</strong>, and <del>tags</del> supported :editormd-logo:;</li>
-<li>[x] list syntax required (any unordered or ordered list supported) :editormd-logo-3x:;</li>
-<li>[x] [ ] :smiley: this is a complete item :smiley:;</li>
-<li>[ ] []this is an incomplete item <a href="#">test link</a> :fa-star: @pandao; </li>
-<li>[ ] [ ]this is an incomplete item :fa-star: :fa-gear:;<ul>
-<li>[ ] :smiley: this is an incomplete item <a href="#">test link</a> :fa-star: :fa-gear:;</li>
-<li>[ ] :smiley: this is  :fa-star: :fa-gear: an incomplete item <a href="#">test link</a>;</li>
-</ul>
-</li>
-</ul>
-<h4 id="反斜杠-Escape"><a href="#反斜杠-Escape" class="headerlink" title="反斜杠 Escape"></a>反斜杠 Escape</h4><p>*literal asterisks*</p>
-<p>[========]</p>
-<h3 id="科学公式-TeX-KaTeX"><a href="#科学公式-TeX-KaTeX" class="headerlink" title="科学公式 TeX(KaTeX)"></a>科学公式 TeX(KaTeX)</h3><p>$$E=mc^2$$</p>
-<p>行内的公式$$E=mc^2$$行内的公式，行内的$$E=mc^2$$公式。</p>
-<p>$$x &gt; y$$</p>
-<p>$$(\sqrt{3x-1}+(1+x)^2)$$</p>
-<p>$$\sin(\alpha)^{\theta}=\sum_{i=0}^{n}(x^i + \cos(f))$$</p>
-<p>多行公式：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">\displaystyle</div><div class="line">\left( \sum\_&#123;k=1&#125;^n a\_k b\_k \right)^2</div><div class="line">\leq</div><div class="line">\left( \sum\_&#123;k=1&#125;^n a\_k^2 \right)</div><div class="line">\left( \sum\_&#123;k=1&#125;^n b\_k^2 \right)</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">\displaystyle </div><div class="line">    \frac&#123;1&#125;&#123;</div><div class="line">        \Bigl(\sqrt&#123;\phi \sqrt&#123;5&#125;&#125;-\phi\Bigr) e^&#123;</div><div class="line">        \frac25 \pi&#125;&#125; = 1+\frac&#123;e^&#123;-2\pi&#125;&#125; &#123;1+\frac&#123;e^&#123;-4\pi&#125;&#125; &#123;</div><div class="line">        1+\frac&#123;e^&#123;-6\pi&#125;&#125;</div><div class="line">        &#123;1+\frac&#123;e^&#123;-8\pi&#125;&#125;</div><div class="line">         &#123;1+\cdots&#125; &#125;</div><div class="line">        &#125; </div><div class="line">    &#125;</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">f(x) = \int_&#123;-\infty&#125;^\infty</div><div class="line">    \hat f(\xi)\,e^&#123;2 \pi i \xi x&#125;</div><div class="line">    \,d\xi</div></pre></td></tr></table></figure>
-<h3 id="分页符-Page-break"><a href="#分页符-Page-break" class="headerlink" title="分页符 Page break"></a>分页符 Page break</h3><blockquote>
-<p>Print Test: Ctrl + P</p>
-</blockquote>
-<p>[========]</p>
-<h3 id="绘制流程图-Flowchart"><a href="#绘制流程图-Flowchart" class="headerlink" title="绘制流程图 Flowchart"></a>绘制流程图 Flowchart</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">st=&gt;start: 用户登陆</div><div class="line">op=&gt;operation: 登陆操作</div><div class="line">cond=&gt;condition: 登陆成功 Yes or No?</div><div class="line">e=&gt;end: 进入后台</div><div class="line"></div><div class="line">st-&gt;op-&gt;cond</div><div class="line">cond(yes)-&gt;e</div><div class="line">cond(no)-&gt;op</div></pre></td></tr></table></figure>
-<p>[========]</p>
-<h3 id="绘制序列图-Sequence-Diagram"><a href="#绘制序列图-Sequence-Diagram" class="headerlink" title="绘制序列图 Sequence Diagram"></a>绘制序列图 Sequence Diagram</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Andrew-&gt;China: Says Hello </div><div class="line">Note right of China: China thinks\nabout it </div><div class="line">China--&gt;Andrew: How are you? </div><div class="line">Andrew-&gt;&gt;China: I am good thanks!</div></pre></td></tr></table></figure>
-<h3 id="End"><a href="#End" class="headerlink" title="End"></a>End</h3>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&lt;img src=&quot;https://pandao.github.io/editor.md/images/logos/editormd-logo-180x180.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://img.shields.io/gith
-    
-    </summary>
-    
-      <category term="test" scheme="http://ghohankawk.github.io/categories/test/"/>
-    
-    
-      <category term="test" scheme="http://ghohankawk.github.io/tags/test/"/>
     
   </entry>
   
