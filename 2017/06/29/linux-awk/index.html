@@ -1,0 +1,153 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> 关于linux中的awk用法 · 闻道</title><meta name="description" content="关于linux中的awk用法 - 韩坤"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/favicon.ico"><link rel="stylesheet" href="/css/prontera.css"><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><script>(adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-9654808400771776",
+    enable_page_level_ads: true
+});</script><script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject'] = r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-100775956-1', 'auto');
+ga('send', 'pageview');
+</script><link rel="search" type="application/opensearchdescription+xml" href="http://ghohankawk.github.io/atom.xml" title="闻道"></head><body><header class="feature-header"><nav class="component-nav"><ul><div class="logo-container"><a href="/"><h2 class="title">闻道</h2></a></div><a href="/" target="_self" class="li component-nav-item"><p>主页</p></a><a href="/archives/" target="_self" class="li component-nav-item"><p>归档</p></a><a href="/about.html" target="_self" class="li component-nav-item"><p>关于我</p></a><a href="https://ghohankawk.gitbooks.io/book/content/" target="_blank" class="li component-nav-item"><p>个人书籍</p></a><ul class="shortcut-icons"><a href="http://blog.csdn.net/ghohankawk" target="_blank"><img src="/images/github.svg" class="icon"></a><a href="/atom.xml" target="_blank"><img src="/images/rss.svg" class="icon"></a></ul></ul></nav></header><main class="container"><div id="post-container"><div class="post"><article class="post-block"><h1 class="post-title">关于linux中的awk用法</h1><div class="post-info">Jun 29, 2017</div><div class="post-content"><h1 id="今天要分享的内容是awk这个命令"><a href="#今天要分享的内容是awk这个命令" class="headerlink" title="今天要分享的内容是awk这个命令"></a>今天要分享的内容是awk这个命令</h1><p>因为要看日志，以前公司业务小的时候，能下载到本地用文本工具一个一个去找，但是现在不行了</p>
+<p>面对hive大数据，根本行不通，没办法，不得不面对这个命令</p>
+<h1 id="先来了解一下awk背景知识"><a href="#先来了解一下awk背景知识" class="headerlink" title="先来了解一下awk背景知识"></a>先来了解一下awk背景知识</h1><p>awk是一种编程语言，用于在linux/unix下对文本和数据进行处理。数据可以来自标准输入、一个或多个文件，或其它命令的输出。它支持用户自定义函数和动态正则表达式等先进功能，是linux/unix下的一个强大编程工具。它在命令行中使用，但更多是作为脚本来使用。awk的处理文本和数据的方式是这样的，它逐行扫描文件，从第一行到最后一行，寻找匹配的特定模式的行，并在这些行上进行你想要的操作。如果没有指定处理动作，则把匹配的行显示到标准输出(屏幕)，如果没有指定模式，则所有被操作所指定的行都被处理。awk分别代表其作者姓氏的第一个字母。因为它的作者是三个人，分别是Alfred Aho、Brian Kernighan、Peter Weinberger。gawk是awk的GNU版本，它提供了Bell实验室和GNU的一些扩展。下面介绍的awk是以GUN的gawk为例的，在linux系统中已把awk链接到gawk。</p>
+<h1 id="语法和选项"><a href="#语法和选项" class="headerlink" title="语法和选项"></a>语法和选项</h1><p>  1.语法</p>
+<pre><code>awk [options] &apos;script&apos; var=value file(s)
+awk [options] -f scriptfile var=value file(s)
+</code></pre><ol>
+<li><p>命令选项</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">-F fs or --field-separator fs</div><div class="line">指定输入分隔符，fs是一个字符串或者是一个正则表达式，如-F:。</div><div class="line"></div><div class="line">-v var=value or --asign var=value</div><div class="line">赋值一个用户定义变量。</div><div class="line"></div><div class="line">-f scripfile or --file scriptfile</div><div class="line">从脚本文件中读取awk命令。</div><div class="line"></div><div class="line">-mf nnn and -mr nnn</div><div class="line">对nnn值设置内在限制，-mf选项限制分配给nnn的最大块数目；-mr选项限制记录的最大数目。这两个功能是Bell实验室版awk的扩展功能，在标准awk中不适用。</div><div class="line"></div><div class="line">-W compact or --compat, -W traditional or --traditional</div><div class="line">在兼容模式下运行awk。所以gawk的行为和标准的awk完全一样，所有的awk扩展都被忽略。</div><div class="line"></div><div class="line">-W copyleft or --copyleft, -W copyright or --copyright</div><div class="line">打印简短的版权信息。</div><div class="line"></div><div class="line">-W help or --help, -W usage or --usage</div><div class="line">打印全部awk选项和每个选项的简短说明。</div><div class="line"></div><div class="line">-W lint or --lint</div><div class="line">打印不能向传统unix平台移植的结构的警告。</div><div class="line"></div><div class="line">-W lint-old or --lint-old</div><div class="line">打印关于不能向传统unix平台移植的结构的警告。</div><div class="line"></div><div class="line">-W posix</div><div class="line">打开兼容模式。但有以下限制，不识别：\x、函数关键字、func、换码序列以及当fs是一个空格时，将新行作为一个域分隔符；操作符**和**=不能代替^和^=；fflush无效。</div><div class="line"></div><div class="line">-W re-interval or --re-inerval</div><div class="line">允许间隔正则表达式的使用，参考(grep中的Posix字符类)，如括号表达式[[:alpha:]]。</div><div class="line"></div><div class="line">-W source program-text or --source program-text</div><div class="line">使用program-text作为源代码，可与-f命令混用。</div><div class="line"></div><div class="line">-W version or --version</div><div class="line">打印bug报告信息的版本。</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h1 id="模式和操作"><a href="#模式和操作" class="headerlink" title="模式和操作"></a>模式和操作</h1><p>awk脚本是由模式和操作组成的：</p>
+<p>pattern {action} </p>
+<p>如<br>$ awk ‘/root/‘ test，或</p>
+<p>$ awk ‘$3 &lt; 100’ test。</p>
+<p>两者是可选的，如果没有模式，则action应用到全部记录，如果没有action，则输出匹配全部记录。</p>
+<h1 id="模式"><a href="#模式" class="headerlink" title="模式"></a>模式</h1><p>  模式可以是以下任意一个：</p>
+<pre><code>/正则表达式/：使用通配符的扩展集。
+关系表达式：可以用下面运算符表中的关系运算符进行操作，可以是字符串或数字的比较，如$2&gt;%1选择第二个字段比第一个字段长的行。
+模式匹配表达式：用运算符~(匹配)和~!(不匹配)。
+pattern语句块，模式：指定一个行的范围。该语法不能包括BEGIN和END模式。
+BEGIN：让用户指定在第一条输入记录被处理之前所发生的动作，通常可在这里设置全局变量。
+END：让用户在最后一条输入记录被读取之后发生的动作。 
+</code></pre><h1 id="操作"><a href="#操作" class="headerlink" title="操作"></a>操作</h1><p>  操作由一个或多个命令、函数、表达式组成，之间由换行符或分号隔开，并位于大括号内。主要有四部份：</p>
+<pre><code>变量或数组赋值
+输出命令
+内置函数
+控制流命令
+</code></pre><h1 id="awk脚本基本结构"><a href="#awk脚本基本结构" class="headerlink" title="awk脚本基本结构"></a>awk脚本基本结构</h1><pre><code>awk &apos;BEGIN{ print &quot;start&quot; } pattern{ commands } END{ print &quot;end&quot; }&apos; file 
+</code></pre><p>  一个awk脚本通常由：BEGIN语句块、能够使用模式匹配的通用语句块、END语句块3部分组成，这三个部分是可选的。任意一个部分都可以不出现在脚本中，脚本通常是被单引号或双引号中，例如：<br> pattern语句块中的通用命令是最重要的部分，它也是可选的。如果没有提供pattern语句块，则默认执行{ print }，即打印每一个读取到的行，awk读取的每一行都会执行该语句块。</p>
+<p>当使用不带参数的print时，它就打印当前行，当print的参数是以逗号进行分隔时，打印时则以空格作为定界符。在awk的print语句块中双引号是被当作拼接符使用，</p>
+<p>例如： </p>
+<pre><code>echo | awk &apos;{ var1=&quot;v1&quot;; var2=&quot;v2&quot;; var3=&quot;v3&quot;; print var1,var2,var3; }&apos; 
+v1 v2 v3 
+</code></pre><p> 双引号拼接使用： </p>
+<pre><code>echo | awk &apos;{ var1=&quot;v1&quot;; var2=&quot;v2&quot;; var3=&quot;v3&quot;; print var1&quot;=&quot;var2&quot;=&quot;var3; }&apos; 
+v1=v2=v3
+</code></pre><p>{ }类似一个循环体，会对文件中的每一行进行迭代，通常变量初始化语句（如：i=0）以及打印文件头部的语句放入BEGIN语句块中，将打印的结果等语句放在END语句块中。</p>
+<h1 id="awk的环境变量"><a href="#awk的环境变量" class="headerlink" title="awk的环境变量"></a>awk的环境变量</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">变量	描述</div><div class="line">$n	当前记录的第n个字段，字段间由FS分隔。</div><div class="line">$0	完整的输入记录。</div><div class="line">ARGC	命令行参数的数目。</div><div class="line">ARGIND	命令行中当前文件的位置(从0开始算)。</div><div class="line">ARGV	包含命令行参数的数组。</div><div class="line">CONVFMT	数字转换格式(默认值为%.6g)</div><div class="line">ENVIRON	环境变量关联数组。</div><div class="line">ERRNO	最后一个系统错误的描述。</div><div class="line">FIELDWIDTHS	字段宽度列表(用空格键分隔)。</div><div class="line">FILENAME	当前文件名。</div><div class="line">FNR	同NR，但相对于当前文件。</div><div class="line">FS	字段分隔符(默认是任何空格)。</div><div class="line">IGNORECASE	如果为真，则进行忽略大小写的匹配。</div><div class="line">NF	当前记录中的字段数。</div><div class="line">NR	当前记录数。</div><div class="line">OFMT	数字的输出格式(默认值是%.6g)。</div><div class="line">OFS	输出字段分隔符(默认值是一个空格)。</div><div class="line">ORS	输出记录分隔符(默认值是一个换行符)。</div><div class="line">RLENGTH	由match函数所匹配的字符串的长度。</div><div class="line">RS	记录分隔符(默认是一个换行符)。</div><div class="line">RSTART	由match函数所匹配的字符串的第一个位置。</div><div class="line">SUBSEP	数组下标分隔符(默认值是\034)。</div></pre></td></tr></table></figure>
+<h1 id="awk运算符"><a href="#awk运算符" class="headerlink" title="awk运算符"></a>awk运算符</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">运算符	描述</div><div class="line">= += -= *= /= %= ^= **=	赋值</div><div class="line">?:	C条件表达式</div><div class="line">||	逻辑或</div><div class="line">&amp;&amp;	逻辑与</div><div class="line">~ ~!	匹配正则表达式和不匹配正则表达式</div><div class="line">&lt; &lt;= &gt; &gt;= != ==	关系运算符</div><div class="line">空格	连接</div><div class="line">+ -	加，减</div><div class="line">* / &amp;	乘，除与求余</div><div class="line">+ - !	一元加，减和逻辑非</div><div class="line">^ ***	求幂</div><div class="line">++ --	增加或减少，作为前缀或后缀</div><div class="line">$	字段引用</div><div class="line">in	数组成员</div></pre></td></tr></table></figure>
+<h1 id="熟悉一组专有名词"><a href="#熟悉一组专有名词" class="headerlink" title="熟悉一组专有名词"></a>熟悉一组专有名词</h1><ol>
+<li>记录</li>
+</ol>
+<p>awk把每一个以换行符结束的行称为一个记录。<br>记录分隔符：默认的输入和输出的分隔符都是回车，保存在内建变量ORS和RS中。<br>$0变量：它指的是整条记录。如$ awk ‘{print $0}’ test将输出test文件中的所有记录。<br>变量NR：一个计数器，每处理完一条记录，NR的值就增加1。如$ awk ‘{print NR,$0}’ test将输出test文件中所有记录，并在记录前显示记录号。</p>
+<ol>
+<li>域</li>
+</ol>
+<p>记录中每个单词称做“域”，默认情况下以空格或tab分隔。awk可跟踪域的个数，并在内建变量NF中保存该值。如$ awk ‘{print $1,$3}’ test将打印test文件中第一和第三个以空格分开的列(域)。</p>
+<ol>
+<li>域分隔符</li>
+</ol>
+<p>内建变量FS保存输入域分隔符的值，默认是空格或tab。我们可以通过-F命令行选项修改FS的值。如$ awk -F: ‘{print $1,$5}’ test将打印以冒号为分隔符的第一，第五列的内容。<br>可以同时使用多个域分隔符，这时应该把分隔符写成放到方括号中，如$awk -F’[:\t]’ ‘{print $1,$3}’ test，表示以空格、冒号和tab作为分隔符。<br>输出域的分隔符默认是一个空格，保存在OFS中。如$ awk -F: ‘{print $1,$5}’ test，$1和$5间的逗号就是OFS的值。</p>
+<h1 id="gawk专用正则表达式元字符"><a href="#gawk专用正则表达式元字符" class="headerlink" title="gawk专用正则表达式元字符"></a>gawk专用正则表达式元字符</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">\Y 匹配一个单词开头或者末尾的空字符串。</div><div class="line"></div><div class="line">\B 匹配单词内的空字符串。</div><div class="line"></div><div class="line">\&lt; 匹配一个单词的开头的空字符串，锚定开始。</div><div class="line"></div><div class="line">\&gt;匹配一个单词的末尾的空字符串，锚定末尾。</div><div class="line"></div><div class="line">\w匹配一个字母数字组成的单词。</div><div class="line"></div><div class="line">\W匹配一个非字母数字组成的单词。</div><div class="line"></div><div class="line">\‘匹配字符串开头的一个空字符串。</div><div class="line"></div><div class="line">\&apos;匹配字符串末尾的一个空字符串。</div></pre></td></tr></table></figure>
+<h1 id="匹配操作符"><a href="#匹配操作符" class="headerlink" title="匹配操作符(~)"></a>匹配操作符(~)</h1><p>  用来在记录或者域内匹配正则表达式。如$ awk ‘$1 ~/^root/‘ test将显示test文件第一列中以root开头的行。</p>
+<h1 id="一组例子"><a href="#一组例子" class="headerlink" title="一组例子"></a>一组例子</h1><pre><code class="angularjs">$ awk &apos;/^(no|so)/&apos; test-----打印所有以模式no或so开头的行。
+
+$ awk &apos;/^[ns]/{print $1}&apos; test-----如果记录以n或s开头，就打印这个记录。
+
+$ awk &apos;$1 ~/[0-9][0-9]$/(print $1}&apos; test-----如果第一个域以两个数字结束就打印这个记录。
+
+$ awk &apos;$1 == 100 || $2 &lt; 50&apos; test-----如果第一个或等于100或者第二个域小于50，则打印该行。
+
+$ awk &apos;$1 != 10&apos; test-----如果第一个域不等于10就打印该行。
+
+$ awk &apos;/test/{print $1 + 10}&apos; test-----如果记录包含正则表达式test，则第一个域加10并打印出来。
+
+$ awk &apos;{print ($1 &gt; 5 ? &quot;ok &quot;$1: &quot;error&quot;$1)}&apos; test-----如果第一个域大于5则打印问号后面的表达式值，否则打印冒号后面的表达式值。
+
+$ awk &apos;/^root/,/^mysql/&apos; test----打印以正则表达式root开头的记录到以正则表达式mysql开头的记录范围内的所有记录。如果找到一个新的正则表达式root开头的记录，则继续打印直到下一个以正则表达式mysql开头的记录为止，或到文件末尾。
+</code></pre>
+<h1 id="数学函数"><a href="#数学函数" class="headerlink" title="数学函数"></a>数学函数</h1><pre><code class="angularjs">函数名称    返回值
+atan2(x,y)    y,x范围内的余切
+cos(x)    余弦函数
+exp(x)    求幂
+int(x)    取整
+log(x)    自然对数
+rand()    随机数
+sin(x)    正弦
+sqrt(x)    平方根
+srand(x)    x是rand()函数的种子
+int(x)    取整，过程没有舍入
+rand()    产生一个大于等于0而小于1的随机数
+</code></pre>
+<h1 id="时间函数"><a href="#时间函数" class="headerlink" title="时间函数"></a>时间函数</h1><pre><code class="angularjs">
+函数名    说明 
+mktime( YYYY MM dd HH MM ss[ DST])    生成时间格式 
+strftime([format [, timestamp]])    格式化时间输出，将时间戳转为时间字符串 具体格式，见下表. 
+systime()    得到时间戳,返回从1970年1月1日开始到当前时间(不计闰年)的整秒数
+
+
+
+
+格式    描述
+%a    星期几的缩写(Sun)
+%A    星期几的完整写法(Sunday)
+%b    月名的缩写(Oct)
+%B    月名的完整写法(October)
+%c    本地日期和时间
+%d    十进制日期
+%D    日期 08/20/99
+%e    日期，如果只有一位会补上一个空格
+%H    用十进制表示24小时格式的小时
+%I    用十进制表示12小时格式的小时
+%j    从1月1日起一年中的第几天
+%m    十进制表示的月份
+%M    十进制表示的分钟
+%p    12小时表示法(AM/PM)
+%S    十进制表示的秒
+%U    十进制表示的一年中的第几个星期(星期天作为一个星期的开始)
+%w    十进制表示的星期几(星期天是0)
+%W    十进制表示的一年中的第几个星期(星期一作为一个星期的开始)
+%x    重新设置本地日期(08/20/99)
+%X    重新设置本地时间(12：00：00)
+%y    两位数字表示的年(99)
+%Y    当前月份
+%Z    时区(PDT)
+%%    百分号(%)
+
+
+ $ awk &apos;{ now=strftime( &quot;%D&quot;, systime() ); print now }&apos;
+ $ awk &apos;{ now=strftime(&quot;%m/%d/%y&quot;); print now }&apos;
+</code></pre>
+<h1 id="字符串函数"><a href="#字符串函数" class="headerlink" title="字符串函数"></a>字符串函数</h1><pre><code class="angularjs">gsub( Ere, Repl, [ In ] )    除了正则表达式所有具体值被替代这点，它和 sub 函数完全一样地执行。 
+sub( Ere, Repl, [ In ] )    用 Repl 参数指定的字符串替换 In 参数指定的字符串中的由 Ere 参数指定的扩展正则表达式的第一个具体值。sub 函数返回替换的数量。出现在 Repl 参数指定的字符串中的 &amp;（和符号）由 In 参数指定的与 Ere 参数的指定的扩展正则表达式匹配的字符串替换。如果未指定 In 参数，缺省值是整个记录（$0 记录变量）。 
+index( String1, String2 )    在由 String1 参数指定的字符串（其中有出现 String2 指定的参数）中，返回位置，从 1 开始编号。如果 String2 参数不在 String1 参数中出现，则返回 0（零）。 
+length [(String)]    返回 String 参数指定的字符串的长度（字符形式）。如果未给出 String 参数，则返回整个记录的长度（$0 记录变量）。 
+blength [(String)]    返回 String 参数指定的字符串的长度（以字节为单位）。如果未给出 String 参数，则返回整个记录的长度（$0 记录变量）。 
+substr( String, M, [ N ] )    返回具有 N 参数指定的字符数量子串。子串从 String 参数指定的字符串取得，其字符以 M 参数指定的位置开始。M 参数指定为将 String 参数中的第一个字符作为编号 1。如果未指定 N 参数，则子串的长度将是 M 参数指定的位置到 String 参数的末尾 的长度。 
+match( String, Ere )    在 String 参数指定的字符串（Ere 参数指定的扩展正则表达式出现在其中）中返回位置（字符形式），从 1 开始编号，或如果 Ere 参数不出现，则返回 0（零）。RSTART 特殊变量设置为返回值。RLENGTH 特殊变量设置为匹配的字符串的长度，或如果未找到任何匹配，则设置为 -1（负一）。 
+split( String, A, [Ere] )    将 String 参数指定的参数分割为数组元素 A[1], A[2], . . ., A[n]，并返回 n 变量的值。此分隔可以通过 Ere 参数指定的扩展正则表达式进行，或用当前字段分隔符（FS 特殊变量）来进行（如果没有给出 Ere 参数）。除非上下文指明特定的元素还应具有一个数字值，否则 A 数组中的元素用字符串值来创建。 
+tolower( String )    返回 String 参数指定的字符串，字符串中每个大写字符将更改为小写。大写和小写的映射由当前语言环境的 LC_CTYPE 范畴定义。 
+toupper( String )    返回 String 参数指定的字符串，字符串中每个小写字符将更改为大写。大写和小写的映射由当前语言环境的 LC_CTYPE 范畴定义。 
+sprintf(Format, Expr, Expr, . . . )
+</code></pre>
+<h1 id="如何把一行竖排的数据转换成横排？实用"><a href="#如何把一行竖排的数据转换成横排？实用" class="headerlink" title="如何把一行竖排的数据转换成横排？实用"></a>如何把一行竖排的数据转换成横排？实用</h1><p>awk ‘{printf(“%s,”,$1)}’ filename</p>
+<h1 id="跟grep的区别是？"><a href="#跟grep的区别是？" class="headerlink" title="跟grep的区别是？"></a>跟grep的区别是？</h1><ol>
+<li><p>grep用于在文件中查找特定的内容</p>
+</li>
+<li><p>awk可以用来加工特定的信息，用于扩展和报表</p>
+</li>
+<li><p>sed是流shi的文本编辑处理，可以替换，增加，删除等操作</p>
+</li>
+</ol>
+<p>因此，awk和sed不仅可以用于查找，有自己的函数，可以完成，复杂的信息提取</p>
+</div></article></div></div></main><footer class="footer-container"><div class="paginator"><a href="/2017/06/29/linux-grep/" class="prev">PREV</a><a href="/2017/06/29/nginx2/" class="next">NEXT</a></div><div class="copyright"><p>© 2017 <a href="http://ghohankawk.github.io">韩坤</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/AngryPowman/hexo-theme-prontera" target="_blank">hexo-theme-prontera</a>.</p></div></footer></body></html>
