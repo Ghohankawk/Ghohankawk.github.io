@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://ghohankawk.github.io/"/>
-  <updated>2017-06-29T12:16:25.970Z</updated>
+  <updated>2017-07-03T12:38:51.129Z</updated>
   <id>http://ghohankawk.github.io/</id>
   
   <author>
@@ -14,6 +14,103 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>关于mysql中select子查询</title>
+    <link href="http://ghohankawk.github.io/2017/07/03/mysql/"/>
+    <id>http://ghohankawk.github.io/2017/07/03/mysql/</id>
+    <published>2017-07-03T11:58:01.077Z</published>
+    <updated>2017-07-03T12:38:51.129Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="今天要分享的内容是mysql的select子查询"><a href="#今天要分享的内容是mysql的select子查询" class="headerlink" title="今天要分享的内容是mysql的select子查询"></a>今天要分享的内容是mysql的select子查询</h1><p>一直记得凯哥，半年前说过的一句话，原来你不知道，子查询啊，其实，我知道是又这么一回事<br>但是，具体又说不上来，大概就是那种，一看就知道，但是你有不完全知道的类型吧<br>现在在写hive语法的时候又碰到了，那么就好好总结一次吧。 </p>
+<h1 id="子查询定义"><a href="#子查询定义" class="headerlink" title="子查询定义"></a>子查询定义</h1><p>在一个表表达中可以调用另一个表表达式，这个被调用的表表达式叫做子查询（subquery），<br>那么也称作子选择（subselect）或内嵌选择（inner select）。<br>子查询的结果传递给调用它的表达式继续处理。</p>
+<p>说人话就是，一个sql语句，出现了2个以上的select关键词，这个清晰了吧？</p>
+<h1 id="子查询分类1"><a href="#子查询分类1" class="headerlink" title="子查询分类1"></a>子查询分类1</h1><pre><code>1*1   标量子查询：返回的结果集是一个标量集合，一行一列，也就是一个标量值。可以指定一个标量表达式的任何地方，都可以用一个标量子查询。
+1*n   行子查询：返回的结果集是一个列的集合，一行N列（N&gt;=1）。行子查询可以用于福查询的FROM子句和WHERE子句中。
+n*1   列子查询：返回的结果集是一个行的集合，N行一列（N&gt;=1）。
+n*n   表子查询：返回的结果集是一个行的集合，N行N列（N&gt;=1）。表子查询经常用于父查询的FROM子句中。
+     就这么四类
+</code></pre><p>从定义上讲，</p>
+<p>每个标量子查询也是一个行子查询和一个列子查询，反之则不是；</p>
+<p>每个行子查询和列子查询也是一个表子查询，反之也不是。</p>
+<h1 id="子查询分类2"><a href="#子查询分类2" class="headerlink" title="子查询分类2"></a>子查询分类2</h1><pre><code>where型子查询：（把内层查询结果当作外层查询的比较条件）
+定义：where型的子查询就是把内层查询的结果当作外层查询的条件。
+
+from型子查询：（把内层的查询结果供外层再次查询）
+定义：from子查询就是把子查询的结果(内存里的一张表)当作一张临时表，然后再对它进行处理。
+
+exists型子查询：（把外层查询结果拿到内层，看内层的查询是否成立）
+定义：exists子查询就是对外层表进行循环，再对内表进行内层查询。和in ()差不多，但是它们还是有区别的。主要是看两个张表大小差的程度。若子查询表大则用exists（内层索引），子查询表小则用in（外层索引）；
+</code></pre><p>其实，光这么说，很难明白的，因为你都没写过，根本理解不了，尤其是exisit子查询</p>
+<h1 id="使用子查询原则"><a href="#使用子查询原则" class="headerlink" title="使用子查询原则"></a>使用子查询原则</h1><pre><code>1.一个子查询必须放在圆括号中。
+2.将子查询放在比较条件的右边以增加可读性。
+子查询不包含 ORDER BY 子句。对一个 SELECT 语句只能用一个 ORDER BY 子句，并且如果指定了它就必须放在主 SELECT 语句的最后。
+3.在子查询中可以使用两种比较条件：单行运算符(&gt;, =, &gt;=, &lt;, &lt;&gt;, &lt;=) 和多行运算符(IN, ANY, ALL)。
+</code></pre><h1 id="where型子查询"><a href="#where型子查询" class="headerlink" title="where型子查询"></a>where型子查询</h1><p>select * from a where a.xx = (select xx from b where b.xx=”xx”),这种感觉</p>
+<h1 id="from型子查询"><a href="#from型子查询" class="headerlink" title="from型子查询"></a>from型子查询</h1><p>select <em> from (select </em> from a) as aa,这种感觉</p>
+<h1 id="exists型子查询"><a href="#exists型子查询" class="headerlink" title="exists型子查询"></a>exists型子查询</h1><p>因为上面那两种，子查询，很明了简单，就不谈了，主要说下面的</p>
+<p>尽量表达清楚</p>
+<pre><code>EXISTS关键字表示存在。使用EXISTS关键字时，内层查询语句不返回查询的记录，
+而是返回一个真假值，如果内层查询语句查询到满足条件的记录，
+只要子查询中至少返回一个值，则EXISTS语句的值就为True。
+就返回true，否则返回false。当返回的值为true时，外层查询语句将进行查询，
+否则不进行查询。NOT EXISTS刚好与之相反。exists的用法和in ()差不多，
+但是它们还是有区别的。主要是看两个张表大小差的程度。
+若子查询表大则用exists（内层索引），子查询表小则用in（外层索引）;
+</code></pre><p>看上面这段话的，解释，保证，你看了，也不知道在说啥，其实说的稍微有点问题</p>
+<p>正确的解释，应该是，上面的当然也没错</p>
+<p>exists对外表用loop逐条查询，每次查询都会查看exists的条件语句，当 exists里的条件语句能够返回记录行时(无论记录行是的多少，只要能返回)，条件就为真，返回当前loop到的这条记录，反之如果exists里的条 件语句不能返回记录行，则当前loop到的这条记录被丢弃，exists的条件就像一个bool条件，当能返回结果集则为true，不能返回结果集则为 false</p>
+<p>就是循环外层的查询结果，然后带进去，查看条件是否成立，不成立丢弃，成立留下</p>
+<pre><code>select * from user where exists (select 1);
+这句话，就会输出，user表中全部的人，因为后面的条件，对于每个人都成立
+</code></pre><p>select * from user where userId in (1, 2, 3);</p>
+<p>这样的in查询，等价于</p>
+<p>select * from user where userId = 1 or userId = 2 or userId = 3;</p>
+<p>因此，要求in后面的表是小表，才不至于，很大的表，循环多次</p>
+<h1 id="记住一句话，谁的表大就用谁的索引"><a href="#记住一句话，谁的表大就用谁的索引" class="headerlink" title="记住一句话，谁的表大就用谁的索引"></a>记住一句话，谁的表大就用谁的索引</h1><p>下面来考虑exists和in的性能</p>
+<pre><code>考虑如下SQL语句
+
+1: select * from A where exists (select * from B where B.id = A.id);
+
+2: select * from A where A.id in (select id from B);
+</code></pre><p> 查询1.可以转化以下伪代码，便于理解</p>
+<pre><code> for ($i = 0; $i &lt; count(A); $i++) {
+
+ 　　$a = get_record(A, $i); #从A表逐条获取记录
+
+ 　　if (B.id = $a[id]) #如果子条件成立
+
+ 　　　　$result[] = $a;
+
+ }
+
+return $result;
+</code></pre><p> 大概就是这么个意思，其实可以看到,查询1主要是用到了B表的索引，A表如何对查询的效率影响应该不大<br> 也就是说，表B越大就越能利用到索引的优势</p>
+<p> 而假设B表是小表的所有id为1,2,3,查询2可以转换为</p>
+<pre><code>select * from A where A.id = 1 or A.id = 2 or A.id = 3;
+</code></pre><p> 这个好理解了，这里主要是用到了A的索引，B表如何对查询影响不大<br>  也就是说，表A越大就越能利用到索引的优势</p>
+<p> 下面再看not exists 和 not in</p>
+<pre><code>1. select * from A where not exists (select * from B where B.id = A.id);
+
+2. select * from A where A.id not in (select id from B);
+</code></pre><p>看查询1，还是和上面一样，用了B的索引</p>
+<p>而对于查询2，可以转化成如下语句</p>
+<pre><code>select * from A where A.id != 1 and A.id != 2 and A.id != 3;
+</code></pre><p>可以知道not in是个范围查询，这种!=的范围查询无法使用任何索引,等于说A表的每条记录，都要在B表里遍历一次，查看B表里是否存在这条记录</p>
+<p>not in 和not exists如果查询语句</p>
+<p>使用了not in 那么内外表都进行全表扫描，没有用到索引；而not extsts 的子查询依然能用到表上的索引。<br>所以无论那个表大，用not exists都比not in要快。          </p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>先大概说一下，这个子查询吧，其实，mysql还有很多的细节地方要注意，有时间再说说，自己的理解吧</p>
+<p>补充一句，昨天和妹子出去吃饭，今天居然就感冒生病了，心疼啊/(ㄒoㄒ)/~~，怪我了</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;今天要分享的内容是mysql的select子查询&quot;&gt;&lt;a href=&quot;#今天要分享的内容是mysql的select子查询&quot; class=&quot;headerlink&quot; title=&quot;今天要分享的内容是mysql的select子查询&quot;&gt;&lt;/a&gt;今天要分享的内容是mysql
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>关于linux中的grep用法</title>
@@ -2049,62 +2146,6 @@ m.pattern();//返回p 也就是返回该Matcher对象是由哪个Pattern对象�
     <summary type="html">
     
       &lt;h1 id=&quot;今天要分享的内容是java语言中的replace的用法&quot;&gt;&lt;a href=&quot;#今天要分享的内容是java语言中的replace的用法&quot; class=&quot;headerlink&quot; title=&quot;今天要分享的内容是java语言中的replace的用法&quot;&gt;&lt;/a&gt;今天要分享
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>redis学习系列之——介绍篇</title>
-    <link href="http://ghohankawk.github.io/2017/06/02/redis-jieshao/"/>
-    <id>http://ghohankawk.github.io/2017/06/02/redis-jieshao/</id>
-    <published>2017-06-02T05:42:48.686Z</published>
-    <updated>2017-06-02T05:58:20.300Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="今天要分享的内容是redis背景介绍"><a href="#今天要分享的内容是redis背景介绍" class="headerlink" title="今天要分享的内容是redis背景介绍"></a>今天要分享的内容是redis背景介绍</h1><h1 id="Redis-背景介绍"><a href="#Redis-背景介绍" class="headerlink" title="Redis 背景介绍"></a>Redis 背景介绍</h1><ul>
-<li><p>REmote DIctionary Server(Redis) 是一个由Salvatore Sanfilippo写的key-value存储系统。</p>
-</li>
-<li><p>Redis是一个开源的使用ANSI C语言编写、遵守BSD协议、支持网络、可基于内存亦可持久化的日志型、Key-Value数据库，并提供多种语言的API。</p>
-</li>
-<li>它通常被称为数据结构服务器，因为值（value）可以是 字符串(String), 哈希(Map), 列表(list), 集合(sets) 和 有序集合(sorted sets)等类型。</li>
-<li>Redis支持数据的持久化，可以将内存中的数据保持在磁盘中，重启的时候可以再次加载进行使用。</li>
-<li>Redis不仅仅支持简单的key-value类型的数据，同时还提供list，set，zset，hash等数据结构的存储。</li>
-<li>Redis支持数据的备份，即master-slave模式的数据备份。</li>
-</ul>
-<h1 id="Redis-优势"><a href="#Redis-优势" class="headerlink" title="Redis 优势"></a>Redis 优势</h1><ul>
-<li><p>性能极高 – Redis能读的速度是110000次/s,写的速度是81000次/s 。</p>
-</li>
-<li><p>丰富的数据类型 – Redis支持二进制案例的 Strings, Lists, Hashes, Sets 及 Ordered Sets 数据类型操作。</p>
-</li>
-<li>原子 – Redis的所有操作都是原子性的，同时Redis还支持对几个操作全并后的原子性执行。<h1 id="Redis-数据类型"><a href="#Redis-数据类型" class="headerlink" title="Redis 数据类型"></a>Redis 数据类型</h1>Redis支持五种数据类型：string（字符串），hash（哈希），list（列表），set（集合）及zset(sorted set：有序集合)。</li>
-</ul>
-<ol>
-<li>String（字符串）<br>string是redis最基本的类型，你可以理解成与Memcached一模一样的类型，一个key对应一个value。<br>string类型是二进制安全的。意思是redis的string可以包含任何数据。比如jpg图片或者序列化的对象 。<br>string类型是Redis最基本的数据类型，一个键最大能存储512MB。</li>
-</ol>
-<p>注意：一个键最大能存储512MB。</p>
-<ol>
-<li>Hash（哈希）<br>Redis hash 是一个键值对集合。</li>
-</ol>
-<p>Redis hash是一个string类型的field和value的映射表，hash特别适合用于存储对象。</p>
-<p>每个 hash 可以存储 232 - 1 键值对（40多亿）。</p>
-<ol>
-<li>List（列表）<br>Redis 列表是简单的字符串列表，按照插入顺序排序。你可以添加一个元素导列表的头部（左边）或者尾部（右边）。</li>
-</ol>
-<p>列表最多可存储 232 - 1 元素 (4294967295, 每个列表可存储40多亿)。</p>
-<ol>
-<li>Set（集合）<br>Redis的Set是string类型的无序集合。</li>
-</ol>
-<p>集合是通过哈希表实现的，所以添加，删除，查找的复杂度都是O(1)。</p>
-<p>集合中最大的成员数为 232 - 1 (4294967295, 每个集合可存储40多亿个成员)。</p>
-<ol>
-<li>zset(sorted set：有序集合)<br>Redis zset 和 set 一样也是string类型元素的集合,且不允许重复的成员。<br>不同的是每个元素都会关联一个double类型的分数。redis正是通过分数来为集合中的成员进行从小到大的排序。<br>zset的成员是唯一的,但分数(score)却可以重复。</li>
-</ol>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h1 id=&quot;今天要分享的内容是redis背景介绍&quot;&gt;&lt;a href=&quot;#今天要分享的内容是redis背景介绍&quot; class=&quot;headerlink&quot; title=&quot;今天要分享的内容是redis背景介绍&quot;&gt;&lt;/a&gt;今天要分享的内容是redis背景介绍&lt;/h1&gt;&lt;h1 id=&quot;R
     
     </summary>
     
