@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://ghohankawk.github.io/"/>
-  <updated>2017-07-03T12:38:51.129Z</updated>
+  <updated>2017-07-05T12:43:12.872Z</updated>
   <id>http://ghohankawk.github.io/</id>
   
   <author>
@@ -14,6 +14,47 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>关于java中的synchronized的用法</title>
+    <link href="http://ghohankawk.github.io/2017/07/05/java-synchronized/"/>
+    <id>http://ghohankawk.github.io/2017/07/05/java-synchronized/</id>
+    <published>2017-07-05T11:35:14.231Z</published>
+    <updated>2017-07-05T12:43:12.872Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="今天要分享的内容是synchronized"><a href="#今天要分享的内容是synchronized" class="headerlink" title="今天要分享的内容是synchronized"></a>今天要分享的内容是synchronized</h1><p>这个地方也是，说起来知道同步的用法，但是并不是多么的清楚，和上面的那篇mysql的子查询一样，看到代码中很多这样写的。<br>就顺便研究总结一下： </p>
+<h1 id="修饰对象有几种-能出现在什么地方"><a href="#修饰对象有几种-能出现在什么地方" class="headerlink" title="修饰对象有几种(能出现在什么地方)"></a>修饰对象有几种(能出现在什么地方)</h1><ul>
+<li>修饰一个类，其作用的范围是synchronized后面括号括起来的部分， 作用的对象是这个类的所有对象。</li>
+<li>修饰一个方法，被修饰的方法称为同步方法，其作用的范围是整个方法， 作用的对象是调用这个方法的对象；</li>
+<li>修改一个静态的方法，其作用的范围是整个静态方法， 作用的对象是这个类的所有对象；</li>
+<li>修饰一个代码块，被修饰的代码块称为同步语句块，其作用的范围是大括号{}括起来的代码， 作用的对象是调用这个代码块的对象；</li>
+</ul>
+<h1 id="2个锁"><a href="#2个锁" class="headerlink" title="2个锁"></a>2个锁</h1><p>上面的4种情况，核心也就是，2个锁</p>
+<ol>
+<li>对象锁，修饰一个类的成员方法和代码块，就是这种情况，他强调的是创建对象，调用对象本身，比如，a对象和b对象完全不同</li>
+<li>类锁（其实没有，类比概念，好理解），也就是修饰类，和静态的方法，这两种的同步是一样的，他们强调的是类class这个对象的锁，因此a对象和b对象拥有同样的锁，所以是相同的</li>
+</ol>
+<h1 id="废话不多说，直接上例子吧"><a href="#废话不多说，直接上例子吧" class="headerlink" title="废话不多说，直接上例子吧"></a>废话不多说，直接上例子吧</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * @author hankun</div><div class="line"> * @create 2017-07-05 19:52</div><div class="line"> */</div><div class="line">public class synchronizedTest &#123;</div><div class="line"></div><div class="line"></div><div class="line">    /**</div><div class="line">     * 同步线程,修饰方法块</div><div class="line">     */</div><div class="line">    static class SyncMehtodBlock implements Runnable &#123;</div><div class="line">        private static int count;</div><div class="line"></div><div class="line">        public SyncMehtodBlock() &#123;</div><div class="line">            count = 0;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        public void run() &#123;</div><div class="line">            synchronized (this) &#123;</div><div class="line">                System.out.println(Thread.currentThread().getName() + &quot;开始..SyncMehtodBlock&quot;);</div><div class="line">                try &#123;</div><div class="line">                    Thread.sleep(1000);</div><div class="line">                &#125; catch (InterruptedException e) &#123;</div><div class="line">                    e.printStackTrace();</div><div class="line">                &#125;</div><div class="line">                System.out.println(Thread.currentThread().getName() + &quot;结束..SyncMehtodBlock&quot;);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">    /**</div><div class="line">     * 同步线程,修饰方法</div><div class="line">     */</div><div class="line">    static class SyncMehtod extends Thread &#123;</div><div class="line">        private synchronizedTest syn;</div><div class="line"></div><div class="line">        public SyncMehtod(synchronizedTest synchronizedTest) &#123;</div><div class="line">            this.syn = synchronizedTest;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        public void run() &#123;</div><div class="line">            syn.test();</div><div class="line">        &#125;</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public synchronized void test() &#123;</div><div class="line">        System.out.println(Thread.currentThread().getName() + &quot;开始..SyncMehtod&quot;);</div><div class="line">        try &#123;</div><div class="line">            Thread.sleep(1000);</div><div class="line">        &#125; catch (InterruptedException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">        System.out.println(Thread.currentThread().getName() + &quot;结束..SyncMehtod&quot;);</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">    /**</div><div class="line">     * 同步线程,修饰静态方法</div><div class="line">     */</div><div class="line">    static class SyncStaticMehtod extends Thread &#123;</div><div class="line"></div><div class="line">        public synchronized static void staticTest() &#123;</div><div class="line">            System.out.println(Thread.currentThread().getName() + &quot;开始..SyncStaticMehtod&quot;);</div><div class="line">            try &#123;</div><div class="line">                Thread.sleep(1000);</div><div class="line">            &#125; catch (InterruptedException e) &#123;</div><div class="line">                e.printStackTrace();</div><div class="line">            &#125;</div><div class="line">            System.out.println(Thread.currentThread().getName() + &quot;结束..SyncStaticMehtod&quot;);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        public void run() &#123;</div><div class="line">            staticTest();</div><div class="line">        &#125;</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * 同步线程,修饰类</div><div class="line">     */</div><div class="line">    static class SyncClass extends Thread &#123;</div><div class="line"></div><div class="line">        public void classTest() &#123;</div><div class="line">            synchronized (synchronizedTest.class) &#123;</div><div class="line">                System.out.println(Thread.currentThread().getName() + &quot;开始..SyncClass&quot;);</div><div class="line">                try &#123;</div><div class="line">                    Thread.sleep(1000);</div><div class="line">                &#125; catch (InterruptedException e) &#123;</div><div class="line">                    e.printStackTrace();</div><div class="line">                &#125;</div><div class="line">                System.out.println(Thread.currentThread().getName() + &quot;结束..SyncClass&quot;);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        public void run() &#123;</div><div class="line">            classTest();</div><div class="line">        &#125;</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">    public static void main(String[] args) &#123;</div><div class="line">        //情况1，修饰方法块</div><div class="line">        SyncMehtodBlock syncMehtodBlock = new SyncMehtodBlock();</div><div class="line">        Thread thread1 = new Thread(syncMehtodBlock, &quot;syncMehtodBlock1&quot;);</div><div class="line">        Thread thread2 = new Thread(syncMehtodBlock, &quot;syncMehtodBlock2&quot;);</div><div class="line">        thread1.start();</div><div class="line">        thread2.start();</div><div class="line"></div><div class="line"></div><div class="line">        //情况2，修饰方法</div><div class="line">        synchronizedTest syn = new synchronizedTest();</div><div class="line">        SyncMehtod syncMehtod3 = new SyncMehtod(syn);</div><div class="line">        SyncMehtod syncMehtod4 = new SyncMehtod(syn);</div><div class="line">        syncMehtod3.start();</div><div class="line">        syncMehtod4.start();</div><div class="line"></div><div class="line"></div><div class="line">        //情况3，修饰静态方法</div><div class="line">        SyncStaticMehtod a = new SyncStaticMehtod();</div><div class="line">        SyncStaticMehtod b = new SyncStaticMehtod();</div><div class="line">        Thread thread5 = new Thread(a, &quot;SyncStaticMehtod1&quot;);</div><div class="line">        Thread thread6 = new Thread(b, &quot;SyncStaticMehtod2&quot;);</div><div class="line">        thread5.start();</div><div class="line">        thread6.start();</div><div class="line"></div><div class="line"></div><div class="line">        //情况4，修饰类</div><div class="line">        SyncClass c = new SyncClass();</div><div class="line">        SyncClass d = new SyncClass();</div><div class="line">        Thread thread7 = new Thread(c, &quot;SyncClass1&quot;);</div><div class="line">        Thread thread8 = new Thread(d, &quot;SyncClass2&quot;);</div><div class="line">        thread7.start();</div><div class="line">        thread8.start();</div><div class="line"></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>我写了一个，模拟4种情况的例子，报每个类型都包含进去了</p>
+<p>请注意观察里面的synchronized的关键位置，出现的情况，以及每个测试例子，是如何新建的，区分不同</p>
+<p>所有的例子，都是具有同步的，因为竞争，比如，a先开始，那么a先结束，然后才能轮到b开始，b结束</p>
+<p>好好，体会里面的内容</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><ol>
+<li>无论synchronized关键字加在方法上还是对象上，如果它作用的对象是非静态的，则它取得的锁是对象；如果synchronized作用的对象是一个静态方法或一个类，则它取得的锁是对类，该类所有的对象同一把锁。</li>
+<li>每个对象只有一个锁（lock）与之相关联，谁拿到这个锁谁就可以运行它所控制的那段代码。</li>
+<li>实现同步是要很大的系统开销作为代价的，甚至可能造成死锁，所以尽量避免无谓的同步控制。</li>
+</ol>
+<p>我觉得别人说的，这三句话，已经说的很明白不过，我也就不加自己的体会了</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;今天要分享的内容是synchronized&quot;&gt;&lt;a href=&quot;#今天要分享的内容是synchronized&quot; class=&quot;headerlink&quot; title=&quot;今天要分享的内容是synchronized&quot;&gt;&lt;/a&gt;今天要分享的内容是synchronized&lt;/
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>关于mysql中select子查询</title>
@@ -2107,45 +2148,6 @@ m.pattern();//返回p 也就是返回该Matcher对象是由哪个Pattern对象�
     <summary type="html">
     
       &lt;h1 id=&quot;今天要分享的内容是java语言中的pattern和matcher的用法&quot;&gt;&lt;a href=&quot;#今天要分享的内容是java语言中的pattern和matcher的用法&quot; class=&quot;headerlink&quot; title=&quot;今天要分享的内容是java语言中的patte
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>java中的replace和replaceAll的区别</title>
-    <link href="http://ghohankawk.github.io/2017/06/02/java-replace/"/>
-    <id>http://ghohankawk.github.io/2017/06/02/java-replace/</id>
-    <published>2017-06-02T07:59:53.019Z</published>
-    <updated>2017-06-02T08:11:00.647Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="今天要分享的内容是java语言中的replace的用法"><a href="#今天要分享的内容是java语言中的replace的用法" class="headerlink" title="今天要分享的内容是java语言中的replace的用法"></a>今天要分享的内容是java语言中的replace的用法</h1><h1 id="测试用例如下"><a href="#测试用例如下" class="headerlink" title="测试用例如下"></a>测试用例如下</h1><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">public class StringReplaceTest &#123;</div><div class="line"></div><div class="line">    public static void main(String[] args) &#123;</div><div class="line"></div><div class="line">        String src = new String("aabbccdd333ee");</div><div class="line">        System.out.println(src.replace("3", "f"));</div><div class="line">        System.out.println(src.replace('3', 'f'));</div><div class="line">        System.out.println(src.replaceAll("\\d", "ff"));</div><div class="line">        System.out.println(src.replaceAll("a", "f"));</div><div class="line">        System.out.println(src.replaceFirst("\\d", "ff"));</div><div class="line">        System.out.println(src.replaceFirst("4", "ff"));</div><div class="line">        System.out.println("\\");</div><div class="line">        System.out.println("\\\\");</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h1 id="输出结果"><a href="#输出结果" class="headerlink" title="输出结果"></a>输出结果</h1><ol>
-<li>aabbccddfffee</li>
-<li>aabbccddffffffee</li>
-<li>ffbbccdd333ee</li>
-<li>aabbccddff33ee</li>
-<li>aabbccdd333ee</li>
-<li>\</li>
-<li>\\</li>
-</ol>
-<h1 id="解释如下"><a href="#解释如下" class="headerlink" title="解释如下"></a>解释如下</h1><ul>
-<li>replace的参数是char和CharSequence,即可以支持字符的替换,也支持字符串的替换(CharSequence即字符串序列的意思,说白了也就是字符串); </li>
-<li>replaceAll的参数是regex,即基于规则表达式的替换,比如,可以通过replaceAll(“\d”, “*”)把一个字符串所有的数字字符都换成星号; </li>
-</ul>
-<p><pre><br>相同点是都是全部替换,即把源字符串中的某一字符或字符串全部换成指定的字符或字符串,如果只想替换第一次出现的,可以使用 replaceFirst(),这个方法也是基于规则表达式的替换,但与replaceAll()不同的是,只替换第一次出现的字符串;<br>另外,如果replaceAll()和replaceFirst()所用的参数据不是基于规则表达式的,则与replace()替换字符串的效果是一样的,即这两者也支持字符串的操作;<br>还有一点注意:执行了替换操作后,源字符串的内容是没有发生改变的<br></pre></p>
-<h1 id="最后讲一个关于斜杠的问题"><a href="#最后讲一个关于斜杠的问题" class="headerlink" title="最后讲一个关于斜杠的问题"></a>最后讲一个关于斜杠的问题</h1><pre><code>&apos;\&apos;在java中是一个转义字符，所以需要用两个代表一个。例如System.out.println( &quot;\\&quot; ) ;只打印出一个&quot;\&quot;。但是&apos;\&apos;也是正则表达式中的转义字符（replaceAll 的参数就是正则表达式），需要用两个代表一个。所以：\\\\被java转换成\\,\\又被正则表达式转换成\。 
-</code></pre><ol>
-<li>CODE: \\\\ </li>
-<li>Java: \\ </li>
-<li>Regex: \ </li>
-</ol>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h1 id=&quot;今天要分享的内容是java语言中的replace的用法&quot;&gt;&lt;a href=&quot;#今天要分享的内容是java语言中的replace的用法&quot; class=&quot;headerlink&quot; title=&quot;今天要分享的内容是java语言中的replace的用法&quot;&gt;&lt;/a&gt;今天要分享
     
     </summary>
     
