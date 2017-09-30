@@ -30,7 +30,7 @@
 
         .cube-loading:before {
             display: block;
-            content: '加载中';
+            content: 'Loading';
             position: relative;
             width: 100%;
             top: 50%;
@@ -93,7 +93,7 @@
 <nav class="cube-side-menu" id="cube-side-menu">
     <ul class="cube-menu-list">
         <li>
-            <a class="scroll-to-top">回到顶部</a>
+            <a class="scroll-to-top">Top</a>
         </li>
     </ul>
 </nav>
@@ -226,7 +226,7 @@
 
 <div class="cube-search cube-sidebar" id="cube-search">
     <div class="search-container">
-        <input type="text" placeholder="搜索" class="cube-search-input" id="cube-search-input">
+        <input type="text" placeholder="Search" class="cube-search-input" id="cube-search-input">
         <i class="cube-icon cube-icon-search cube-search-submit" aria-hidden="true"></i>
     </div>
     <!-- TODO 通过给window赋一个全局变量，通过脚本赋值 -->
@@ -241,7 +241,7 @@
 </script>
 <div class="cube-search-form">
     <div class="cube-search-control">
-        <input type="text" placeholder="搜索" class="search-input">
+        <input type="text" placeholder="Search" class="search-input">
         <a class="close-button">
             <i class="cube-icon cube-close" aria-hidden="true"></i>
         </a>
@@ -264,41 +264,35 @@
     </iframe>
 </div>
 
-<div class="cube-author cube-sidebar" id="cube-author">
-    
-    
+
+<div class="title">
+    <a>图片欣赏</a>
+</div>
+<div class="cube-pic cube-sidebar" id="cube-pic">
     <style>
-        @media(min-width: 768px) {
-            .cube-author img {
-                margin-top: 40px;
-                margin-bottom: 10px;
-            }
+        .cube-pic{
+            height:340px;
         }
-        @media(max-width: 1120px) and (min-width: 768px) {
-            .cube-author img {
-                width: 128px;
-                height: 128px;
-            }
-        }
-        @media(min-width: 1120px) {
-            .cube-author img {
-                width: 160px;
-                height: 160px;
-            }
-        }
+
     </style>
-    
-    <img src="/images/avatar.jpg" alt="avatar" class="cube-avatar">
-    
-    
-    <span>ghohank</span>
-    
-    
-    <div class="count">
-        <a class="count articles"><span>34</span>文章</a>
-        <a class="count tags"><span>3</span>标签</a>
-        <a class="count categories"><span>3</span>分类</a>
-    </div>
+    <iframe src="/origin/pics.html" style="width:100%;height:100%;overflow-x:hidden;"    frameborder="0">
+    </iframe>
+</div>
+
+
+
+<div class="title">
+    <a>我在哪里？</a>
+</div>
+<div class="cube-map cube-sidebar" id="cube-map">
+    <style>
+        .cube-map{
+            height:365px;
+        }
+
+    </style>
+    <iframe src="/origin/map.html" style="width:100%;height:100%;overflow-x:hidden;"    frameborder="0">
+    </iframe>
 </div>
 
 
@@ -312,10 +306,10 @@
 <script>
     (function (window) {
         window.musicModule = {}
-        window.musicModule.musicConfig = '{"narrow":false,"autoplay":true,"showlrc":0,"theme":"#b7daff","mutex":true,"mode":"random","preload":"auto","listmaxheight":"513px","music":[{"title":"Dear friends","author":"TRIPLANE","url":"http://cube-1252774894.cosgz.myqcloud.com/music/source/TRIPLANE - Dear friends.mp3","lrc":"http://cube-1252774894.cosgz.myqcloud.com/music/lrc/Dear friends - TRIPLANE.lrc","pic":"http://cube-1252774894.cosgz.myqcloud.com/music/image/TRIPLANE - Dear friends.jpg"},{"title":"Butter-Fly","author":"和田光司","url":"http://cube-1252774894.cosgz.myqcloud.com/music/source/和田光司 - Butter-Fly (ピアノヴァージョン).mp3","lrc":"http://cube-1252774894.cosgz.myqcloud.com/music/lrc/Butter-Fly (ピアノヴァージョン) - 和田光司.lrc","pic":"http://cube-1252774894.cosgz.myqcloud.com/music/image/和田光司 - Butter-Fly (ピアノヴァージョン).jpg"},{"title":"宵闇花火","author":"葉月ゆら","url":"http://cube-1252774894.cosgz.myqcloud.com/music/source/葉月ゆら - 宵闇花火.mp3","lrc":"http://cube-1252774894.cosgz.myqcloud.com/music/lrc/宵闇花火 - 葉月ゆら.lrc","pic":"http://cube-1252774894.cosgz.myqcloud.com/music/image/葉月ゆら - 宵闇花火.jpg"},{"title":"シルシ (印记)","author":"Lisa","url":"http://dl.stream.qqmusic.qq.com/C400003fRgD80OhHFt.m4a?vkey=FFF6A65E0B97AE536CB8DBC5ECE386DEB2040FA9A0D77EE2326F8DF5E01AE768D6B2ED96B8B8B7F0DE74C00A39CE06858675DEE0EBDAA503&guid=2806291824&uin=0&fromtag=66","pic":"https://y.gtimg.cn/music/photo_new/T002R300x300M000002D4O4r4OYr0l.jpg?max_age=2592000"}]}'
+        window.musicModule.musicConfig = '{"narrow":false,"autoplay":true,"showlrc":0,"theme":"#b7daff","mutex":true,"mode":"random","preload":"auto","listmaxheight":"513px","music":[{"title":"You","author":"雪野五月","url":"http://fs.w.kugou.com/201709301412/ade28c2d08580c10cc2af3f0408df27d/G014/M03/11/01/roYBAFUKii-AYLzJADzMkUW2wrM890.mp3","pic":"http://singerimg.kugou.com/uploadpic/softhead/400/20141220/20141220175754495447.jpg"},{"title":"あいぞめ","author":"能登麻美子","url":"http://fs.w.kugou.com/201709301410/f5aa2ac76884dd92ab5123c9f1f1580c/G009/M07/01/19/qYYBAFT-T1GAYzlVAEUJNzS7FeY980.mp3","pic":"http://singerimg.kugou.com/uploadpic/softhead/400/20140411/20140411182558407258.jpg"},{"title":"逆さまの蝶","author":"SNoW","url":"http://fs.w.kugou.com/201709301312/3d2eb3cc5b2c2b9b15b0f819a9bb94c7/G011/M04/19/03/Sw0DAFT-rIiAB5T5AELUb0ACOaA266.mp3","pic":"http://singerimg.kugou.com/uploadpic/softhead/400/20110704/20110704110207910.jpg"},{"title":"Only My Railgun","author":"fripSide","url":"http://fs.w.kugou.com/201709301412/020400366b16a59e96f3e8e757db7b82/G012/M06/0A/04/TA0DAFULdzuAQT5xAD7H1p1vchc426.mp3","pic":"http://singerimg.kugou.com/uploadpic/softhead/400/20140901/20140901133905743482.jpg"},{"title":"Continued Story","author":"黒石ひとみ","url":"http://fs.w.kugou.com/201709301410/6e5f221dedf36ec624313a22da7bbc97/G005/M0A/06/15/pYYBAFUIRdeAOkNWAEyLwX4EGs8349.mp3","pic":"http://singerimg.kugou.com/uploadpic/softhead/400/20131214/20131214151506586339.jpg"},{"title":"青空","author":"Lia","url":"http://fs.w.kugou.com/201709301414/67ffa781675410bf1bb9041fd0601cee/G006/M09/1D/15/poYBAFS3912AEvH3AD9DQT130PY308.mp3","pic":"http://singerimg.kugou.com/uploadpic/softhead/400/20151219/20151219102303708.jpg"},{"title":"God knows...","author":"平野綾","url":"http://fs.w.kugou.com/201709301414/bffce7489a4768cdacee3271433d1480/G047/M03/16/10/D5QEAFYmheqAUNFQAESkqo_0ay0392.mp3","pic":"http://singerimg.kugou.com/uploadpic/softhead/400/20160924/20160924170911713.jpg"},{"title":"I Do","author":"Ilaria Graziano","url":"http://fs.w.kugou.com/201709301414/0dabf35c3b8ace7d1b382b3cfba5bdd9/G010/M07/1E/00/qoYBAFULeA-Aa9k4AEdgpyzbLdE313.mp3","pic":"http://singerimg.kugou.com/uploadpic/softhead/400/20140403/20140403181759832730.jpg"}]}'
         window.musicModule.lrcConfig = {
-            open: '开启歌词',
-            close: '关闭歌词'
+            open: 'Open Lyrics',
+            close: 'Close Lyrics'
         }
     })(window)
 </script>
@@ -331,7 +325,7 @@
             height:300px;
         }
     </style>
-    <video src="http://vjs.zencdn.net/v/oceans.mp4" style="width:100%;height:100%;background:#000;" controls preload="auto"></video>
+    <video src="http://vjs.zencdn.net/v/oceans.mp4" style="width:100%;height:100%;background:#000;" controls ></video>
 
 </div>
 
@@ -339,7 +333,7 @@
 
 
 <div class="title">
-    <a>实验区</a>
+    <a>日常撸狗</a>
 </div>
 <div class="cube-demo cube-sidebar" id="cube-demo">
     <style>
@@ -356,7 +350,7 @@
 
 <div class="cube-recent-posts cube-sidebar" id="cube-recent-posts">
     <div class="title">
-        <a>近期文章</a>
+        <a>Recent Posts</a>
     </div>
     <ul class="list">
         
@@ -435,7 +429,7 @@
 
 <div class="cube-links cube-sidebar" id="cube-links">
     <div class="title">
-        <a>个人链接</a>
+        <a>Links</a>
     </div>
     <ul class="list">
         
@@ -462,7 +456,7 @@
 
 <div class="cube-friend-links cube-sidebar" id="cube-friend-links">
     <div class="title">
-        <a>友情链接</a>
+        <a>Friend Links</a>
     </div>
     <ul class="list">
         

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <title>图片欣赏</title>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/animate.css/3.3.0/animate.min.css">
+</head>
+<body style="margin: 0;overflow-y:hidden;">
+<ul id="jc-slider" style="list-style-type: none;margin: 0;padding: 0;">
+</ul>
+<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script >
+    !function(n,e,i,o){"use strict";n.fn.jcSlider=function(i){function t(){var n,i=e.createElement("fakeelement"),t={animation:"animationend",OAnimation:"oAnimationEnd",MozAnimation:"animationend",WebkitAnimation:"webkitAnimationEnd"};for(n in t)if(i.style[n]!==o)return t[n]}var a=n(this);a.css({overflow:"hidden"}),a.find(".jc-animation:not(:first)").hide();var d=n.extend({animationIn:"bounceInRight",animationOut:"bounceOutLeft",stopOnHover:!0,loop:!0},i),r="animated "+d.animationOut,m="animated "+d.animationIn,l=a.find(".jc-animation"),u=l.length,s=0,c=null,f=t(),v=function(){c=setInterval(function(){d.loop===!1&&s==u-2&&clearInterval(c),l.eq(s).removeClass(m).addClass(r).one(f,function(){l.eq(s).removeClass(r).hide(),s++,s==u&&(s=0),l.eq(s).show().addClass(m)})},4e3)};v(),d.stopOnHover===!0&&a.hover(function(){clearInterval(c)},function(){v()})}}(window.jQuery||window.Zepto||window.$,document,window),"undefined"!=typeof module&&module.exports&&(module.exports=jcSlider);
+</script>
+<script>
+    var effects = [
+        'bounce',
+        'flash',
+        'pulse',
+        'rubberBand',
+        'shake',
+        'swing',
+        'tada',
+        'wobble',
+        'jello',
+        'bounceIn',
+        'bounceInDown',
+        'bounceInLeft',
+        'bounceInRight',
+        'bounceInUp',
+        'bounceOut',
+        'bounceOutDown',
+        'bounceOutLeft',
+        'bounceOutRight',
+        'bounceOutUp',
+        'fadeIn',
+        'fadeInDown',
+        'fadeInDownBig',
+        'fadeInLeft',
+        'fadeInLeftBig',
+        'fadeInRight',
+        'fadeInRightBig',
+        'fadeInUp',
+        'fadeInUpBig',
+        'fadeOut',
+        'fadeOutDown',
+        'fadeOutDownBig',
+        'fadeOutLeft',
+        'fadeOutLeftBig',
+        'fadeOutRight',
+        'fadeOutRightBig',
+        'fadeOutUp',
+        'fadeOutUpBig',
+        'flipInX',
+        'flipInY',
+        'flipOutX',
+        'flipOutY',
+        'lightSpeedIn',
+        'lightSpeedOut',
+        'rotateIn',
+        'rotateInDownLeft',
+        'rotateInDownRight',
+        'rotateInUpLeft',
+        'rotateInUpRight',
+        'rotateOut',
+        'rotateOutDownLeft',
+        'rotateOutDownRight',
+        'rotateOutUpLeft',
+        'rotateOutUpRight',
+        'hinge',
+        'rollIn',
+        'rollOut',
+        'zoomIn',
+        'zoomInDown',
+        'zoomInLeft',
+        'zoomInRight',
+        'zoomInUp',
+        'zoomOut',
+        'zoomOutDown',
+        'zoomOutLeft',
+        'zoomOutRight',
+        'zoomOutUp',
+        'slideInDown',
+        'slideInLeft',
+        'slideInRight',
+        'slideInUp',
+        'slideOutDown',
+        'slideOutLeft',
+        'slideOutRight',
+        'slideOutUp'];
+
+    $(document).ready(function() {
+        $.getJSON("pics.json",function (result) {
+            $.each(result,function (index,item) {
+                if(item.description=="")return true;
+                var liItem = "<li class='jc-animation'><img width='100%' height='100%' src='"+item.description+"' alt='"+item.title+"'></li>";
+                $('#jc-slider').append(liItem);
+            });
+            $('#jc-slider').jcSlider({
+                animationIn: effects[Math.floor(Math.random()*effects.length)],
+                animationOut: effects[Math.floor(Math.random()*effects.length)],
+                stopOnHover: false
+            });
+        });
+    });
+</script>
+</body>
+</html>
