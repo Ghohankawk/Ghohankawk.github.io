@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://ghohankawk.github.io/"/>
-  <updated>2017-09-28T09:11:24.922Z</updated>
+  <updated>2017-10-12T11:41:54.165Z</updated>
   <id>http://ghohankawk.github.io/</id>
   
   <author>
@@ -14,6 +14,482 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>ES6新特性概览总结</title>
+    <link href="http://ghohankawk.github.io/2017/10/12/js-es6/"/>
+    <id>http://ghohankawk.github.io/2017/10/12/js-es6/</id>
+    <published>2017-10-12T06:41:14.840Z</published>
+    <updated>2017-10-12T11:41:54.165Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="什么是ES6？"><a href="#什么是ES6？" class="headerlink" title="什么是ES6？"></a>什么是ES6？</h1><p> ES6（ECMAScript 6 == ECMAScript2015）是即将到来的新版本JavaScript语言的标准，代号harmony,上一次标准的制订还是2009年出台的ES5。<br>大部分标准已经就绪，且各浏览器对ES6的支持也正在实现中。<br>目前想要运行ES6代码的话，可以用<a href="http://google.github.io/traceur-compiler/demo/repl.html#" target="_blank" rel="external">google/traceur-compiler</a>将代码转译。<br>当然，并不是所有ES6新特性都被实现了，有一些还是无法测试的。<br>如果你还不知道什么是ES6的话，它是JavaScript一个新的实现，几个新特性。</p>
+<p>首先，一个简单的JavaScript时间线，不了解历史的人也无法创造历史。</p>
+<ul>
+<li>1995年：JavaScript以LiveScript之名诞生</li>
+<li>1997年：ECMAScript标准确立</li>
+<li>1999年：ES3发布，IE5非常生气</li>
+<li>2000年-2005年：XMLHttpRequest，熟知为AJAX，在如Outlook Web Access(2002)、Oddpost(2002)、Gmail(2004)、Google Maps(2005)中得到了广泛的应用</li>
+<li>2009年：ES5发布（这是我们目前用的最多的版本），带来了forEach / Object.keys / Object.create（特地为Douglas Crockford所造，JSON标准创建者） ，还有JSON标准。</li>
+</ul>
+<p>历史课上完了，我们回来讲编程。<br><a id="more"></a> </p>
+<h1 id="箭头操作符是什么？"><a href="#箭头操作符是什么？" class="headerlink" title="箭头操作符是什么？"></a>箭头操作符是什么？</h1><p>其实就是类比java中的lambda表达式，ES6中新增的箭头操作符=&gt;便有异曲同工之妙。它简化了函数的书写。操作符左边为输入的参数，而右边则是进行的操作以及返回的值Inputs=&gt;outputs。<br>使用箭头函数需要注意：</p>
+<ul>
+<li>函数体内的this对象，绑定定义时所在的对象，而不是使用时所在的对象。</li>
+<li>不可以当作构造函数，也就是说，不可以使用new命令，否则会抛出一个错误。</li>
+<li>不可以使用arguments对象，该对象在函数体内不存在。</li>
+</ul>
+<pre><code>var f = () =&gt; 5;
+// 等同于
+var f = function (){ return 5 };
+
+var sum = (num1, num2) =&gt; num1 + num2;
+// 等同于
+var sum = function(num1, num2) {
+    return num1 + num2;
+};
+</code></pre><p>##为什么有？<br>JS中回调是经常的事，而一般回调又以匿名函数的形式出现，每次都需要写一个function，甚是繁琐。当引入箭头操作符后可以方便地写回调了，去掉繁琐的function   </p>
+<pre><code>var array = [1, 2, 3];
+//传统写法
+array.forEach(function(v, i, a) {
+    console.log(v);
+});
+//ES6
+array.forEach(v =&gt; console.log(v));
+</code></pre><h1 id="class是什么？"><a href="#class是什么？" class="headerlink" title="class是什么？"></a>class是什么？</h1><p>ES6中添加了对类的支持，引入了class关键字（其实class在JavaScript中一直是保留字，目的就是考虑到可能在以后的新版本中会用到，现在终于派上用场了）。JS本身就是面向对象的，ES6中提供的类实际上只是JS原型模式的包装。现在提供原生的class支持后，对象的创建，继承更加直观了，并且父类方法的调用，实例化，静态方法和构造函数等概念都更加形象化。</p>
+<pre><code>//类的定义
+class Animal {
+    //ES6中新型构造器
+    constructor(name) {
+        this.name = name;
+    }
+    //实例方法
+    sayName() {
+        console.log(&apos;My name is &apos;+this.name);
+    }
+}
+//类的继承
+class Programmer extends Animal {
+    constructor(name) {
+        //直接调用父类构造器进行初始化
+        super(name);
+    }
+    program() {
+        console.log(&quot;I&apos;m coding...&quot;);
+    }
+}
+//测试我们的类
+var animal=new Animal(&apos;dummy&apos;),
+wayou=new Programmer(&apos;wayou&apos;);
+animal.sayName();//输出 ‘My name is dummy’
+wayou.sayName();//输出 ‘My name is wayou’
+wayou.program();//输出 ‘I&apos;m coding...’
+</code></pre><h1 id="增强的对象字面量是什么？"><a href="#增强的对象字面量是什么？" class="headerlink" title="增强的对象字面量是什么？"></a>增强的对象字面量是什么？</h1><p>对象字面量被增强了，写法更加简洁与灵活，同时在定义对象的时候能够做的事情更多了。具体表现在：</p>
+<ul>
+<li>可以在对象字面量里面定义原型</li>
+<li>定义方法可以不用function关键字</li>
+<li>直接调用父类方法  </li>
+</ul>
+<pre><code>var Person = {
+  name: &apos;张三&apos;,
+
+  //等同于birth: birth
+  birth,
+
+  // 等同于hello: function ()...
+  hello() { console.log(&apos;我的名字是&apos;, this.name); }
+};
+
+var lastWord = &quot;last word&quot;;
+
+var a = {
+    &quot;first word&quot;: &quot;hello&quot;,
+    [lastWord]: &quot;world&quot;
+};
+
+//表达式属性
+a[&quot;first word&quot;] // &quot;hello&quot;
+a[lastWord] // &quot;world&quot;
+a[&quot;last word&quot;] // &quot;world&quot;
+
+
+//通过对象字面量创建对象
+var human = {
+    breathe() {
+        console.log(&apos;breathing...&apos;);
+    }
+};
+var worker = {
+    __proto__: human, //设置此对象的原型为human,相当于继承human
+    company: &apos;freelancer&apos;,
+    work() {
+        console.log(&apos;working...&apos;);
+    }
+};
+human.breathe();//输出 ‘breathing...’
+//调用继承来的breathe方法
+worker.breathe();//输出 ‘breathing...’
+</code></pre><h1 id="字符串模板是什么？"><a href="#字符串模板是什么？" class="headerlink" title="字符串模板是什么？"></a>字符串模板是什么？</h1><p>ES6中允许使用反引号 ` 来创建字符串，此种方法创建的字符串里面可以包含由美元符号加花括号包裹的变量${vraible}。</p>
+<pre><code>//产生一个随机数
+var num=Math.random();
+//将这个数字输出到console
+console.log(`your num is ${num}`);
+
+`In JavaScript&apos;\n&apos; is a line-feed.`
+
+// 多行字符串
+console.log(`string text line 1
+string text line 2`);
+
+// 字符串中嵌入变量
+var name = &quot;Bob&quot;, time = &quot;today&quot;;
+`Hello ${name}, how are you ${time}?`
+
+//反斜杠转义
+var greeting = `\`Yo\` World!`;
+
+//对象属性
+var obj = {x: 1, y: 2};
+console.log(`${obj.x + obj.y}`)
+
+//函数调用
+function fn() {
+  return &quot;Hello World&quot;;
+}
+console.log(`foo ${fn()} bar`);
+</code></pre><h1 id="自动解析是什么？"><a href="#自动解析是什么？" class="headerlink" title="自动解析是什么？"></a>自动解析是什么？</h1><p>自动解析数组或对象中的值。比如若一个函数要返回多个值，常规的做法是返回一个对象，将每个值做为这个对象的属性返回。但在ES6中，利用解构这一特性，可以直接返回一个数组，然后数组中的值会自动被解析到对应接收该值的变量中。</p>
+<pre><code>var [x,y]=getVal(),//函数返回值的解构
+    [name,,age]=[&apos;wayou&apos;,&apos;male&apos;,&apos;secrect&apos;];//数组解构
+
+function getVal() {
+    return [ 1, 2 ];
+}
+
+console.log(&apos;x:&apos;+x+&apos;, y:&apos;+y);//输出：x:1, y:2 
+console.log(&apos;name:&apos;+name+&apos;, age:&apos;+age);//输出： name:wayou, age:secrect 
+
+let [foo, [[bar], baz]] = [1, [[2], 3]];
+let [x, y=&apos;b&apos;] = [&apos;a&apos;, undefined]; // x=&apos;a&apos;, y=&apos;b&apos;
+let [a, b, c] = new Set([&quot;a&quot;, &quot;b&quot;, &quot;c&quot;]);
+
+var { foo, bar } = { foo: &quot;aaa&quot;, bar: &quot;bbb&quot; };
+
+var {x, y = 5} = {x: 1};
+console.log(x, y) // 1, 5
+
+let { log, sin, cos } = Math;
+
+function move({x=0, y=0} = {}) {
+  return [x, y];
+}
+
+move({x: 3}); // [3, 0]
+move({}); // [0, 0]
+move(); // [0, 0]
+</code></pre><h1 id="参数默认值，不定参数，拓展参数是什么？"><a href="#参数默认值，不定参数，拓展参数是什么？" class="headerlink" title="参数默认值，不定参数，拓展参数是什么？"></a>参数默认值，不定参数，拓展参数是什么？</h1><ul>
+<li>默认参数值（默认赋值）</li>
+</ul>
+<p>现在可以在定义函数的时候指定参数的默认值了，而不用像以前那样通过逻辑或操作符来达到目的了。</p>
+<pre><code>function sayHello(name){
+    //传统的指定默认参数的方式
+    var name=name||&apos;dude&apos;;
+    console.log(&apos;Hello &apos;+name);
+}
+//运用ES6的默认参数
+function sayHello2(name=&apos;dude&apos;){
+    console.log(`Hello ${name}`);
+}
+sayHello();//输出：Hello dude
+sayHello(&apos;Wayou&apos;);//输出：Hello Wayou
+sayHello2();//输出：Hello dude
+sayHello2(&apos;Wayou&apos;);//输出：Hello Wayou
+</code></pre><ul>
+<li>不定参数（三个点参数）</li>
+</ul>
+<p>不定参数是在函数中使用命名参数同时接收不定数量的未命名参数。这只是一种语法糖，在以前的JavaScript代码中我们可以通过arguments变量来达到这一目的。不定参数的格式是三个句点后跟代表所有不定参数的变量名。比如下面这个例子中，…x代表了所有传入add函数的参数。</p>
+<pre><code>//将所有参数相加的函数
+function add(...x){
+    return x.reduce((m,n)=&gt;m+n);
+}
+//传递任意个数的参数
+console.log(add(1,2,3));//输出：6
+console.log(add(1,2,3,4,5));//输出：15
+</code></pre><ul>
+<li>拓展参数（三个点数组参数）</li>
+</ul>
+<p>拓展参数则是另一种形式的语法糖，它允许传递数组或者类数组直接做为函数的参数而不用通过apply。   </p>
+<pre><code>var people=[&apos;Wayou&apos;,&apos;John&apos;,&apos;Sherlock&apos;];
+//sayHello函数本来接收三个单独的参数人一，人二和人三
+function sayHello(people1,people2,people3){
+    console.log(`Hello ${people1},${people2},${people3}`);
+}
+//但是我们将一个数组以拓展参数的形式传递，它能很好地映射到每个单独的参数
+sayHello(...people);//输出：Hello Wayou,John,Sherlock 
+
+//而在以前，如果需要传递数组当参数，我们需要使用函数的apply方法
+sayHello.apply(null,people);//输出：Hello Wayou,John,Sherlock 
+</code></pre><h1 id="let与const-关键字是什么？"><a href="#let与const-关键字是什么？" class="headerlink" title="let与const 关键字是什么？"></a>let与const 关键字是什么？</h1><p>可以把let看成var，只是它定义的变量被限定在了特定范围内才能使用，而离开这个范围则无效。const则很直观，用来定义常量，即无法被更改值的变量。</p>
+<pre><code>for (let i=0;i&lt;2;i++)console.log(i);//输出: 0,1
+console.log(i);//输出：undefined,严格模式下会报错
+对比之前的var
+for (var i=0;i&lt;2;i++)console.log(i);//输出: 0,1
+console.log(i);//输出：2
+</code></pre><h1 id="for-of-值遍历是什么？"><a href="#for-of-值遍历是什么？" class="headerlink" title="for of 值遍历是什么？"></a>for of 值遍历是什么？</h1><p>我们都知道for in 循环用于遍历数组，类数组或对象，ES6中新引入的for of循环功能相似，不同的是每次循环它提供的不是序号而是值。</p>
+<pre><code>var someArray = [ &quot;a&quot;, &quot;b&quot;, &quot;c&quot; ];
+
+for (v of someArray) {
+    console.log(v);//输出 a,b,c
+}
+for of 和 for in 的对比区别
+for (v in someArray) {
+        console.log(v);//输出 0,1,2
+}
+
+var a1 = [1, 2, 3, 4];
+var a2 = [for (i of a1) i * 2];
+a2 // [2, 4, 6, 8]
+
+var years = [ 1954, 1974, 1990, 2006, 2010, 2014 ];
+[for (year of years) if (year &gt; 2000 &amp;&amp; year &lt; 2010) year];
+</code></pre><h1 id="模块是什么？（关键字module）"><a href="#模块是什么？（关键字module）" class="headerlink" title="模块是什么？（关键字module）"></a>模块是什么？（关键字module）</h1><p>在ES6标准中，JavaScript原生支持module了。这种将JS代码分割成不同功能的小块进行化的概念是在一些三方规范中流行起来的，比如CommonJS和AMD模式。</p>
+<p>将不同功能的代码分别写在不同文件中，各模块只需导出公共接口部分，然后通过模块的导入的方式可以在其他地方使用    </p>
+<pre><code>// point.js
+module &quot;point&quot; {
+    export class Point {
+        constructor (x, y) {
+            public x = x;
+            public y = y;
+        }
+    }
+}
+
+// myapp.js
+//声明引用的模块
+module point from &quot;/point.js&quot;;
+//这里可以看出，尽管声明了引用的模块，还是可以通过指定需要的部分进行导入
+import Point from &quot;point&quot;;
+
+var origin = new Point(0, 0);
+console.log(origin);
+
+module命令可以取代import语句，达到整体输入模块的作用。
+// circle.js
+export function area(radius) {
+  return Math.PI * radius * radius;
+}
+
+export function circumference(radius) {
+  return 2 * Math.PI * radius;
+}
+
+// main.js
+module circle from &apos;circle&apos;;
+
+console.log(&quot;圆面积：&quot; + circle.area(4));
+console.log(&quot;圆周长：&quot; + circle.circumference(14));
+
+
+export default命令定义模块的默认方法。
+// export-default.js
+export default function () {
+    console.log(&apos;foo&apos;);
+}
+
+// import-default.js
+import customName from &apos;./export-default&apos;;
+customName(); // &apos;foo&apos;
+</code></pre><h1 id="Map，Set-和-WeakMap，WeakSet是什么？（新增数据类型）"><a href="#Map，Set-和-WeakMap，WeakSet是什么？（新增数据类型）" class="headerlink" title="Map，Set 和 WeakMap，WeakSet是什么？（新增数据类型）"></a>Map，Set 和 WeakMap，WeakSet是什么？（新增数据类型）</h1><p>这些是新加的集合类型，提供了更加方便的获取属性值的方法，不用像以前一样用hasOwnProperty来检查某个属性是属于原型链上的呢还是当前对象的。同时，在进行属性值添加与获取时有专门的get，set 方法。<br>类比和java中的类型</p>
+<pre><code>// Sets
+var s = new Set();
+s.add(&quot;hello&quot;).add(&quot;goodbye&quot;).add(&quot;hello&quot;);
+s.size === 2;
+s.has(&quot;hello&quot;) === true;
+
+// Maps
+var m = new Map();
+m.set(&quot;hello&quot;, 42);
+m.set(s, 34);
+m.get(s) == 34;
+
+// Weak Maps
+var wm = new WeakMap();
+wm.set(s, { extra: 42 });
+wm.size === undefined
+
+// Weak Sets
+var ws = new WeakSet();
+ws.add({ data: 42 });//因为添加到ws的这个临时对象没有其他变量引用它，所以ws不会保存它的值，也就是说这次添加其实没有意思
+</code></pre><p>有时候我们会把对象作为一个对象的键用来存放属性值，普通集合类型比如简单对象会阻止垃圾回收器对这些作为属性键存在的对象的回收，有造成内存泄漏的危险。而WeakMap,WeakSet则更加安全些，这些作为属性键的对象如果没有别的变量在引用它们，则会被回收释放掉<br>WeakMap结构与Map结构基本类似，唯一的区别是它只接受对象作为键名（null除外），不接受原始类型的值作为键名，而且键名所指向的对象，不计入垃圾回收机制，有助于防止内存泄漏。</p>
+<p>Map结构类似于对象，也是键值对的集合，但是“键”的范围不限于字符串，各种类型的值（包括对象）都可以当作键。<br>注意Map的键实际上是跟内存地址绑定的，只要内存地址不一样，就视为两个键。这就解决了同名属性碰撞（clash）的问题，我们扩展别人的库的时候，如果使用对象作为键名，就不用担心自己的属性与原作者的属性同名。只有对同一个对象的引用，Map结构才将其视为同一个键</p>
+<pre><code>var map = new Map();
+
+map.set([&apos;a&apos;], 555); 
+map.get([&apos;a&apos;]) // undefined
+</code></pre><h1 id="Promises是什么？（异步处理，ajax）"><a href="#Promises是什么？（异步处理，ajax）" class="headerlink" title="Promises是什么？（异步处理，ajax）"></a>Promises是什么？（异步处理，ajax）</h1><p>Promises是处理异步操作的一种模式，之前在很多三方库中有实现，比如jQuery的deferred 对象。当你发起一个异步请求，并绑定了.when(), .done()等事件处理程序时，其实就是在应用promise模式。</p>
+<pre><code>//创建promise
+var promise = new Promise(function(resolve, reject) {
+    // 进行一些异步或耗时操作
+    if ( /*如果成功 */ ) {
+        resolve(&quot;Stuff worked!&quot;);
+    } else {
+        reject(Error(&quot;It broke&quot;));
+    }
+});
+//绑定处理程序
+promise.then(function(result) {
+    //promise成功的话会执行这里
+    console.log(result); // &quot;Stuff worked!&quot;
+}, function(err) {
+    //promise失败会执行这里
+    console.log(err); // Error: &quot;It broke&quot;
+});
+</code></pre><h1 id="Proxies是什么？（设计模式）"><a href="#Proxies是什么？（设计模式）" class="headerlink" title="Proxies是什么？（设计模式）"></a>Proxies是什么？（设计模式）</h1><p>Proxy可以监听对象身上发生了什么事情，并在这些事情发生后执行一些相应的操作。一下子让我们对一个对象有了很强的追踪能力，同时在数据绑定方面也很有用处。</p>
+<p>Proxy用于修改某些操作的默认行为，等于在目标对象之前，架设一层“拦截”，外界对该对象的访问，都必须先通过这层拦截，因此提供了一种机制，可以对外界的访问进行过滤和改写。而Proxy.revocable()方法则返回一个可取消的Proxy实例。</p>
+<pre><code>//定义被侦听的目标对象
+var engineer = { name: &apos;Joe Sixpack&apos;, salary: 50 };
+//定义处理程序
+var interceptor = {
+  set: function (receiver, property, value) {
+    console.log(property, &apos;is changed to&apos;, value);
+    receiver[property] = value;
+  }
+};
+//创建代理以进行侦听
+engineer = Proxy(engineer, interceptor);
+//做一些改动来触发代理
+engineer.salary = 60;//控制台输出：salary is changed to 60
+
+var person = {
+  name: &quot;张三&quot;
+};
+
+var proxy = new Proxy(person, {
+    get: function(target, property) {
+        return property in target ? target[property] : &quot;米有&quot;;
+    }
+});
+
+proxy.name // &quot;张三&quot;
+proxy.title // &quot;米有&quot;
+</code></pre><p>对于处理程序，是在被侦听的对象身上发生了相应事件之后，处理程序里面的方法就会被调用，上面例子中我们设置了set的处理函数，表明，如果我们侦听的对象的属性被更改，也就是被set了，那这个处理程序就会被调用，同时通过参数能够得知是哪个属性被更改，更改为了什么值。</p>
+<h1 id="Math，Number，String，Object-的新API是什么？"><a href="#Math，Number，String，Object-的新API是什么？" class="headerlink" title="Math，Number，String，Object 的新API是什么？"></a>Math，Number，String，Object 的新API是什么？</h1><pre><code>Number.EPSILON
+Number.isInteger(Infinity) // false
+Number.isNaN(&quot;NaN&quot;) // false
+
+Math.acosh(3) // 1.762747174039086
+Math.hypot(3, 4) // 5
+Math.imul(Math.pow(2, 32) - 1, Math.pow(2, 32) - 2) // 2
+
+&quot;abcde&quot;.contains(&quot;cd&quot;) // true
+&quot;abc&quot;.repeat(3) // &quot;abcabcabc&quot;
+
+Array.from()：用于将两类对象转为真正的数组：类似数组的对象（array-like object）和可遍历（iterable）的对象
+Array.from(document.querySelectorAll(&apos;*&apos;)) // Returns a real Array
+
+Array.of()方法用于将一组值，转换为数组。弥补数组构造函数Array()的不足。
+Array.of(1, 2, 3) // Similar to new Array(...), but without special one-arg behavior
+[0, 0, 0].fill(7, 1) // [0,7,7]
+[1,2,3].findIndex(x =&gt; x == 2) // 1
+[&quot;a&quot;, &quot;b&quot;, &quot;c&quot;].entries() // iterator [0, &quot;a&quot;], [1,&quot;b&quot;], [2,&quot;c&quot;]
+[&quot;a&quot;, &quot;b&quot;, &quot;c&quot;].keys() // iterator 0, 1, 2
+[&quot;a&quot;, &quot;b&quot;, &quot;c&quot;].values() // iterator &quot;a&quot;, &quot;b&quot;, &quot;c&quot;
+
+Object.assign(Point, { origin: new Point(0,0) })
+
+二进制和八进制数值的新的写法，分别用前缀0b和0o表示
+0b111110111 === 503 // true
+0o767 === 503 // true
+</code></pre><h1 id="Symbols是什么？"><a href="#Symbols是什么？" class="headerlink" title="Symbols是什么？"></a>Symbols是什么？</h1><p>我们知道对象其实是键值对的集合，而键通常来说是字符串。而现在除了字符串外，我们还可以用symbol这种值来做为对象的键。Symbol是一种基本类型，像数字，字符串还有布尔一样，它不是一个对象。Symbol 通过调用symbol函数产生，它接收一个可选的名字参数，该函数返回的symbol是唯一的。之后就可以用这个返回值做为对象的键了。Symbol还可以用来创建私有属性，外部无法直接访问由symbol做为键的属性值。</p>
+<p>Symbol是一种新的原始数据类型，表示独一无二的ID，它通过Symbol函数生成。凡是属性名属于Symbol类型，就都是独一无二的，可以保证不会与其他属性名产生冲突。Symbol函数可以接受一个字符串作为参数，表示Symbol实例的名称。</p>
+<pre><code>(function() {
+
+  // 创建symbol
+  var key = Symbol(&quot;key&quot;);
+
+  function MyClass(privateData) {
+    this[key] = privateData;
+  }
+
+  MyClass.prototype = {
+    doStuff: function() {
+      ... this[key] ...
+    }
+  };
+
+})();
+
+var c = new MyClass(&quot;hello&quot;)
+c[&quot;key&quot;] === undefined//无法访问该属性，因为是私有的
+
+var mySymbol = Symbol(&apos;Test&apos;);
+mySymbol.name
+// Test
+
+// 有参数的情况
+var s1 = Symbol(&quot;foo&quot;);
+var s2 = Symbol(&quot;foo&quot;);
+
+s1 === s2 // false
+
+//不能与其他类型的值进行运算
+var sym = Symbol(&apos;My symbol&apos;);
+&apos;&apos; + sym
+// TypeError: Cannot convert a Symbol value to a string
+
+//可以转换为字符串
+String(sym)
+// &apos;Symbol(My symbol)&apos;
+</code></pre><h1 id="Generator-函数是什么？-个人认为最不好理解的"><a href="#Generator-函数是什么？-个人认为最不好理解的" class="headerlink" title="Generator 函数是什么？(个人认为最不好理解的)"></a>Generator 函数是什么？(个人认为最不好理解的)</h1><p>Generator是一个普通函数，有两个特征：一是function命令与函数名之间有一个星号；二是函数体内部使用yield语句，定义遍历器的每个成员。</p>
+<p>Generator可以理解成一个函数的内部状态的遍历器，每调用一次，函数的内部状态发生一次改变。换句话说，它就是一个改装了的 Iterator 遍历器，通过 yield 来增加一个 next() 节点。</p>
+<p>先看一下Generator函数的完整作用： 用Generator函数定义helloWorldGenerator，它的遍历器有两个成员“hello”和“world”。当调用Generator函数的时候，该函数并不执行，而是返回一个遍历器（可以理解成暂停执行）。以后，每次调用这个遍历器的next方法，就从函数体的头部或者上一次停下来的地方开始执行（可以理解成恢复执行），直到遇到下一个yield语句为止。</p>
+<p>for…of循环可以自动遍历Generator函数，且此时不再需要调用next方法。</p>
+<pre><code>function *foo() {
+  yield 1;
+  yield 2;
+  yield 3;
+  yield 4;
+  yield 5;
+  return 6;
+}
+
+for (let v of foo()) {
+  console.log(v);
+}
+// 1 2 3 4 5
+</code></pre><h2 id="next方法的参数"><a href="#next方法的参数" class="headerlink" title="next方法的参数"></a>next方法的参数</h2><p>yield语句本身没有返回值，或者说总是返回undefined。next方法可以带一个参数，该参数会被当作上一个yield语句的返回值。这个功能有很重要的语法意义，Generator函数从暂停状态到恢复运行，它的上下文状态（context）是不变的。通过next方法的参数，就有办法在Generator函数开始运行之后，继续向函数体内部注入值。</p>
+<pre><code>function* foo(x) {
+  var y = 2 * (yield (x + 1));
+  var z = yield (y / 3);
+  return (x + y + z);
+}
+
+var it = foo(5);
+
+it.next()
+// { value:6, done:false }
+it.next(12)
+// { value:8, done:false }
+it.next(13)
+// { value:42, done:true }
+先把这个例子理解了，再说
+</code></pre>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;什么是ES6？&quot;&gt;&lt;a href=&quot;#什么是ES6？&quot; class=&quot;headerlink&quot; title=&quot;什么是ES6？&quot;&gt;&lt;/a&gt;什么是ES6？&lt;/h1&gt;&lt;p&gt; ES6（ECMAScript 6 == ECMAScript2015）是即将到来的新版本JavaScript语言的标准，代号harmony,上一次标准的制订还是2009年出台的ES5。&lt;br&gt;大部分标准已经就绪，且各浏览器对ES6的支持也正在实现中。&lt;br&gt;目前想要运行ES6代码的话，可以用&lt;a href=&quot;http://google.github.io/traceur-compiler/demo/repl.html#&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;google/traceur-compiler&lt;/a&gt;将代码转译。&lt;br&gt;当然，并不是所有ES6新特性都被实现了，有一些还是无法测试的。&lt;br&gt;如果你还不知道什么是ES6的话，它是JavaScript一个新的实现，几个新特性。&lt;/p&gt;
+&lt;p&gt;首先，一个简单的JavaScript时间线，不了解历史的人也无法创造历史。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;1995年：JavaScript以LiveScript之名诞生&lt;/li&gt;
+&lt;li&gt;1997年：ECMAScript标准确立&lt;/li&gt;
+&lt;li&gt;1999年：ES3发布，IE5非常生气&lt;/li&gt;
+&lt;li&gt;2000年-2005年：XMLHttpRequest，熟知为AJAX，在如Outlook Web Access(2002)、Oddpost(2002)、Gmail(2004)、Google Maps(2005)中得到了广泛的应用&lt;/li&gt;
+&lt;li&gt;2009年：ES5发布（这是我们目前用的最多的版本），带来了forEach / Object.keys / Object.create（特地为Douglas Crockford所造，JSON标准创建者） ，还有JSON标准。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;历史课上完了，我们回来讲编程。&lt;br&gt;
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>关于生命中最亲的人的离别</title>
@@ -2420,176 +2896,6 @@ myFunc.cache = {};
     <summary type="html">
     
       &lt;h1 id=&quot;今天要分享的内容是tom大叔的JavaScript系列的读书观后感3&quot;&gt;&lt;a href=&quot;#今天要分享的内容是tom大叔的JavaScript系列的读书观后感3&quot; class=&quot;headerlink&quot; title=&quot;今天要分享的内容是tom大叔的JavaScrip
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>汤姆大叔的深入理解JavaScript读后感二（17——24节）</title>
-    <link href="http://ghohankawk.github.io/2017/06/13/tomdashu2/"/>
-    <id>http://ghohankawk.github.io/2017/06/13/tomdashu2/</id>
-    <published>2017-06-13T03:23:16.482Z</published>
-    <updated>2017-06-13T11:44:04.860Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="今天要分享的内容是tom大叔的JavaScript系列的读书观后感2"><a href="#今天要分享的内容是tom大叔的JavaScript系列的读书观后感2" class="headerlink" title="今天要分享的内容是tom大叔的JavaScript系列的读书观后感2"></a>今天要分享的内容是tom大叔的JavaScript系列的读书观后感2</h1><p><iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="330" height="86" src="//music.163.com/outchain/player?type=2&id=527602&auto=1&height=66"></iframe></p>
-<h1 id="第十七部分，面向对象编程之概论"><a href="#第十七部分，面向对象编程之概论" class="headerlink" title="第十七部分，面向对象编程之概论"></a>第十七部分，面向对象编程之概论</h1><p>我们有必要掌握一些OOP基本的特征，并澄清概论中的主要概念。主要讨论封装，继承，多态，接口，那些传统的面向对象概念，可以忽略不看，不影响</p>
-<h1 id="第十八部分，面向对象编程之ECMAScript实现（推荐）"><a href="#第十八部分，面向对象编程之ECMAScript实现（推荐）" class="headerlink" title="第十八部分，面向对象编程之ECMAScript实现（推荐）"></a>第十八部分，面向对象编程之ECMAScript实现（推荐）</h1><p>总结如下：</p>
-<pre><code>1. 原始值类型
-   回头来看6中用于ECMAScript程序的数据类型，前5种是原始值类型，包括Undefined、Null、Boolean、String、Number、Object。
-2. 有必要需要注意的是规范还区分了这内置对象、元素对象和宿主对象。
-所有ECMAScript实现的对象都是原生对象（其中一些是内置对象、一些在程序执行的时候创建，例如用户自定义对象）。内置对象是原生对象的一个子集、是在程序开始之前内置到ECMAScript里的（例如，parseInt, Match等）。所有的宿主对象是由宿主环境提供的，通常是浏览器，并可能包括如window、alert等。
-也有对象是由特殊的内置构造函数创建： Function（函数对象构造器）、Array（数组构造器） RegExp（正则表达式构造器）、Math（数学模块）、 Date（日期的构造器）等等，这些对象也是Object对象类型的值
-3. 字面量Literal
-
-   对于三个对象的值：对象（object）,数组（array）和正则表达式（regular expression）
-4. 然而，如果我们彻底改变函数的prototype属性（通过分配一个新的对象），那原始构造函数的引用就是丢失，这是因为我们创建的对象不包括constructor属性：
-function A() {}
-A.prototype = {
-  x: 10
-};
-
-var a = new A();
-alert(a.x); // 10
-alert(a.constructor === A); // false!
-因此，对函数的原型引用需要手工恢复：
-
-function A() {}
-A.prototype = {
-  constructor: A,
-  x: 10
-};
-
-var a = new A();
-alert(a.x); // 10
-alert(a.constructor === A); // true
-5. a.[[Prototype]] ----&gt; Prototype &lt;---- A.prototype
-
-   此外， 实例的[[Prototype]]值确实是在构造函数的prototype属性上获取的。
-
-   然而，提交prototype属性不会影响已经创建对象的原型（只有在构造函数的prototype属性改变的时候才会影响到)，就是说新创建的对象才有有新的原型，而已创建对象还是引用到原来的旧原型（这个原型已经不能被再被修改了）。
-  对象的原型是对象的创建的时候创建的，并且在此之后不能修改为新的对象，如果依然引用到同一个对象，可以通过构造函数的显式prototype引用，对象创建以后，只能对原型的属性进行添加或修改。
-
-  这个地方，原型链，特别难理解，详细的看第一篇，观后感的，原型链的，链接，那个是非常详细的说明 
-6. 有误解：
-
-   if (foo instanceof Foo) {
-     ...
-   }
-   这不是用来检测对象foo是否是用Foo构造函数创建的，
-所有instanceof运算符只需要一个对象属性——foo.[[Prototype]]，在原型链中从Foo.prototype开始检查其是否存在。
-
-7. alert(1..toString()); // &quot;1&quot;，不是语法错误
-   大部分程序里使用原型是用来存储对象的方法、默认状态和共享对象的属性。
-</code></pre><h1 id="第十九部分，求值策略-Evaluation-strategy"><a href="#第十九部分，求值策略-Evaluation-strategy" class="headerlink" title="第十九部分，求值策略(Evaluation strategy)"></a>第十九部分，求值策略(Evaluation strategy)</h1><p>很多程序员都确信在JavaScript中（甚至其它一些语言)，对象是按引用传参，而原始值类型按值传参</p>
-<pre><code>1. 按值传递
-   按值传递，很多开发人员都很了解了，参数的值是调用者传递的对象值的拷贝(copy of value），函数内部改变参数的值不会影响到外面的对象（该参数在外面的值），一般来说，是重新分配了新内存(我们不关注分配内存是怎么实现的——也是是栈也许是动态内存分配），该新内存块的值是外部对象的拷贝，并且它的值是用到函数内部的。
-2. 按引用传递
-   另外一个众所周知的按引用传递接收的不是值拷贝，而是对象的隐式引用，如该对象在外部的直接引用地址。函数内部对参数的任何改变都是影响该对象在函数外部的值，因为两者引用的是同一个对象，也就是说：这时候参数就相当于外部对象的一个别名。
-3. 按共享传递（Call by sharing）
-最重要的区别就是：函数内部给参数重新赋新值不会影响到外部的对象（和上例按引用传递的case），但是因为该参数是一个地址拷贝，所以在外面访问和里面访问的都是同一个对象（例如外部的该对象不是想按值传递一样完全的拷贝),改变该参数对象的属性值将会影响到外部的对象。
-4. 现在我们知道了ECMAScript中将对象作为参数传递的策略了——按共享传递：修改参数的属性将会影响到外部，而重新赋值将不会影响到外部对象
-传递的是引用的拷贝（地址副本）
-
-再强调一下，这里所说对象的值是地址（address），而不是对象结构本身，将变量赋值给另外一个变量——是赋值值的引用。因此两个变量引用的是同一个内存地址。下一个赋值却是新地址，是解析与旧对象的地址绑定，然后绑定到新对象的地址上，这就是和按引用传递的最重要区别。
-</code></pre><h1 id="第二十部分，《你真懂JavaScript吗？》答案详解"><a href="#第二十部分，《你真懂JavaScript吗？》答案详解" class="headerlink" title="第二十部分，《你真懂JavaScript吗？》答案详解"></a>第二十部分，《你真懂JavaScript吗？》答案详解</h1><p>总结如下：</p>
-<pre><code>1.  题目1
-
-    if (!(&quot;a&quot; in window)) {
-        var a = 1;
-    }
-    alert(a);
-   答案是undefined
-2. var a = 1,
-       b = function a(x) {
-           x &amp;&amp; a(--x);
-       };
-   alert(a);
-   答案1
-3. function a(x) {
-       return x * 2;
-   }
-   var a;
-   alert(a);
-   答案 a函数
-4. function b(x, y, a) {
-       arguments[2] = 10;
-       alert(a);
-   }
-   b(1, 2, 3);
-   答案是10
-5. function a() {
-       alert(this);
-   }
-   a.call(null);
-    答案是window
-</code></pre><h1 id="第二十一部分，S-O-L-I-D五大原则之接口隔离原则ISP"><a href="#第二十一部分，S-O-L-I-D五大原则之接口隔离原则ISP" class="headerlink" title="第二十一部分，S.O.L.I.D五大原则之接口隔离原则ISP"></a>第二十一部分，S.O.L.I.D五大原则之接口隔离原则ISP</h1><p>没看懂，基本不用看</p>
-<h1 id="第二十二部分，S-O-L-I-D五大原则之依赖倒置原则DIP"><a href="#第二十二部分，S-O-L-I-D五大原则之依赖倒置原则DIP" class="headerlink" title="第二十二部分，S.O.L.I.D五大原则之依赖倒置原则DIP]"></a>第二十二部分，S.O.L.I.D五大原则之依赖倒置原则DIP]</h1><p>稍微看懂了，估计是因为java看多了，ioc，基本不用看</p>
-<h1 id="第二十三部分，JavaScript与DOM（上）——也适用于新手"><a href="#第二十三部分，JavaScript与DOM（上）——也适用于新手" class="headerlink" title="第二十三部分，JavaScript与DOM（上）——也适用于新手"></a>第二十三部分，JavaScript与DOM（上）——也适用于新手</h1><pre><code>最重要的是Element, Text, Document。
-
- Element节点在页面里展示的是一个元素，所以如果你有段落元素(&lt;p&gt;)，你可以通过这个DOM节点来访问。
- Text节点在页面里展示的所有文本相关的元素，所以如果你的段落有文本在里面的话，你可以直接通过DOM的Text节点来访问这个文本
- Document节点代表是整个文档，它是DOM的根节点。
-
-nodeType类型，1是元素，2是属性，3是text节点，详细的type类型可以通过此地址：
-
-    Node.ELEMENT_NODE == 1
-    Node.ATTRIBUTE_NODE == 2
-    Node.TEXT_NODE == 3
-    Node.CDATA_SECTION_NODE == 4
-    Node.ENTITY_REFERENCE_NODE == 5
-    Node.ENTITY_NODE == 6
-    Node.PROCESSING_INSTRUCTION_NODE == 7
-    Node.COMMENT_NODE == 8
-    Node.DOCUMENT_NODE == 9
-    Node.DOCUMENT_TYPE_NODE == 10
-    Node.DOCUMENT_FRAGMENT_NODE == 11
-    Node.NOTATION_NODE == 12
-</code></pre><h1 id="第二十四部分，JavaScript与DOM（下）"><a href="#第二十四部分，JavaScript与DOM（下）" class="headerlink" title="第二十四部分，JavaScript与DOM（下）"></a>第二十四部分，JavaScript与DOM（下）</h1><pre><code>node节点的2种类型，一种是元素节点，一种是text节点，上一章节已经列出了所有的节点类型，这两种需要我们现在特别注意。创建元素可以通过createElement方法，而创建text节点可以使用createTextNode，相应代码如下：
-正如我们上章所说的，DOM和JavaScript语言是2个单独的东西，浏览器事件是DOM API的一部分，而不是JavaScript的一部分。
-
-‘mouseover’ – 鼠标移动到某元素上的时候触发mouseover事件。
- ‘mouseout’ – 鼠标从某元素离开的时候触发mouseout事件。
- ‘mousemove’ – 鼠标在某元素上移动但未离开的时候触发mousemove事件。
- ‘change’ – 控件失去input焦点的时候触发该事件（或者值被改变的时候）。
-
- ‘load’ – 页面加载完毕（包括内容、图片、frame、object）的时候触发该事件。
- ‘resize’ – 页面大小改变的时候触发该事件（例如浏览器缩放）。
- ‘scroll’ – 页面滚动的时候触发该事件。
- ‘unload’ – 从页面或frame删除所有内容的时候触发该事件（例如离开一个页面）。
-
- 严格来说，有2中不同的模型：W3C模型和微软模型，除IE之外W3C模型支持所有的现代浏览器，而微软模型只支持IE
-
- 使用W3C模型的代码如下：
-
- // 格式：target.addEventListener( type, function, useCapture );  
- // 例子:  
- var myIntro = document.getElementById(&apos;intro&apos;);
- myIntro.addEventListener(&apos;click&apos;, introClick, false);
- 使用IE模型的代码如下：
-
- // 格式: target.attachEvent ( &apos;on&apos; + type, function );  
- // 例子:  
- var myIntro = document.getElementById(&apos;intro&apos;);
- myIntro.attachEvent(&apos;onclick&apos;, introClick);
-
- 一个非常重要的内容是Event对象，当事件发生的时候出发某个函数，该Event对象将自动在函数内可用，该对象包含了很多事件触发时候的信息，但IE却没有这么实现，而是自己实现的，IE浏览器是通过全局对象window下的event属性来包含这些信息
-
- 例如当你想取消默认的行为的时候你可以使用Event对象里的preventDefault()方法，但IE里不得不使用对象的returnValue属性值来控制
-
-
- 事件冒泡，就是事件触发的时候通过DOM向上冒泡，首先要知道不是所有的事件都有冒泡。事件在一个目标元素上触发的时候，该事件将触发一一触发祖先节点元素，直到最顶层的元素：
- 如图所示，如果a连接被点击，触发触发连接的click事件，然后触发p的click事件，以此再触发div和body的click事件。顺序不变，而且不一定是在同时触发的。
- 举例来说，如果你有一个很多行的大表格，在每个&lt;tr&gt;上绑定点击事件是个非常危险的想法，因为性能是个大问题。流行的做法是使用事件委托。事件委托描述的是将事件绑定在容器元素上，然后通过判断点击的target子元素的类型来触发相应的事件。
- 事件委托依赖于事件冒泡，如果事件冒泡到table之前被禁用的话，那上面的代码就无法工作了。
-
- 经典的事件处理模型，微软的冒泡，以及网景的捕获模型，w3c的两者兼容，网上例子很多，去看解释
-</code></pre>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h1 id=&quot;今天要分享的内容是tom大叔的JavaScript系列的读书观后感2&quot;&gt;&lt;a href=&quot;#今天要分享的内容是tom大叔的JavaScript系列的读书观后感2&quot; class=&quot;headerlink&quot; title=&quot;今天要分享的内容是tom大叔的JavaScrip
     
     </summary>
     
