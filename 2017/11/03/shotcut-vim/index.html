@@ -10,7 +10,7 @@
     
     
     
-    <title>关于log4j的使用说明 | 闻道</title>
+    <title>关于vim的不可不知的快捷键 | 闻道</title>
     <!-- inject:style -->
     <link href="/css/style.css" rel="stylesheet" type="text/css">
     <!-- endinject -->
@@ -164,13 +164,13 @@
     <div class="cube-content">
         <div class="cube-left">
             <div class="cube-article">
-    <h1 class="title">关于log4j的使用说明</h1>
+    <h1 class="title">关于vim的不可不知的快捷键</h1>
     
     <div class="cube-article-header">
         <div class="cube-article-date">
             <i class="cube-icon cube-icon-date" aria-hidden="true"></i>
             <!-- moment.js对象 -->
-            2017-06-06
+            2017-11-03
         </div>
         <div class="cube-article-tags">
     <i class="cube-icon cube-icon-tag" aria-hidden="true"></i>
@@ -183,60 +183,316 @@
     
     <div class="cube-article-content cube-markdown">
         
-        <h1 id="今天要分享的内容是log4j的使用。"><a href="#今天要分享的内容是log4j的使用。" class="headerlink" title="今天要分享的内容是log4j的使用。"></a>今天要分享的内容是log4j的使用。</h1><p>每个系统都有日志记录，而多数都是用的log4j，以为会配置了，懂了，发现还是有些细节的问题，要问，说不上来<br><a id="more"></a> </p>
-<h1 id="先来直接看配置吧和测试用例吧"><a href="#先来直接看配置吧和测试用例吧" class="headerlink" title="先来直接看配置吧和测试用例吧"></a>先来直接看配置吧和测试用例吧</h1><p>jar包的依赖<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&lt;!-- log4j support --&gt;</div><div class="line">    &lt;dependency&gt;</div><div class="line">        &lt;groupId&gt;log4j&lt;/groupId&gt;</div><div class="line">        &lt;artifactId&gt;log4j&lt;/artifactId&gt;</div><div class="line">        &lt;version&gt;1.2.17&lt;/version&gt;</div><div class="line">    &lt;/dependency&gt;</div></pre></td></tr></table></figure></p>
-<p>log4j.properties文件如下，放在你的web的resource下面，推荐maven标准工程来<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">### 设置###</div><div class="line">log4j.rootLogger = DEBUG,stdout,D,E</div><div class="line"></div><div class="line">log4j.logger.A=DEBUG, stdout</div><div class="line">log4j.logger.A.B=INFO, stdout  </div><div class="line"></div><div class="line">### 输出信息到控制抬 ###</div><div class="line">log4j.appender.stdout = org.apache.log4j.ConsoleAppender</div><div class="line">log4j.appender.stdout.Target = System.out</div><div class="line">log4j.appender.stdout.layout = org.apache.log4j.PatternLayout</div><div class="line">log4j.appender.stdout.layout.ConversionPattern = [%-5p] %d&#123;yyyy-MM-dd HH:mm:ss,SSS&#125; method:%l%n%m%n</div><div class="line"></div><div class="line">### 输出DEBUG 级别以上的日志到=D://logs/error.log ###</div><div class="line">log4j.appender.D = org.apache.log4j.DailyRollingFileAppender</div><div class="line">log4j.appender.D.File = D://logs/log.log</div><div class="line">log4j.appender.D.Append = true</div><div class="line">log4j.appender.D.Threshold = DEBUG</div><div class="line">log4j.appender.D.layout = org.apache.log4j.PatternLayout</div><div class="line">log4j.appender.D.layout.ConversionPattern = %-d&#123;yyyy-MM-dd HH:mm:ss&#125;  [ %t:%r ] - [ %p ]  %m%n</div><div class="line"></div><div class="line">### 输出ERROR 级别以上的日志到=D://logs/error.log ###</div><div class="line">log4j.appender.E = org.apache.log4j.DailyRollingFileAppender</div><div class="line">log4j.appender.E.File =D://logs/error.log</div><div class="line">log4j.appender.E.Append = true</div><div class="line">log4j.appender.E.Threshold = ERROR</div><div class="line">log4j.appender.E.layout = org.apache.log4j.PatternLayout</div><div class="line">log4j.appender.E.layout.ConversionPattern = %-d&#123;yyyy-MM-dd HH:mm:ss&#125;  [ %t:%r ] - [ %p ]  %m%n</div></pre></td></tr></table></figure></p>
-<p>测试用例<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">import org.apache.log4j.Logger;</div><div class="line"></div><div class="line">/**</div><div class="line"> * @author hankun</div><div class="line"> * @create 2017-06-06 18:32</div><div class="line"> */</div><div class="line">public class log4jTtest &#123;</div><div class="line">    private static Logger logger = Logger.getLogger(log4jTtest.class);</div><div class="line">    private static Logger loggerA = Logger.getLogger(&quot;A&quot;);</div><div class="line">    private static Logger loggerA_B = Logger.getLogger(&quot;A.B&quot;);</div><div class="line"></div><div class="line">    /**</div><div class="line">     * @param args</div><div class="line">     */</div><div class="line">    public static void main(String[] args) &#123;</div><div class="line"></div><div class="line">        // 记录debug级别的信息</div><div class="line">        logger.debug(&quot;This is debug message.&quot;);</div><div class="line">        // 记录info级别的信息</div><div class="line">        logger.info(&quot;This is info message.&quot;);</div><div class="line">        // 记录error级别的信息</div><div class="line">        logger.error(&quot;This is error message.&quot;);</div><div class="line"></div><div class="line">        loggerA_B.info(&quot;repeat three times in console&quot;);</div><div class="line">        loggerA.info(&quot;repeat two times in console&quot;);</div><div class="line">        logger.info(&quot;repeat one times in console&quot;);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<h1 id="注意上面的输出结果，你知道输出啥内容，则，就真正理解了"><a href="#注意上面的输出结果，你知道输出啥内容，则，就真正理解了" class="headerlink" title="注意上面的输出结果，你知道输出啥内容，则，就真正理解了"></a>注意上面的输出结果，你知道输出啥内容，则，就真正理解了</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">[DEBUG] 2017-06-06 19:05:03,477 method:log4jTtest.main(log4jTtest.java:18)</div><div class="line">This is debug message.</div><div class="line">[INFO ] 2017-06-06 19:05:03,479 method:log4jTtest.main(log4jTtest.java:20)</div><div class="line">This is info message.</div><div class="line">[ERROR] 2017-06-06 19:05:03,479 method:log4jTtest.main(log4jTtest.java:22)</div><div class="line">This is error message.</div><div class="line">[INFO ] 2017-06-06 19:05:03,479 method:log4jTtest.main(log4jTtest.java:24)</div><div class="line">repeat three times in console</div><div class="line">[INFO ] 2017-06-06 19:05:03,479 method:log4jTtest.main(log4jTtest.java:24)</div><div class="line">repeat three times in console</div><div class="line">[INFO ] 2017-06-06 19:05:03,479 method:log4jTtest.main(log4jTtest.java:24)</div><div class="line">repeat three times in console</div><div class="line">[INFO ] 2017-06-06 19:05:03,480 method:log4jTtest.main(log4jTtest.java:25)</div><div class="line">repeat two times in console</div><div class="line">[INFO ] 2017-06-06 19:05:03,480 method:log4jTtest.main(log4jTtest.java:25)</div><div class="line">repeat two times in console</div><div class="line">[INFO ] 2017-06-06 19:05:03,480 method:log4jTtest.main(log4jTtest.java:26)</div><div class="line">repeat one times in console</div></pre></td></tr></table></figure>
-<h1 id="问题如下"><a href="#问题如下" class="headerlink" title="问题如下"></a>问题如下</h1><ol>
-<li>前面的三个输出，不用解释，都明白为啥</li>
-<li>为啥那个loggerA_B，输出了三次，而loggerA输出了二次，logger输出了一次？</li>
-</ol>
-<h1 id="log4j几个重要的概念"><a href="#log4j几个重要的概念" class="headerlink" title="log4j几个重要的概念"></a>log4j几个重要的概念</h1><ul>
-<li>logger组件<ol>
-<li>简单的说，它就是决定了应用程序中，哪些代码哪些地方，有可能输出日志</li>
-<li>这也就是为什么，每个类里面上来，就是，logger的初始化，它决定了这个类有资格输出日志</li>
-<li>首先Log4J中总是存在一个rootLogger，即使没有显示配置也是存在的，并且默认输出级别为DEBUG。</li>
-<li>Log4J中的层次是用’.’来分隔的，如log4j.logger.com.example.test，这里并不是说log4j.logger后面一定是具体的包名乃至类名，</li>
-</ol>
-</li>
-<li>appender组件<ol>
-<li>输出地，也就是你的日志想输出到哪里，把上面的logger里面的日志</li>
-<li>再简单点，就是输出到控制台和文件里面，也就是上面的配置stdout和D和E</li>
-<li>这个需要和下面的这个概念配合</li>
-</ol>
-</li>
-<li>输出控制的概念<ol>
-<li>Log4j默认把日志信息分为五个等级  all&lt;debug &lt; info &lt; warn &lt; error &lt; fatal&lt;off</li>
-<li>只有大于设置的级别，才会打印日志，低于则忽略</li>
-<li>log4j.appender.threshold=ERROR，这种配置用于控制，一个appender的输出级别</li>
-</ol>
-</li>
-<li>继承的概念<ol>
-<li>log4j.rootLogger=DEBUG, Console</li>
-<li>log4j.logger.A=DEBUG, Console</li>
-<li>log4j.logger.A.B=INFO, Console</li>
-<li>A.B继承A，再继承最顶级的root</li>
-<li>Log4j是根据Log的名字来判断继承关系的</li>
-</ol>
-</li>
-</ul>
-<h1 id="来解释一下，上面的输出结果"><a href="#来解释一下，上面的输出结果" class="headerlink" title="来解释一下，上面的输出结果"></a>来解释一下，上面的输出结果</h1><ol>
-<li>首先是，debug，info和error前三个日志输出，它们的logger是log4jTtest.class初始化的，继承根logger，因此就是debug级别，同时因为还有D和E的两个appender，所以你在d盘可以看到，有一个info的文件还有一个error的文件，这个日志输出没问题</li>
-<li>然后就是解释那重复的三个，因为loggerA_B，它是根据A.B这个参数初始化的，是有继承的，满足A.B的info级别的日志输出，必然满足A的logger的日志输出，当然还有默认的根输出，因此三次</li>
-<li>而那个两次的，它的logger是loggerA，继承于根，因此，info的时候，它本身输出一次，根也输出一次，就是两次了。</li>
-<li>最后一个，用的是默认的根，当然，只能输出一次了</li>
-</ol>
-<h1 id="问题来了，怎么避免重复，因为继承父的logger？"><a href="#问题来了，怎么避免重复，因为继承父的logger？" class="headerlink" title="问题来了，怎么避免重复，因为继承父的logger？"></a>问题来了，怎么避免重复，因为继承父的logger？</h1><pre><code>log4j.additivity.A.B=false
-logger A.B的日志仅会输出到自己Console中，不会继承任何父logger的appender。
-</code></pre><p> 就加上面的这句，就解决了问题</p>
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>之前反反复复看了很多次，关于日志log4j的配置，每次看完以为会了，但是到了项目里面，总是不知道，自己有时候打印的日志到底跑哪里去了，或者去哪里看？<br>总结其原因就是，对于细节没有掌握理解到位，比如就是这个logger的概念，如果你真正的明白了，就知道了</p>
-<p>谁能产生日志？logger</p>
-<p>日志放哪里？appender</p>
-<p>什么级别的日志才会输出？日志级别</p>
-<p>他们是相互独立的组件，单独配置，又是相互配合，一起使用的，n*m的这种概念</p>
-<p>因此上面的配置文件，一个logger可以对应多个appender，而appender之间又是彼此独立的。</p>
+<div class="cube-gallery">
+    
+    <a class="gallery-item" href="https://i.pximg.net/c/600x600/img-master/img/2017/10/16/17/20/52/65460420_p0_master1200.jpg" rel="gallery_cja0y1ejv0011lgdrblrz6ofq">
+        <img src="https://i.pximg.net/c/600x600/img-master/img/2017/10/16/17/20/52/65460420_p0_master1200.jpg" itemprop="image" />
+    </a>
+    
+    <a class="gallery-item" href="https://i.pximg.net/c/600x600/img-master/img/2017/10/30/13/26/41/65661514_p0_master1200.jpg" rel="gallery_cja0y1ejv0011lgdrblrz6ofq">
+        <img src="https://i.pximg.net/c/600x600/img-master/img/2017/10/30/13/26/41/65661514_p0_master1200.jpg" itemprop="image" />
+    </a>
+    
+    <a class="gallery-item" href="https://i.pximg.net/c/600x600/img-master/img/2017/11/01/11/35/40/65697180_p0_master1200.jpg" rel="gallery_cja0y1ejv0011lgdrblrz6ofq">
+        <img src="https://i.pximg.net/c/600x600/img-master/img/2017/11/01/11/35/40/65697180_p0_master1200.jpg" itemprop="image" />
+    </a>
+    
+</div>
 
+        <h1 id="linux上使用vi编辑查看文本总是记不住那些按键？"><a href="#linux上使用vi编辑查看文本总是记不住那些按键？" class="headerlink" title="linux上使用vi编辑查看文本总是记不住那些按键？"></a>linux上使用vi编辑查看文本总是记不住那些按键？</h1><p>先看几张，可爱的娜娜奇</p>
+<p>对于开发人员，linux是不陌生的吧，尤其是写动态页面的，经常要登录linux上面查看，文件是否更新，以及更新的内容变化<br>因此今天总结一下，这些常用的快捷键<br><a id="more"></a> </p>
+<h1 id="总的分为几个部分"><a href="#总的分为几个部分" class="headerlink" title="总的分为几个部分"></a>总的分为几个部分</h1><table>
+<thead>
+<tr>
+<th>光标移动</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>h,j,k,l（替代箭头）</td>
+<td>h表示往左，j表示往下，k表示往上，l表示往右</td>
+</tr>
+<tr>
+<td>Ctrl+f（翻页）</td>
+<td>下一页</td>
+</tr>
+<tr>
+<td>Ctrl+b（翻页）</td>
+<td>上一页</td>
+</tr>
+<tr>
+<td>w, e, W, E（单词内部跳）</td>
+<td>跳到单词的后面，小写包括标点</td>
+</tr>
+<tr>
+<td>b, B（单词之间跳）</td>
+<td>以单词为单位往前跳动光标，小写包含标点</td>
+</tr>
+<tr>
+<td>0（好像和下面的^没有啥区别，效果一样）</td>
+<td>跳到本行的头部</td>
+</tr>
+<tr>
+<td>O（插入一行）</td>
+<td>开启新的一行</td>
+</tr>
+<tr>
+<td>^</td>
+<td>一行的开始</td>
+</tr>
+<tr>
+<td>$</td>
+<td>一行的结尾</td>
+</tr>
+<tr>
+<td>gg</td>
+<td>文档的第一行</td>
+</tr>
+<tr>
+<td>[N]G</td>
+<td>文档的第N行（G 是最后一行），如：27+shift+g</td>
+</tr>
+<tr>
+<td>插入</td>
+</tr>
+<tr>
+<td>i（小写相对于光标）</td>
+<td>插入到光标前面</td>
+</tr>
+<tr>
+<td>I（大写相对于行）</td>
+<td>插入到行的开始位置</td>
+</tr>
+<tr>
+<td>a</td>
+<td>插入到光标的后面</td>
+</tr>
+<tr>
+<td>A</td>
+<td>插入到行的最后位置</td>
+</tr>
+<tr>
+<td>o（相对于行）</td>
+<td>在当前光标的下方插入新一行</td>
+</tr>
+<tr>
+<td>O(Shift+o)</td>
+<td>在当前光标的上方插入新一行</td>
+</tr>
+<tr>
+<td>Esc</td>
+<td>关闭插入模式</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>编辑</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>r（单个字符replace）</td>
+<td>在插入模式替换光标所在的一个字符</td>
+</tr>
+<tr>
+<td>J(行)</td>
+<td>合并下一行到上一行</td>
+</tr>
+<tr>
+<td>s（单个字符删除进入插入状态）</td>
+<td>删除光标所在的一个字符, 光标还在当行</td>
+</tr>
+<tr>
+<td>S（整行删除进入插入状态）</td>
+<td>删除光标所在的一行，光标还在当行，不同于dd</td>
+</tr>
+<tr>
+<td>u（类别ctrl+z）</td>
+<td>撤销上一步操作</td>
+</tr>
+<tr>
+<td>ctrl+r（类别ctrl+y）</td>
+<td>恢复上一步操作</td>
+</tr>
+<tr>
+<td>.(记忆)</td>
+<td>重复最后一个命令</td>
+</tr>
+<tr>
+<td>~（单个字符）</td>
+<td>变换为大写</td>
+</tr>
+<tr>
+<td>[N]&gt;&gt;</td>
+<td>一行或N行往右移动一个tab</td>
+</tr>
+<tr>
+<td>[N]&lt;&lt;</td>
+<td>一行或N行往左移动一个tab</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>退出</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>:w</td>
+<td>保存</td>
+</tr>
+<tr>
+<td>:q</td>
+<td>关闭（前提是，执行了已保存）</td>
+</tr>
+<tr>
+<td>:q!</td>
+<td>（强行退，丢失内容）强制关，不保存</td>
+</tr>
+<tr>
+<td>:wq,:x,ZZ(这三个是等价的)</td>
+<td>保存并关闭</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>查找和搜索</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>/pattern(最常用的)</td>
+<td>搜索（非插入模式) ，支持正则</td>
+</tr>
+<tr>
+<td>?pattern（区别是按n的时候，方向不一样）</td>
+<td>往前搜索</td>
+</tr>
+<tr>
+<td>n</td>
+<td>光标到达搜索结果的前一个目标</td>
+</tr>
+<tr>
+<td>N</td>
+<td>光标到达搜索结果的后一个目标</td>
+</tr>
+<tr>
+<td>r+p（上面编辑r的用法）</td>
+<td>将光标之后的字符替换为字母p</td>
+</tr>
+<tr>
+<td>:s/word/replace（相对于行）</td>
+<td>光标所在行的第一个 word 替换为replace。</td>
+</tr>
+<tr>
+<td>:%s/word/replace/（相对于全局）</td>
+<td>全文查找 word 并替换为 replace</td>
+</tr>
+<tr>
+<td>:1,50s/word/replace/（指定范围内，也就是行）</td>
+<td>在第1行和第50行之间（含）进行搜索和替换</td>
+</tr>
+<tr>
+<td>:45s/word/replace/（固定行）</td>
+<td>表示仅仅在第45行进行搜索和替换。而 1,$ 行号范围和 % 是等价的</td>
+</tr>
+<tr>
+<td>:%s/^/ 要插入的字符串</td>
+<td>每行开头插入字符串</td>
+</tr>
+<tr>
+<td>:%s/$/要插入的字符串</td>
+<td>每行结尾插入字符串</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>剪切，复制，粘贴</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>dd</td>
+<td>删除一行，同时被删除内容存于剪贴板上</td>
+</tr>
+<tr>
+<td>de</td>
+<td>（不包含之后的空格）删除光标后的单词内容，同时被删除内容存于剪贴板上</td>
+</tr>
+<tr>
+<td>dw</td>
+<td>（包含空格）删除光标后的单词内容以及之后的空格，同时被删除内容存于剪贴板上</td>
+</tr>
+<tr>
+<td>[N]dd</td>
+<td>删除以当前行开始的n行</td>
+</tr>
+<tr>
+<td>x</td>
+<td>（单字符） 删除后一个字符</td>
+</tr>
+<tr>
+<td>X</td>
+<td>删除前一个字符</td>
+</tr>
+<tr>
+<td>D</td>
+<td>（区别在于光标不动，还在当前行，和dd相比）删除一行最后一个字符</td>
+</tr>
+<tr>
+<td>[N]yy</td>
+<td>复制一行或者N行</td>
+</tr>
+<tr>
+<td>yw</td>
+<td>（单词相对于）复制一个单词</td>
+</tr>
+<tr>
+<td>p</td>
+<td>粘贴</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>窗口操作</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>:vsplit</td>
+<td>水平方向分割出一个窗口</td>
+</tr>
+<tr>
+<td>:split</td>
+<td>垂直方向分割出一个窗口</td>
+</tr>
+<tr>
+<td>:close</td>
+<td>关闭窗口</td>
+</tr>
+<tr>
+<td>Ctrl+W</td>
+<td>切换窗口, h到左边窗口，j到下方窗口，k到上方窗口，l到右边窗口</td>
+</tr>
+</tbody>
+</table>
+<h1 id="以上就是分享的全部，有这6个方面的知识，基本可以应对日常的使用。"><a href="#以上就是分享的全部，有这6个方面的知识，基本可以应对日常的使用。" class="headerlink" title="以上就是分享的全部，有这6个方面的知识，基本可以应对日常的使用。"></a>以上就是分享的全部，有这6个方面的知识，基本可以应对日常的使用。</h1>
     </div>
 </div>
 
@@ -244,16 +500,16 @@ logger A.B的日志仅会输出到自己Console中，不会继承任何父logger
     <ul>
         
         <li class="prev">
-            <a href="/2017/06/06/before-gaokao/">
+            <a href="/2017/11/03/shotcut-sublime/">
                 <i class="cube-icon cube-prev" aria-hidden="true"></i>
-                写在高考前，对弟弟的祝福
+                关于sublime的不可不知的快捷键
             </a>
         </li>
         
         
         <li class="next">
-            <a href="/2017/06/02/liuyi/">
-                六一儿童节快乐（补）
+            <a href="/2017/10/12/js-es6/">
+                ES6新特性概览总结
                 <i class="cube-icon cube-next" aria-hidden="true"></i>
             </a>
         </li>
