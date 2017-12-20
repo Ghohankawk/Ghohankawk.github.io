@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://ghohankawk.github.io/"/>
-  <updated>2017-11-13T09:17:17.805Z</updated>
+  <updated>2017-12-20T07:56:40.905Z</updated>
   <id>http://ghohankawk.github.io/</id>
   
   <author>
@@ -14,6 +14,38 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>关于在linux上你必须要学的常用命令</title>
+    <link href="http://ghohankawk.github.io/2017/12/20/linux-usual-cmd/"/>
+    <id>http://ghohankawk.github.io/2017/12/20/linux-usual-cmd/</id>
+    <published>2017-12-20T06:52:02.609Z</published>
+    <updated>2017-12-20T07:56:40.905Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="从终端ssh到linux上，是否不知道该敲什么命令，想看什么？或者用linux的命令能干啥？是否有这种困惑？"><a href="#从终端ssh到linux上，是否不知道该敲什么命令，想看什么？或者用linux的命令能干啥？是否有这种困惑？" class="headerlink" title="从终端ssh到linux上，是否不知道该敲什么命令，想看什么？或者用linux的命令能干啥？是否有这种困惑？"></a>从终端ssh到linux上，是否不知道该敲什么命令，想看什么？或者用linux的命令能干啥？是否有这种困惑？</h1><p>随便测试分享几张图片</p>
+<ol>
+<li>首页这里不会具体介绍所有命令的相关选项参数，因为实在是记不住，有些也没必要</li>
+<li>会根据linux每日一命令的系列中，选出每个命令，最常用的组合，方便日常使用</li>
+<li>这个里面提供了最日常用的，建议每个人按照自己的需求，也进行总结分享</li>
+</ol>
+<p>那么今天就把终端上回用到的命令，分享一下，大家可以参考一下<br><a id="more"></a> </p>
+<h1 id="全部都记在keep上了，直接上图"><a href="#全部都记在keep上了，直接上图" class="headerlink" title="全部都记在keep上了，直接上图"></a>全部都记在keep上了，直接上图</h1><p><img src="https://i.loli.net/2017/12/20/5a3a15990f0cb.png" alt="linux命令1.png"><br>分隔线———————–<br><img src="https://i.loli.net/2017/12/20/5a3a161e21584.png" alt="linux命令2.png"><br>分隔线———————–<br><img src="https://i.loli.net/2017/12/20/5a3a1705476f5.png" alt="linux命令3.png"><br>分隔线———————–<br><img src="https://i.loli.net/2017/12/20/5a3a17050119b.png" alt="linux命令4.png"><br>分隔线———————–<br><img src="https://i.loli.net/2017/12/20/5a3a1704c6bfa.png" alt="linux命令5.png"><br>分隔线———————–<br><img src="https://i.loli.net/2017/12/20/5a3a1703a7d7c.png" alt="linux命令6.png"></p>
+<h1 id="以上就是分享的全部，你要是不知道linux有啥命令？命令能干啥？或者只知道，ls-cd-这种参数不会加的，那么看一下这组分享，应该有帮助。"><a href="#以上就是分享的全部，你要是不知道linux有啥命令？命令能干啥？或者只知道，ls-cd-这种参数不会加的，那么看一下这组分享，应该有帮助。" class="headerlink" title="以上就是分享的全部，你要是不知道linux有啥命令？命令能干啥？或者只知道，ls,cd,这种参数不会加的，那么看一下这组分享，应该有帮助。"></a>以上就是分享的全部，你要是不知道linux有啥命令？命令能干啥？或者只知道，ls,cd,这种参数不会加的，那么看一下这组分享，应该有帮助。</h1>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;从终端ssh到linux上，是否不知道该敲什么命令，想看什么？或者用linux的命令能干啥？是否有这种困惑？&quot;&gt;&lt;a href=&quot;#从终端ssh到linux上，是否不知道该敲什么命令，想看什么？或者用linux的命令能干啥？是否有这种困惑？&quot; class=&quot;headerlink&quot; title=&quot;从终端ssh到linux上，是否不知道该敲什么命令，想看什么？或者用linux的命令能干啥？是否有这种困惑？&quot;&gt;&lt;/a&gt;从终端ssh到linux上，是否不知道该敲什么命令，想看什么？或者用linux的命令能干啥？是否有这种困惑？&lt;/h1&gt;&lt;p&gt;随便测试分享几张图片&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;首页这里不会具体介绍所有命令的相关选项参数，因为实在是记不住，有些也没必要&lt;/li&gt;
+&lt;li&gt;会根据linux每日一命令的系列中，选出每个命令，最常用的组合，方便日常使用&lt;/li&gt;
+&lt;li&gt;这个里面提供了最日常用的，建议每个人按照自己的需求，也进行总结分享&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;那么今天就把终端上回用到的命令，分享一下，大家可以参考一下&lt;br&gt;
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>关于sublime的不可不知的快捷键</title>
@@ -313,7 +345,7 @@
     <link href="http://ghohankawk.github.io/2017/11/03/shotcut-vim/"/>
     <id>http://ghohankawk.github.io/2017/11/03/shotcut-vim/</id>
     <published>2017-11-03T07:37:31.010Z</published>
-    <updated>2017-11-13T09:17:17.775Z</updated>
+    <updated>2017-11-17T04:26:34.109Z</updated>
     
     <content type="html"><![CDATA[<h1 id="linux上使用vi编辑查看文本总是记不住那些按键？"><a href="#linux上使用vi编辑查看文本总是记不住那些按键？" class="headerlink" title="linux上使用vi编辑查看文本总是记不住那些按键？"></a>linux上使用vi编辑查看文本总是记不住那些按键？</h1><p>先看几张，可爱的娜娜奇</p>
 <p>对于开发人员，linux是不陌生的吧，尤其是写动态页面的，经常要登录linux上面查看，文件是否更新，以及更新的内容变化<br>因此今天总结一下，这些常用的快捷键<br><a id="more"></a> </p>
@@ -371,6 +403,7 @@
 </tr>
 <tr>
 <td>插入</td>
+<td></td>
 </tr>
 <tr>
 <td>i（小写相对于光标）</td>
@@ -2806,40 +2839,6 @@ alert(jq);
     <summary type="html">
     
       &lt;h1 id=&quot;今天要分享的内容是requirejs&quot;&gt;&lt;a href=&quot;#今天要分享的内容是requirejs&quot; class=&quot;headerlink&quot; title=&quot;今天要分享的内容是requirejs&quot;&gt;&lt;/a&gt;今天要分享的内容是requirejs&lt;/h1&gt;
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>gitbook的自己定制的写书模板</title>
-    <link href="http://ghohankawk.github.io/2017/06/15/gitbook/"/>
-    <id>http://ghohankawk.github.io/2017/06/15/gitbook/</id>
-    <published>2017-06-15T12:33:25.838Z</published>
-    <updated>2017-06-15T12:54:51.077Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="今天要分享的内容是gitbook的使用"><a href="#今天要分享的内容是gitbook的使用" class="headerlink" title="今天要分享的内容是gitbook的使用"></a>今天要分享的内容是gitbook的使用</h1><p>今天本来在看js的commonJs，amd，cmd，umd这些模块内容</p>
-<p>看着，看着，突然看到了gitbook的内容</p>
-<p>发现很多人，都用这个，写一个类似，api或者一些列的书籍用</p>
-<p>所以下午花时间，开始弄这个</p>
-<p>开始也是啥不懂，慢慢总算摸清门路了</p>
-<p>其实还是不会用</p>
-<p>本来去掉了让人讨厌的，最下面的那个published with gitbook那个连接</p>
-<p>结果和github同步了一次代码，全部丢失了</p>
-<p>后来实在，是不想弄了，就留着吧，懒得弄啦</p>
-<p>最后的解决方案就是</p>
-<p>用gitbook的那个编辑器，直接写文章将来</p>
-<p>或者像这个博客一样，全部用markdown的语法，自己写</p>
-<p>显得的高大上</p>
-<p>去我的github上面，可以找一下，gitbook的写作模板</p>
-<p>顺便把首页的测试页链接，改为自己的书籍，将来补充一下，争取写成一个书单，或者笔记之类的东西吧</p>
-<p><script src="https://source.pixiv.net/source/embed.js" data-id="63304470_cc053618b7d92f9794e300a7d7e3f1e2" data-size="large" data-border="on" charset="utf-8"></script><noscript><p><a href="https://www.pixiv.net/member_illust.php?mode=medium&amp;illust_id=63304470" target="_blank">美少女で 閲覧数を取れなきゃ 幼女を出せ</a> by <a href="https://www.pixiv.net/member.php?id=1147470" target="_blank">ぎぇうす</a> on <a href="https://www.pixiv.net/" target="_blank">pixiv</a></p></noscript></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h1 id=&quot;今天要分享的内容是gitbook的使用&quot;&gt;&lt;a href=&quot;#今天要分享的内容是gitbook的使用&quot; class=&quot;headerlink&quot; title=&quot;今天要分享的内容是gitbook的使用&quot;&gt;&lt;/a&gt;今天要分享的内容是gitbook的使用&lt;/h1&gt;&lt;p&gt;今天
     
     </summary>
     
