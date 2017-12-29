@@ -1,0 +1,1467 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="ghohank">
+    
+    
+    
+    
+    
+    
+    <title>Linux每日一命令学习系列总结 | 闻道</title>
+    <!-- inject:style -->
+    <link href="/css/style.css" rel="stylesheet" type="text/css">
+    <!-- endinject -->
+    <style>
+        .cube-loading {
+            top: 0;
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background: url('/images/lg/loading.gif') no-repeat center center;
+            background-color: rgba(0,0,0,.7);
+        }
+
+        .cube-loading.out {
+            display: none;
+        }
+
+        .cube-loading:before {
+            display: block;
+            content: '加载中';
+            position: relative;
+            width: 100%;
+            top: 50%;
+            right: -50%;
+            color: #fff;
+        }
+
+        @media(max-width: 768px) {
+            .cube-loading:before {
+                font-size: 1.2em;
+                transform: translate(-24px,20px);
+                -webkit-transform: translate(-24px,20px);
+                -o-transform: translate(-24px,20px);
+                -ms-transform: translate(-24px,20px);
+            }
+        }
+
+        @media(min-width: 768px) {
+            .cube-loading:before {
+
+            }
+        }
+    </style>
+    
+    <script type="text/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-100775956-1', 'auto');
+    ga('send', 'pageview');
+</script>
+
+    
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-9654808400771776",
+            enable_page_level_ads: true
+        });
+    </script>
+</head>
+<body>
+<div class="cube-body">
+    <nav id="cube-top-memu" class="cube-menu">
+    <ul class="cube-menu-collapse">
+        
+        <li>
+            <i class="cube-icon cube-icon-home" aria-hidden="true"></i>
+            <a href="/">首页</a>
+        </li>
+        
+        <li>
+            <i class="cube-icon cube-icon-archive" aria-hidden="true"></i>
+            <a href="/archives">归档</a>
+        </li>
+        
+        <li>
+            <i class="cube-icon cube-icon-about" aria-hidden="true"></i>
+            <a href="/about.html">关于我</a>
+        </li>
+        
+    </ul>
+</nav>
+<nav class="cube-side-menu" id="cube-side-menu">
+    <ul class="cube-menu-list">
+        <li>
+            <a class="scroll-to-top">回到顶部</a>
+        </li>
+    </ul>
+</nav>
+    <header class="cube-header" id="cube-header">
+    <img src=" http://punchline.asia/wp-content/uploads/2016/10/%E3%80%8A%E4%BD%A0%E7%9A%84%E5%90%8D%E5%AD%97%E3%80%8B10%E6%9C%8814%E8%87%B316%E6%97%A5%E5%8F%A3%E7%A2%91%E5%A0%B4%EF%BC%8C10%E6%9C%8821%E6%97%A5%E5%85%A8%E5%8F%B0%E6%AD%A3%E5%BC%8F%E4%B8%8A%E6%98%A0100403.jpg " alt="头部背景图片">
+    
+    <div class="cube-type">
+        <span class="cube-typed-title">二次元の世界</span>
+        <span class="cube-typed-cursor">|</span>
+    </div>
+    
+</header>
+
+    <style>
+        nav.cube-menu:before {
+            content: '';
+            visibility: hidden;
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 44px;
+        
+            filter: blur(5px);
+            -webkit-filter: blur(5px);
+        
+            z-index: -1;
+            background-image: url('http://punchline.asia/wp-content/uploads/2016/10/%E3%80%8A%E4%BD%A0%E7%9A%84%E5%90%8D%E5%AD%97%E3%80%8B10%E6%9C%8814%E8%87%B316%E6%97%A5%E5%8F%A3%E7%A2%91%E5%A0%B4%EF%BC%8C10%E6%9C%8821%E6%97%A5%E5%85%A8%E5%8F%B0%E6%AD%A3%E5%BC%8F%E4%B8%8A%E6%98%A0100403.jpg');
+            background-repeat: no-repeat;
+            background-position: center -356px;
+            background-size: cover;
+            background-color: transparent;
+        }
+
+        header.cube-background.cube-header-background {
+            visibility: hidden;
+            background-image: url('http://punchline.asia/wp-content/uploads/2016/10/%E3%80%8A%E4%BD%A0%E7%9A%84%E5%90%8D%E5%AD%97%E3%80%8B10%E6%9C%8814%E8%87%B316%E6%97%A5%E5%8F%A3%E7%A2%91%E5%A0%B4%EF%BC%8C10%E6%9C%8821%E6%97%A5%E5%85%A8%E5%8F%B0%E6%AD%A3%E5%BC%8F%E4%B8%8A%E6%98%A0100403.jpg');
+            background-position: center -400px;
+        }
+    </style>
+    <header class="cube-background cube-header-background">
+        
+        <div class="cube-type">
+            <span class="cube-typed-title">二次元の世界</span>
+            <span class="cube-typed-cursor">|</span>
+        </div>
+        
+    </header>
+    <div class="load-header-background"></div>
+    <script>
+        (function (window) {
+
+            window.headerModule = {}
+            window.headerModule.image = {
+                width: '1920',
+                height: '1080'
+            }
+
+        })(window)
+    </script>
+    
+    <div class="cube-content">
+        <div class="cube-left">
+            <div class="cube-article">
+    <h1 class="title">Linux每日一命令学习系列总结</h1>
+    
+    <div class="cube-article-header">
+        <div class="cube-article-date">
+            <i class="cube-icon cube-icon-date" aria-hidden="true"></i>
+            <!-- moment.js对象 -->
+            2017-12-29
+        </div>
+        <div class="cube-article-tags">
+    <i class="cube-icon cube-icon-tag" aria-hidden="true"></i>
+    
+</div>
+        <span id="busuanzi_container_page_pv">
+        <i class="cube-icon fa-eye" aria-hidden="true">访问量：<span style="display: inline-block" id="busuanzi_value_page_pv"></span></i>
+        </span>
+    </div>
+    
+    <div class="cube-article-content cube-markdown">
+        
+<div class="cube-gallery">
+    
+    <a class="gallery-item" href="https://lh3.googleusercontent.com/-jeVkuXRyY2U/WkU7va-I2dI/AAAAAAAACtU/Mq8zHnXBN3IQ4Tz-sYgjNBb3bDUUpdxBgCJoC/w530-h663-n-rw/50425_23164038_163249994272721_204712082791202816_n.jpg" rel="gallery_cjbro7y1i0000t8drfha2t0ub">
+        <img src="https://lh3.googleusercontent.com/-jeVkuXRyY2U/WkU7va-I2dI/AAAAAAAACtU/Mq8zHnXBN3IQ4Tz-sYgjNBb3bDUUpdxBgCJoC/w530-h663-n-rw/50425_23164038_163249994272721_204712082791202816_n.jpg" itemprop="image" />
+    </a>
+    
+    <a class="gallery-item" href="https://lh3.googleusercontent.com/-ffUP6ygBZjs/WkVrrcVAWFI/AAAAAAAAIjc/kwTa3YCuDv0c4VDDGMkNd7Eyw9sVBbqYQCJoC/w530-h750-n-rw/4257458dea04a1d6d17df4b118bde90f.jpg" rel="gallery_cjbro7y1i0000t8drfha2t0ub">
+        <img src="https://lh3.googleusercontent.com/-ffUP6ygBZjs/WkVrrcVAWFI/AAAAAAAAIjc/kwTa3YCuDv0c4VDDGMkNd7Eyw9sVBbqYQCJoC/w530-h750-n-rw/4257458dea04a1d6d17df4b118bde90f.jpg" itemprop="image" />
+    </a>
+    
+    <a class="gallery-item" href="https://lh3.googleusercontent.com/-kKbWXIuf30E/WkTWohmF7uI/AAAAAAACl0A/2GEDtOaTmhwkYzpsc-A_-jNNtNOWlSp3wCJoC/w530-h568-n-rw/KiuMbY5S6U.png" rel="gallery_cjbro7y1i0000t8drfha2t0ub">
+        <img src="https://lh3.googleusercontent.com/-kKbWXIuf30E/WkTWohmF7uI/AAAAAAACl0A/2GEDtOaTmhwkYzpsc-A_-jNNtNOWlSp3wCJoC/w530-h568-n-rw/KiuMbY5S6U.png" itemprop="image" />
+    </a>
+    
+</div>
+
+        <h1 id="这里是罗列出最常用的命令组合，而不是一个个详细介绍每个参数的用法，适合当你面对linux的终端的时候，知道有哪些命令，可是不知道加啥组合参数有啥效果的时候使用。"><a href="#这里是罗列出最常用的命令组合，而不是一个个详细介绍每个参数的用法，适合当你面对linux的终端的时候，知道有哪些命令，可是不知道加啥组合参数有啥效果的时候使用。" class="headerlink" title="这里是罗列出最常用的命令组合，而不是一个个详细介绍每个参数的用法，适合当你面对linux的终端的时候，知道有哪些命令，可是不知道加啥组合参数有啥效果的时候使用。"></a>这里是罗列出最常用的命令组合，而不是一个个详细介绍每个参数的用法，适合当你面对linux的终端的时候，知道有哪些命令，可是不知道加啥组合参数有啥效果的时候使用。</h1><p>首页先要说的是，今天是2017年的年末的最后一个工作日，马上就要元旦过新年了，大家这一年过得怎么样？</p>
+<p>不过如何，虽然又大了一岁，改变了很多事情，还是要说新年元旦快乐。</p>
+<p>回到正文，居然没有人看，图片版本的上篇文章，那么只好弄一篇markdown版本的帮助你们复制粘贴了，原文可以去这里看，www.cnblogs.com/peida/tag/每日一linux命令/</p>
+<p>说明，文中的，三个减号(—)代表linux的管道符合（|），因为markdown的表格冲突，暂时这样写<br><a id="more"></a> </p>
+<h2 id="正式开始"><a href="#正式开始" class="headerlink" title="正式开始"></a>正式开始</h2><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>使用场景</th>
+<th>组合参数用法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ls</td>
+<td>列出某一个目录下的子目录以及文件</td>
+<td><code>ls -lRF  /</code></td>
+</tr>
+<tr>
+<td></td>
+<td>因为total的原因不够直观，那么可以代替上面这个</td>
+<td><code>find $PWD ---xargs ls -ldF</code></td>
+</tr>
+<tr>
+<td></td>
+<td>如果还是不够直观，这次加颜色参数</td>
+<td><code>find $PWD --- xargs ls -ldF --color</code></td>
+</tr>
+<tr>
+<td></td>
+<td>当前文件目录最新修改的文件排序最前</td>
+<td><code>ls -ltr</code></td>
+</tr>
+<tr>
+<td></td>
+<td>直观的看出目录于名称后加”/“, 可执行档于名称后加”*”</td>
+<td><code>ls -F</code></td>
+</tr>
+<tr>
+<td>———-</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>cd</td>
+<td>进入当前登录用户的目录</td>
+<td><code>cd</code></td>
+</tr>
+<tr>
+<td></td>
+<td>进入刚才的目录</td>
+<td><code>cd -</code></td>
+</tr>
+<tr>
+<td></td>
+<td>后退上一级目录</td>
+<td><code>cd ..</code></td>
+</tr>
+<tr>
+<td>———-</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>pwd</td>
+<td>当前工作目录的完整路径（软连接，-P物理地址）</td>
+<td><code>pwd</code></td>
+</tr>
+<tr>
+<td>———-</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>mkdir</td>
+<td>创建目录 （递归创建目录-p）</td>
+<td><code>mkdir -p hank/a/b/c</code></td>
+</tr>
+<tr>
+<td>———-</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>rm</td>
+<td>强制删除当前目录以及里面的文件</td>
+<td><code>rm -rf  *</code></td>
+</tr>
+<tr>
+<td>———-</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>rmdir</td>
+<td>删除空目录（删除前目录必须为空）递归删除包括自身</td>
+<td><code>rmdir -p</code>（不实用）</td>
+</tr>
+<tr>
+<td>———-</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>mv</td>
+<td>文件改名</td>
+<td><code>mv test.log test.txt</code></td>
+</tr>
+<tr>
+<td></td>
+<td>文件移动</td>
+<td><code>mv test.log(文件)   test(文件夹)</code></td>
+</tr>
+<tr>
+<td></td>
+<td>目录移动</td>
+<td><code>mv testa(文件夹)   testb(文件夹)</code></td>
+</tr>
+<tr>
+<td></td>
+<td>移动当前文件夹下的所有文件到上一级目录</td>
+<td><code>mv * ../</code></td>
+</tr>
+<tr>
+<td>———-</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>cp</td>
+<td>复制单个文件到目标目录</td>
+<td><code>cp test.log(文件)    test(文件夹)</code></td>
+</tr>
+<tr>
+<td></td>
+<td>复制整个目录 (testb不存在那么就没有testa)</td>
+<td><code>cp -a testa(文件夹)   testb(文件夹)</code></td>
+</tr>
+<tr>
+<td>———-</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>touch</td>
+<td>创建文件</td>
+<td><code>touch a b c</code></td>
+</tr>
+<tr>
+<td></td>
+<td>修改文件时间戳</td>
+<td><code>touch a</code></td>
+</tr>
+<tr>
+<td>———-</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>cat</td>
+<td>查看文件</td>
+<td><code>cat  a  b  c</code></td>
+</tr>
+<tr>
+<td></td>
+<td>生成文件</td>
+<td><code>cat &gt;test.log&lt;&lt;EOF</code></td>
+</tr>
+<tr>
+<td></td>
+<td>合并文件</td>
+<td><code>cat  a  b  c  &gt; d</code></td>
+</tr>
+<tr>
+<td>———-</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>nl</td>
+<td>显示行号不管是否为空行</td>
+<td><code>nl -b a test.log</code></td>
+</tr>
+<tr>
+<td></td>
+<td>让行号左边开头补全零</td>
+<td><code>nl -b a -n rz test.log</code></td>
+</tr>
+<tr>
+<td>———-</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>more</td>
+<td>向后翻页</td>
+<td>空格</td>
+</tr>
+<tr>
+<td></td>
+<td>向前翻页</td>
+<td>b键</td>
+</tr>
+<tr>
+<td></td>
+<td>从第n页开始</td>
+<td><code>more        +n             文件</code></td>
+</tr>
+<tr>
+<td></td>
+<td>每页设定n条记录</td>
+<td><code>more         -n             文件</code></td>
+</tr>
+<tr>
+<td></td>
+<td>查找一个指定字符串</td>
+<td><code>more        +/字符串     文件</code></td>
+</tr>
+<tr>
+<td>———-</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>less</td>
+<td>升级版的more，低级版的vi，不需要像more一样全部加载文件</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>查看文件</td>
+<td><code>less           文件（其他按键操作看vi）</code></td>
+</tr>
+<tr>
+<td>———-</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>head</td>
+<td>显示文件的前5行</td>
+<td><code>head          -n        5       log.test</code></td>
+</tr>
+<tr>
+<td></td>
+<td>显示文件的除了最后5行的全部内容</td>
+<td><code>head    -n   -5      log.test</code></td>
+</tr>
+<tr>
+<td>———-</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>tail</td>
+<td>显示行末的最后5行</td>
+<td><code>tail             -n        5        log.test</code></td>
+</tr>
+<tr>
+<td></td>
+<td>刷新查看最新的文件内容</td>
+<td><code>tail              -f                  log.test(超实用)</code></td>
+</tr>
+<tr>
+<td></td>
+<td>显示文件第5行开始的内容</td>
+<td><code>tail              -n       +5      log.test</code></td>
+</tr>
+<tr>
+<td>———-</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>which</td>
+<td>查询Path变量路径下的，某个系统可执行（不是任意的文件）的文件的位置</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td><code>which    ls</code></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td><code>which    which</code></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td><code>which    cd</code></td>
+</tr>
+<tr>
+<td>———-</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>whereis</td>
+<td>搜索程序名包括，二进制文件，man说明文件，源代码文件三类（不要搞错）</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td><code>whereis  svn</code></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td><code>whereis  tomcat</code></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td><code>whereis  resin</code></td>
+</tr>
+<tr>
+<td>———-</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>locate</td>
+<td>快速查询档案系统是否有指定的档案（这里我也不太懂什么叫档案）</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>查询pwd相关的文件</td>
+<td><code>locate      pwd</code></td>
+</tr>
+<tr>
+<td></td>
+<td>查询etc目录下所有m开头的文件</td>
+<td><code>locate      /etc/m</code></td>
+</tr>
+<tr>
+<td>———-</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>find</td>
+<td>查询24小时内修改过的文件</td>
+<td><code>find           -atime            -1</code></td>
+</tr>
+<tr>
+<td></td>
+<td>根据关键字查询文件(文件夹)</td>
+<td><code>find           -name            &quot;*han*&quot;</code></td>
+</tr>
+<tr>
+<td></td>
+<td>只查询文件不包括文件夹</td>
+<td><code>find  -type f  -name       &quot;*han*&quot;</code></td>
+</tr>
+<tr>
+<td></td>
+<td>查询当前目录下的所有子目录</td>
+<td><code>find    .   type     d</code></td>
+</tr>
+<tr>
+<td></td>
+<td>查询当前目录下大于1k的文件</td>
+<td><code>find    .   -type   f  -size +1000c</code></td>
+</tr>
+<tr>
+<td></td>
+<td>列出更加详细的文件信息组合命令</td>
+<td><code>find    .   -type   f  -exec ls -l {} \;</code></td>
+</tr>
+<tr>
+<td></td>
+<td>把查找到的文件移动到指定目录</td>
+<td><code>find . -type f  -name  &quot;*han*&quot; -exec mv {} hello</code></td>
+</tr>
+<tr>
+<td></td>
+<td>把查找到的文件复制到指定目录</td>
+<td><code>find . -type f  -name  &quot;*han*&quot; -exec cp {} hello</code></td>
+</tr>
+<tr>
+<td></td>
+<td>查找当前目录文件并显示属于哪类文件</td>
+<td><code>find . -type f --- xargs  file</code></td>
+</tr>
+<tr>
+<td></td>
+<td>查找当面目录文件中包括关键字</td>
+<td><code>find .  -type  f --- xargs   grep  &quot;hank&quot;</code></td>
+</tr>
+<tr>
+<td></td>
+<td>在a目录查询避开b目录查询</td>
+<td><code>find   a  -path   &quot;b&quot; -prune -o -print</code></td>
+</tr>
+<tr>
+<td></td>
+<td>优先在当前目录查找然后去子目录</td>
+<td><code>find / -name &quot;file&quot; -depth -print</code></td>
+</tr>
+<tr>
+<td>———-</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>chmod</td>
+<td>给文件一组默认执行权限</td>
+<td><code>chmod     751           test.log</code></td>
+</tr>
+<tr>
+<td></td>
+<td>给文件一组默认读权限</td>
+<td><code>chmod      444          test.log</code></td>
+</tr>
+<tr>
+<td></td>
+<td>给文件一组读写执行权限</td>
+<td><code>chmod     777           test.log</code></td>
+</tr>
+<tr>
+<td>———-</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>tar</td>
+<td>搞清楚打包和压缩两个概念，tar是打包用的，但是可以参数进行压缩</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>解开一个tar包还原里面的文件</td>
+<td><code>tar xvf     file.tar</code></td>
+</tr>
+<tr>
+<td></td>
+<td>把文件和目录达成一个tar包</td>
+<td><code>tar cvf   file.tar   对应目录</code></td>
+</tr>
+<tr>
+<td></td>
+<td>解开tar包的压缩包版本 （gzip）</td>
+<td><code>tar zxvf    file.tar.gz</code></td>
+</tr>
+<tr>
+<td></td>
+<td>压缩打包后的tar包 （bzip）</td>
+<td><code>tar zcvf     file.tar.gz     对应目录</code></td>
+</tr>
+<tr>
+<td></td>
+<td>产一个gz的压缩包</td>
+<td><code>tar -ztvf   file.tar.gz</code></td>
+</tr>
+<tr>
+<td>———-</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>chgrp</td>
+<td>群组去/etc/group里面看</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>根据某个文件改变其他所属的类别</td>
+<td><code>chgrp      --reference=a      b</code></td>
+</tr>
+<tr>
+<td>———-</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>chown</td>
+<td>更改指定目录及其子目录所有的拥有者和群组</td>
+<td><code>chown -R hank:han   test.log</code></td>
+</tr>
+<tr>
+<td>———-</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>gzip</td>
+<td>压缩当前目录下的所有文件（文件夹忽略）</td>
+<td><code>gzip *</code></td>
+</tr>
+<tr>
+<td></td>
+<td>解压当前目录下的压缩文件</td>
+<td><code>gzip  -d   *</code></td>
+</tr>
+<tr>
+<td></td>
+<td>压缩一个tar包</td>
+<td><code>gzip -r test.tar</code></td>
+</tr>
+<tr>
+<td></td>
+<td>递归压缩目录</td>
+<td><code>gzip  -r       test/</code></td>
+</tr>
+<tr>
+<td>———-</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>df</td>
+<td>显示磁盘使用情况</td>
+<td><code>df</code></td>
+</tr>
+<tr>
+<td></td>
+<td>查看文件系统类型</td>
+<td><code>df   -T</code></td>
+</tr>
+<tr>
+<td></td>
+<td>更方面人理解的列表（H表示1000而不是1024）</td>
+<td><code>df -h</code></td>
+</tr>
+<tr>
+<td>———-</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>du</td>
+<td>查看当前目录下各个目录占用空间</td>
+<td><code>du</code></td>
+</tr>
+<tr>
+<td></td>
+<td>查看当前目录下文件+目录各自占用空间</td>
+<td><code>du -a</code></td>
+</tr>
+<tr>
+<td></td>
+<td>用人能看懂的方式展示</td>
+<td><code>du -h</code></td>
+</tr>
+<tr>
+<td></td>
+<td>只看一级的子目录各自占用的空间大小</td>
+<td><code>du -h --max-depth=1</code></td>
+</tr>
+<tr>
+<td>———-</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>ln</td>
+<td>软硬链接的区别，软的是一种快捷方式，硬的直接指向文件所在位置</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td><code>ln -s     test.log       test.soft.link</code></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td><code>ln          test.log       test.hard.link</code></td>
+</tr>
+<tr>
+<td>———-</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>diff</td>
+<td>比较2个文件(文件夹)，推荐方式</td>
+<td><code>diff a  b  -y</code></td>
+</tr>
+<tr>
+<td></td>
+<td>生成补丁</td>
+<td><code>diff a  b &gt; a.patch</code></td>
+</tr>
+<tr>
+<td></td>
+<td>打补丁</td>
+<td><code>patch a a.patch</code></td>
+</tr>
+<tr>
+<td>———-</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>date</td>
+<td>日期</td>
+<td><code>date &quot;+%D&quot;</code></td>
+</tr>
+<tr>
+<td></td>
+<td>时间</td>
+<td><code>date &quot;+%T&quot;</code></td>
+</tr>
+<tr>
+<td>———-</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>cal</td>
+<td>本月的日历</td>
+<td><code>cal</code></td>
+</tr>
+<tr>
+<td></td>
+<td>全年的阳历</td>
+<td><code>cal -y 2017</code></td>
+</tr>
+<tr>
+<td>———-</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>grep</td>
+<td>查找指定进错</td>
+<td><code>ps -ef --- grep svn</code></td>
+</tr>
+<tr>
+<td></td>
+<td>从a文件中读取规则去b文件中找</td>
+<td><code>cat b --- grep -f a</code></td>
+</tr>
+<tr>
+<td></td>
+<td>从文件中找关键字</td>
+<td><code>grep &#39;han&#39; test.log</code></td>
+</tr>
+<tr>
+<td></td>
+<td>查找ssh同时排除grep</td>
+<td><code>ps aux--- grep ssh --- grep -v &#39;grep&#39;</code></td>
+</tr>
+<tr>
+<td></td>
+<td>查找包含a或者b或者c的内容行</td>
+<td><code>grep -E  &#39;a---b---c&#39;      test.log</code></td>
+</tr>
+<tr>
+<td>———-</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>wc</td>
+<td>统计行数，单词数，字节数，文件名</td>
+<td><code>wc         test.log</code></td>
+</tr>
+<tr>
+<td></td>
+<td>只统计行数</td>
+<td><code>wc    -l  test.log</code></td>
+</tr>
+<tr>
+<td>———-</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>ps</td>
+<td>显示所有进程信息（常见）</td>
+<td><code>ps -ef</code></td>
+</tr>
+<tr>
+<td></td>
+<td>查找特定进程（常用）</td>
+<td><code>ps -ef ---grep svn</code></td>
+</tr>
+<tr>
+<td></td>
+<td>列出当前用户登录的pid相关</td>
+<td><code>ps -l</code></td>
+</tr>
+<tr>
+<td></td>
+<td>显示所有内存当中的程序（实用）</td>
+<td><code>ps aux</code></td>
+</tr>
+<tr>
+<td>———-</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>kill</td>
+<td>彻底杀死进程（超常用）</td>
+<td><code>kill -9 进程号</code></td>
+</tr>
+<tr>
+<td>———-</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>killall</td>
+<td>杀死进程通过名字（可能误杀）</td>
+<td><code>killall -9  进程名称</code></td>
+</tr>
+<tr>
+<td>———-</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>top</td>
+<td>显示完整命令(默认cpu排序，实用)</td>
+<td><code>top  -c</code></td>
+</tr>
+<tr>
+<td>———-</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>free</td>
+<td>查看内存</td>
+<td><code>free -m</code></td>
+</tr>
+<tr>
+<td>———-</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>vmstat</td>
+<td>查看内存使用的详细信息</td>
+<td><code>vmstat    -s</code></td>
+</tr>
+<tr>
+<td>———-</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>iostat</td>
+<td>查看所有设备负载情况</td>
+<td><code>iostat</code></td>
+</tr>
+<tr>
+<td>———-</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>watch</td>
+<td>每隔一秒高亮显示网络中链接数的变化</td>
+<td><code>watch -n 1 -d netstat -ant</code></td>
+</tr>
+<tr>
+<td>———-</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>at</td>
+<td>一次性的定时任务</td>
+<td><code>at        时刻</code></td>
+</tr>
+<tr>
+<td></td>
+<td>打开定时任务</td>
+<td><code>/etc/init.d/atd start</code></td>
+</tr>
+<tr>
+<td></td>
+<td>查看定时任务</td>
+<td><code>atq</code></td>
+</tr>
+<tr>
+<td></td>
+<td>删除定时任务</td>
+<td><code>atrm         任务号</code></td>
+</tr>
+<tr>
+<td>———-</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>crontab</td>
+<td>打开crond服务</td>
+<td><code>service crond start</code></td>
+</tr>
+<tr>
+<td></td>
+<td>每日执行一命令</td>
+<td><code>crontab -e</code></td>
+</tr>
+<tr>
+<td></td>
+<td>最后一行添加如hello</td>
+<td><code>* * * * * /bin/echo &#39;hello&#39; &gt; /root/han/cron</code></td>
+</tr>
+<tr>
+<td>———-</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>lsof</td>
+<td>通过进程号显示该进程打开的文件</td>
+<td><code>lsof -p 进程号</code></td>
+</tr>
+<tr>
+<td></td>
+<td>列出哪些进程在使用这个文件</td>
+<td><code>lsof     /bin/bash</code></td>
+</tr>
+<tr>
+<td></td>
+<td>列出tcp网络连接信息</td>
+<td><code>lsof -i tcp</code></td>
+</tr>
+<tr>
+<td></td>
+<td>查询谁在使用某个端口</td>
+<td><code>lsof -i :8080</code></td>
+</tr>
+<tr>
+<td></td>
+<td>主要解决了，这个进程打开了哪些文件，这个文件是由那个进程打开的</td>
+<td></td>
+</tr>
+<tr>
+<td>———-</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>ifconfig</td>
+<td>显示网络设备信息</td>
+<td><code>ifconfig</code></td>
+</tr>
+<tr>
+<td>———-</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>route</td>
+<td>查看路由信息</td>
+<td><code>route -n</code></td>
+</tr>
+<tr>
+<td>———-</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>ping</td>
+<td>向指定的ip发送指定次数</td>
+<td><code>ping  -c  10  127.0.0.1</code></td>
+</tr>
+<tr>
+<td>———-</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>traceroute</td>
+<td>向指定的域名发送请求探测出路径</td>
+<td><code>traceroute  www.sogo.com</code></td>
+</tr>
+<tr>
+<td>———-</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>netstat</td>
+<td>显示监听的套接口</td>
+<td><code>netstat -l</code></td>
+</tr>
+<tr>
+<td></td>
+<td>显示所有udp的连接</td>
+<td><code>netstat -u</code></td>
+</tr>
+<tr>
+<td></td>
+<td>显示所有tcp的连接</td>
+<td><code>netstat -t</code></td>
+</tr>
+<tr>
+<td></td>
+<td>统计机器中网络连接各个状态个数</td>
+<td><code>netstat -a -- awk &#39;/^tcp/ {++S[$NF]} END {for(a in S) print a, S[a]}&#39;</code></td>
+</tr>
+<tr>
+<td></td>
+<td>找出程序运行的端口</td>
+<td><code>netstat -ap --- grep ssh</code></td>
+</tr>
+<tr>
+<td></td>
+<td>显示pid和进程名字</td>
+<td><code>netstat -p</code></td>
+</tr>
+<tr>
+<td></td>
+<td>显示ip地址而不是域名</td>
+<td><code>netstat -n</code></td>
+</tr>
+<tr>
+<td></td>
+<td>通过端口找到进程</td>
+<td><code>netstat -ap--- grep &#39;80&#39;</code></td>
+</tr>
+<tr>
+<td>———-</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>ss</td>
+<td>显示tcp链接</td>
+<td><code>ss  -t  -a</code></td>
+</tr>
+<tr>
+<td></td>
+<td>列出所有打开的网络连接端口</td>
+<td><code>ss      -l</code></td>
+</tr>
+<tr>
+<td>———-</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>scp</td>
+<td>本地文件（文件夹）到远程</td>
+<td><code>scp -r local    remoteIP:remote</code></td>
+</tr>
+<tr>
+<td></td>
+<td>远程到本地</td>
+<td><code>scp -r remoteIP:remote     local</code></td>
+</tr>
+</tbody>
+</table>
+
+    </div>
+</div>
+
+<div class="cube-article-nav">
+    <ul>
+        
+        
+        <li class="next">
+            <a href="/2017/12/20/linux-usual-cmd/">
+                关于在linux上你必须要学的常用命令
+                <i class="cube-icon cube-next" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+
+<!-- TODO 根据theme.comment的内容进行入口选择 -->
+
+
+
+        </div>
+        <div class="cube-right">
+            
+
+<div class="cube-search cube-sidebar" id="cube-search">
+    <div class="search-container">
+        <input type="text" placeholder="搜索" class="cube-search-input" id="cube-search-input">
+        <i class="cube-icon cube-icon-search cube-search-submit" aria-hidden="true"></i>
+    </div>
+    <!-- TODO 通过给window赋一个全局变量，通过脚本赋值 -->
+</div>
+<script>
+    (function (window) {
+        'use strict';
+        window.searchModule = {}
+        window.searchModule.JSONUrl = '/content.json'
+        window.searchModule.rootUrl = '/'
+    })(window)
+</script>
+<div class="cube-search-form">
+    <div class="cube-search-control">
+        <input type="text" placeholder="搜索" class="search-input">
+        <a class="close-button">
+            <i class="cube-icon cube-close" aria-hidden="true"></i>
+        </a>
+    </div>
+    <div class="cube-search-result"></div>
+</div>
+
+
+<div class="title">
+    <a>珍惜时间</a>
+</div>
+<div class="cube-clock cube-sidebar" id="cube-clock">
+    <style>
+        #cube-clock{
+            height:300px;
+        }
+
+    </style>
+    <iframe src="/origin/clock.html" style="width:100%;height:100%;overflow-x:hidden;"    frameborder="0">
+    </iframe>
+</div>
+
+
+<div class="title">
+    <a>图片欣赏</a>
+</div>
+<div class="cube-pic cube-sidebar" id="cube-pic">
+    <style>
+        .cube-pic{
+            height:340px;
+        }
+
+    </style>
+    <iframe src="/origin/pics.html" style="width:100%;height:100%;overflow-x:hidden;"    frameborder="0">
+    </iframe>
+</div>
+
+
+
+<div class="title">
+    <a>我在哪里？</a>
+</div>
+<div class="cube-map cube-sidebar" id="cube-map">
+    <style>
+        .cube-map{
+            height:365px;
+        }
+
+    </style>
+    <iframe src="/origin/map.html" style="width:100%;height:100%;overflow-x:hidden;"    frameborder="0">
+    </iframe>
+</div>
+
+
+
+<div class="title">
+    <a>最爱音乐</a>
+</div>
+<div class="cube-music cube-sidebar" id="cube-music">
+    <div class="cube-player aplayer" id="cube-player"></div>
+</div>
+<script>
+    (function (window) {
+        window.musicModule = {}
+        window.musicModule.musicConfig = '{"narrow":false,"autoplay":true,"showlrc":0,"theme":"#b7daff","mutex":true,"mode":"random","preload":"auto","listmaxheight":"513px","music":[{"title":"You","author":"雪野五月","url":"http://fs.w.kugou.com/201709301412/ade28c2d08580c10cc2af3f0408df27d/G014/M03/11/01/roYBAFUKii-AYLzJADzMkUW2wrM890.mp3","pic":"http://singerimg.kugou.com/uploadpic/softhead/400/20141220/20141220175754495447.jpg"},{"title":"あいぞめ","author":"能登麻美子","url":"http://fs.w.kugou.com/201709301410/f5aa2ac76884dd92ab5123c9f1f1580c/G009/M07/01/19/qYYBAFT-T1GAYzlVAEUJNzS7FeY980.mp3","pic":"http://singerimg.kugou.com/uploadpic/softhead/400/20140411/20140411182558407258.jpg"},{"title":"逆さまの蝶","author":"SNoW","url":"http://fs.w.kugou.com/201709301312/3d2eb3cc5b2c2b9b15b0f819a9bb94c7/G011/M04/19/03/Sw0DAFT-rIiAB5T5AELUb0ACOaA266.mp3","pic":"http://singerimg.kugou.com/uploadpic/softhead/400/20110704/20110704110207910.jpg"},{"title":"Only My Railgun","author":"fripSide","url":"http://fs.w.kugou.com/201709301412/020400366b16a59e96f3e8e757db7b82/G012/M06/0A/04/TA0DAFULdzuAQT5xAD7H1p1vchc426.mp3","pic":"http://singerimg.kugou.com/uploadpic/softhead/400/20140901/20140901133905743482.jpg"},{"title":"Continued Story","author":"黒石ひとみ","url":"http://fs.w.kugou.com/201709301410/6e5f221dedf36ec624313a22da7bbc97/G005/M0A/06/15/pYYBAFUIRdeAOkNWAEyLwX4EGs8349.mp3","pic":"http://singerimg.kugou.com/uploadpic/softhead/400/20131214/20131214151506586339.jpg"},{"title":"青空","author":"Lia","url":"http://fs.w.kugou.com/201709301414/67ffa781675410bf1bb9041fd0601cee/G006/M09/1D/15/poYBAFS3912AEvH3AD9DQT130PY308.mp3","pic":"http://singerimg.kugou.com/uploadpic/softhead/400/20151219/20151219102303708.jpg"},{"title":"God knows...","author":"平野綾","url":"http://fs.w.kugou.com/201709301414/bffce7489a4768cdacee3271433d1480/G047/M03/16/10/D5QEAFYmheqAUNFQAESkqo_0ay0392.mp3","pic":"http://singerimg.kugou.com/uploadpic/softhead/400/20160924/20160924170911713.jpg"},{"title":"I Do","author":"Ilaria Graziano","url":"http://fs.w.kugou.com/201709301414/0dabf35c3b8ace7d1b382b3cfba5bdd9/G010/M07/1E/00/qoYBAFULeA-Aa9k4AEdgpyzbLdE313.mp3","pic":"http://singerimg.kugou.com/uploadpic/softhead/400/20140403/20140403181759832730.jpg"}]}'
+        window.musicModule.lrcConfig = {
+            open: '开启歌词',
+            close: '关闭歌词'
+        }
+    })(window)
+</script>
+
+
+
+<div class="title">
+    <a>推荐视频</a>
+</div>
+<div class="cube-video cube-sidebar" id="cube-video">
+    <style>
+        .cube-video{
+            height:300px;
+        }
+    </style>
+    <video src="http://vjs.zencdn.net/v/oceans.mp4" style="width:100%;height:100%;background:#000;" controls ></video>
+
+</div>
+
+
+
+
+<div class="title">
+    <a>日常撸狗</a>
+</div>
+<div class="cube-demo cube-sidebar" id="cube-demo">
+    <style>
+        .cube-demo{
+            height:365px;
+        }
+
+    </style>
+    <iframe src="/origin/robbot.html" style="width:100%;height:100%;overflow-x:hidden;"    frameborder="0">
+    </iframe>
+</div>
+
+
+
+<div class="cube-recent-posts cube-sidebar" id="cube-recent-posts">
+    <div class="title">
+        <a>近期文章</a>
+    </div>
+    <ul class="list">
+        
+        
+        <li>
+            <!-- TODO 如果文章要显示图片，那么在front-matter上添加preview属性(url or path) -->
+            
+            <div class="normal">
+                <p class="index first">
+                    <span>1</span>
+                </p>
+                <p class="title">
+                    <a href="/2017/12/29/linux-usual-cmd2/" title="Linux每日一命令学习系列总结">Linux每日一命令学习系列总结</a>
+                </p>
+            </div>
+            
+        </li>
+        
+        
+        
+        <li>
+            <div class="normal">
+                <p class="index">
+                    <span>2</span>
+                </p>
+                <p class="title">
+                    <a href="/2017/12/20/linux-usual-cmd/" title="关于在linux上你必须要学的常用命令">关于在linux上你必须要学的常用命令</a>
+                </p>
+            </div>
+        </li>
+        
+        
+        
+        <li>
+            <div class="normal">
+                <p class="index">
+                    <span>3</span>
+                </p>
+                <p class="title">
+                    <a href="/2017/11/03/shotcut-sublime/" title="关于sublime的不可不知的快捷键">关于sublime的不可不知的快捷键</a>
+                </p>
+            </div>
+        </li>
+        
+        
+        
+        <li>
+            <div class="normal">
+                <p class="index">
+                    <span>4</span>
+                </p>
+                <p class="title">
+                    <a href="/2017/11/03/shotcut-vim/" title="关于vim的不可不知的快捷键">关于vim的不可不知的快捷键</a>
+                </p>
+            </div>
+        </li>
+        
+        
+        
+        <li>
+            <div class="normal">
+                <p class="index">
+                    <span>5</span>
+                </p>
+                <p class="title">
+                    <a href="/2017/10/12/js-es6/" title="ES6新特性概览总结">ES6新特性概览总结</a>
+                </p>
+            </div>
+        </li>
+        
+        
+    </ul>
+</div>
+
+
+
+<div class="cube-links cube-sidebar" id="cube-links">
+    <div class="title">
+        <a>个人链接</a>
+    </div>
+    <ul class="list">
+        
+        <li>
+            
+            
+            <img src="http://cube-1252774894.cosgz.myqcloud.com/links/GitHub.png">
+            
+            <a href="https://github.com/Ghohankawk" target="_blank">GitHub</a>
+        </li>
+        
+        <li>
+            
+            
+            <img src="http://is5.mzstatic.com/image/thumb/Purple128/v4/06/c4/9f/06c49f4a-9d81-2193-3dd7-0ea79a377cf0/source/175x175bb.jpg">
+            
+            <a href="http://blog.csdn.net/ghohankawk" target="_blank">CSDN</a>
+        </li>
+        
+    </ul>
+</div>
+
+
+
+<div class="cube-friend-links cube-sidebar" id="cube-friend-links">
+    <div class="title">
+        <a>友情链接</a>
+    </div>
+    <ul class="list">
+        
+        <li>
+            <!-- TODO change avatar.png to friend.png-->
+            <img src="http://cube-1252774894.cosgz.myqcloud.com/avatar.png">
+            <a href="http://sora1.coding.me/" target="_blank">该主题大佬</a>
+        </li>
+        
+    </ul>
+</div>
+
+
+        </div>
+    </div>
+</div>
+<footer class="cube-footer">
+    <span style="display: inline;" id="busuanzi_container_site_uv">本站总访客数 <span id="busuanzi_value_site_uv" font="微软雅黑" style="color:black"></span> 次</span>
+<span style="display: inline;" id="busuanzi_container_site_pv">本站总访问量 <span id="busuanzi_value_site_pv" font="微软雅黑" style="color:black"></span> 次</span>
+
+© 2017 ghohank
+
+<br>
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>.&nbsp;Theme by <a href="https://github.com/ZEROKISEKI" target="_blank">AONOSORA</a>
+</footer>
+<!-- inject:script -->
+<script src="/js/script.js"></script>
+<!-- endinject -->
+<div class="cube-loading out"></div>
+<style>
+#live2dcanvas{
+    left: 0;
+}
+</style>
+
+    <script type="text/javascript" src="/live2d/script.js"></script>
+    <canvas id="live2dcanvas" width="150" height="300" class="live2d"></canvas>
+    <style>
+      #live2dcanvas {
+        position: fixed;
+        right: 0px;
+        z-index: 999;
+        pointer-events: none;
+        bottom: 60px;
+      }
+    </style>
+    <script>loadlive2d("live2dcanvas" ,"/live2d/assets/haru/haru.model.json",0.5)</script>
+  
+</body>
+</html>
